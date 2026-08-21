@@ -71,6 +71,10 @@ export default function Home() {
         <p style={styles.cardLabel}>SOURCE</p>
         <p style={styles.cardValue}>{collection.source}</p>
       </div>
+      <div style={styles.card}>
+        <p style={styles.cardLabel}>CITY</p>
+        <p style={styles.cardValue}>{collection.city}</p>
+      </div>
 
       <p style={styles.count}>entries in the archive: 0 (for now)</p>
 
