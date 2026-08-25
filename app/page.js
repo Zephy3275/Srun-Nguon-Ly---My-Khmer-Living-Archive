@@ -1,4 +1,18 @@
 import collection from "../collection.config.js";
+import EntryCard from "../components/EntryCard.js";
+
+const entries = [
+  {
+    title: "Mooncake Ngoyen Egg 1",
+    source: "My uncle's shop",
+    image: "/images/mooncake_egg_1.jpg",
+  },
+  {
+    title: "Mooncake Ngoyen Egg 2",
+    source: "My uncle's shop",
+    image: "/images/mooncake_egg_2.jpg",
+  },
+];
 
 const styles = {
   wrap: {
@@ -47,6 +61,12 @@ const styles = {
     color: "#2EE6A8",
     marginTop: 48,
   },
+  grid: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: 24,
+    marginTop: 24,
+  },
   footer: {
     marginTop: 64,
     paddingTop: 24,
@@ -76,7 +96,13 @@ export default function Home() {
         <p style={styles.cardValue}>{collection.city}</p>
       </div>
 
-      <p style={styles.count}>entries in the archive: 0 (for now)</p>
+      <p style={styles.count}>entries in the archive: {entries.length}</p>
+
+      <div style={styles.grid}>
+        {entries.map((entry) => (
+          <EntryCard key={entry.title} {...entry} />
+        ))}
+      </div>
 
       <footer style={styles.footer}>
         Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall
