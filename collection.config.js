@@ -20,7 +20,7 @@ const collection = {
   source: "The knowledge will come from my family, my mom, uncle and grandma. My family is hybrid between khmer and chinese, so they have a unique blend of culture",
 
   // Place
-  City: "Phnom Penh",
+  city: "Phnom Penh",
 
 };
 

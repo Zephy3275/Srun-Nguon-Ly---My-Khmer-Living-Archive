@@ -20,15 +20,22 @@ const styles = {
     margin: 0,
   },
   title: { fontSize: 18, fontWeight: 600, margin: "6px 0 0" },
+  description: {
+    fontSize: 14,
+    color: "#97A1B3",
+    lineHeight: 1.5,
+    margin: "8px 0 0",
+  },
 };
 
-export default function EntryCard({ title, source, image }) {
+export default function EntryCard({ title, source, description, image }) {
   return (
     <div style={styles.card}>
       <img src={image} alt={title} style={styles.image} />
       <div style={styles.body}>
         <p style={styles.label}>SOURCE: {source}</p>
         <p style={styles.title}>{title}</p>
+        {description && <p style={styles.description}>{description}</p>}
       </div>
     </div>
   );

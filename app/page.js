@@ -5,11 +5,15 @@ const entries = [
   {
     title: "Mooncake Ngoyen Egg 1",
     source: "My uncle's shop",
+    description:
+      "A classic style mooncake. When people think of mooncake, they think of a cake that have mixture of various ingredients packing many flavors.",
     image: "/images/mooncake_egg_1.jpg",
   },
   {
     title: "Mooncake Ngoyen Egg 2",
     source: "My uncle's shop",
+    description:
+      "A premium classic. Only slightly bigger than the mooncake egg 1 but with 2 eggs. Perfect for those with a bigger appetite.",
     image: "/images/mooncake_egg_2.jpg",
   },
 ];
