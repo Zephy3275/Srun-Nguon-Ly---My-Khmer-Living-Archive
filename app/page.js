@@ -1,22 +1,7 @@
+import Link from "next/link";
 import collection from "../collection.config.js";
 import EntryCard from "../components/EntryCard.js";
-
-const entries = [
-  {
-    title: "Mooncake Ngoyen Egg 1",
-    source: "My uncle's shop",
-    description:
-      "A classic style mooncake. When people think of mooncake, they think of a cake that have mixture of various ingredients packing many flavors.",
-    image: "/images/mooncake_egg_1.jpg",
-  },
-  {
-    title: "Mooncake Ngoyen Egg 2",
-    source: "My uncle's shop",
-    description:
-      "A premium classic. Only slightly bigger than the mooncake egg 1 but with 2 eggs. Perfect for those with a bigger appetite.",
-    image: "/images/mooncake_egg_2.jpg",
-  },
-];
+import entries from "../data/entries.js";
 
 const styles = {
   wrap: {
@@ -29,6 +14,16 @@ const styles = {
     color: "#2EE6A8",
     fontSize: 14,
     letterSpacing: 1,
+  },
+  nav: {
+    marginBottom: 40,
+  },
+  navLink: {
+    fontFamily: "'Courier New', monospace",
+    fontSize: 14,
+    letterSpacing: 1,
+    color: "#2EE6A8",
+    textDecoration: "none",
   },
   title: {
     fontSize: 48,
@@ -83,6 +78,12 @@ const styles = {
 export default function Home() {
   return (
     <main style={styles.wrap}>
+      <nav style={styles.nav}>
+        <Link href="/browse" style={styles.navLink}>
+          BROWSE THE COLLECTION ↗
+        </Link>
+      </nav>
+
       <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
       <h1 style={styles.title}>{collection.name}</h1>
       <p style={styles.description}>{collection.description}</p>
@@ -104,7 +105,7 @@ export default function Home() {
 
       <div style={styles.grid}>
         {entries.map((entry) => (
-          <EntryCard key={entry.title} {...entry} />
+          <EntryCard key={entry.id} {...entry} />
         ))}
       </div>
 
