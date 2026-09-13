@@ -40,8 +40,18 @@ export default function SearchFilter({ entries }) {
   const [query, setQuery] = useState("");
   const q = query.trim().toLowerCase();
 
-  const matches = (entry) =>
-    (entry.title + " " + entry.description).toLowerCase().includes(q);
+  const matches = (entry) => {
+    const searchable = [
+      entry.title,
+      entry.description,
+      entry.titleKhmer,
+      entry.descriptionKhmer,
+    ]
+      .filter(Boolean)
+      .join(" ")
+      .toLowerCase();
+    return searchable.includes(q);
+  };
 
   const filtered = q === "" ? entries : entries.filter(matches);
 

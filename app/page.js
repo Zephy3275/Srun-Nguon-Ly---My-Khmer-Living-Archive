@@ -1,6 +1,7 @@
 import Link from "next/link";
 import collection from "../collection.config.js";
 import EntryCard from "../components/EntryCard.js";
+import ContextAbout from "../components/ContextAbout.js";
 import entries from "../data/entries.js";
 
 const styles = {
@@ -100,6 +101,8 @@ export default function Home() {
         <p style={styles.cardLabel}>CITY</p>
         <p style={styles.cardValue}>{collection.city}</p>
       </div>
+
+      <ContextAbout />
 
       <p style={styles.count}>entries in the archive: {entries.length}</p>
 
