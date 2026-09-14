@@ -57,7 +57,7 @@ const entries = [
     id: "mooncake-bean-paste-egg-1",
     title: "Mooncake Bean Paste Egg 1",
     titleKhmer: "នំព្រះច័ន្ទសាច់សណ្ដែកពងទា ១",
-    source: "Pending",
+    source: "My uncle's shop: Tea Tek Bouy Bakery",
     description:
       "A baked mooncake filled with smooth, pale bean paste — milder and lighter than the nut filling above — wrapped around a single salted egg yolk. Bean paste is one of the oldest mooncake fillings still made today, valued for a gentler sweetness that lets the egg yolk's saltiness come through more clearly.",
     descriptionKhmer:
@@ -70,7 +70,7 @@ const entries = [
     id: "mooncake-lotus-paste-egg-1",
     title: "Mooncake Lotus Paste Egg 1",
     titleKhmer: "នំព្រះច័ន្ទសាច់ឈូកពងទា ១",
-    source: "Pending",
+    source: "My uncle's shop: Tea Tek Bouy Bakery",
     description:
       "Baked with pure lotus seed paste, the filling most associated with “mooncake” worldwide, and finished with a single salted egg yolk. Lotus paste is prized for turning out smoother than nuttier or bean-based fillings, and it's traditionally treated as the more refined, formal choice among mooncake styles.",
     descriptionKhmer:
@@ -83,7 +83,7 @@ const entries = [
     id: "mooncake-lotus-paste-egg-2",
     title: "Mooncake Lotus Paste Egg 2",
     titleKhmer: "នំព្រះច័ន្ទសាច់ឈូកពងទា ២",
-    source: "Pending",
+    source: "My uncle's shop: Tea Tek Bouy Bakery",
     description:
       "A second lotus-paste mooncake from the same line as Lotus Paste 1 — same silky filling, same single egg yolk, same baked golden crust. Shops typically sell lotus paste mooncakes as a small run like this rather than a one-off, which is likely why it exists as its own entry alongside the first.",
     descriptionKhmer:
@@ -96,7 +96,7 @@ const entries = [
     id: "mooncake-pandan-lotus-paste-egg-1",
     title: "Mooncake Pandan Lotus Paste Egg 1",
     titleKhmer: "នំព្រះច័ន្ទសាច់ឈូកស្លឹកតីពងទា ១",
-    source: "Pending",
+    source: "My uncle's shop: Tea Tek Bouy Bakery",
     description:
       "Unlike every baked mooncake above, this one isn't baked at all — it's a snow skin mooncake, with a soft, chewy glutinous-rice “skin” tinted and flavored green with pandan, wrapped around lotus paste and a salted egg custard center. Served chilled rather than at room temperature, it's a lighter, more modern variation, closer to Southeast Asian dessert traditions than to the older baked styles in this collection.",
     descriptionKhmer:
@@ -109,7 +109,7 @@ const entries = [
     id: "mooncake-big-peah",
     title: "Mooncake Big Peah",
     titleKhmer: "ពាធំ",
-    source: "Pending",
+    source: "My uncle's shop: Tea Tek Bouy Bakery",
     description:
       "The largest of the shop's three Pia sizes — Teochew-style flaky pastries built from alternating layers of water dough and oil dough folded into thin, delicate sheets, a completely different construction from the thick baked crust of the mooncakes above. Big Pia is made with two salted egg yolks at its center, wrapped in the customer's choice of taro, bean paste, or winter melon paste — the same three fillings offered across all three Pia sizes.",
     descriptionKhmer:
@@ -122,7 +122,7 @@ const entries = [
     id: "mooncake-round-peah",
     title: "Mooncake Round Peah",
     titleKhmer: "ពាមូល",
-    source: "Pending",
+    source: "My uncle's shop: Tea Tek Bouy Bakery",
     description:
       "A mid-sized Pia with the same laminated Teochew crust as Big Pia, stamped in red with 福 (“fortune/blessing”). Round Pia is made with a single salted egg yolk, wrapped in whichever of the three traditional fillings — taro, bean paste, or winter melon — the customer chooses.",
     descriptionKhmer:
@@ -135,7 +135,7 @@ const entries = [
     id: "mooncake-small-peah",
     title: "Mooncake Small Peah",
     titleKhmer: "ពាតូច",
-    source: "Pending",
+    source: "My uncle's shop: Tea Tek Bouy Bakery",
     description:
       "The smallest of the three Pia sizes, with the same flaky layered crust and red 福 stamp as its larger siblings, and the same single-egg-yolk center as Round Pia. Same three filling choices apply here too, just scaled down to a smaller, single-serving size.",
     descriptionKhmer:
