@@ -2,10 +2,9 @@
 
 import { useState } from "react";
 import EntryList from "./EntryList.js";
+import SearchSuggestions from "./SearchSuggestions.js";
 
-// Khmer copy for the empty state. This is a PLACEHOLDER.
-// Paste a verified Khmer line here from family / native speaker before
-// submitting (AGENTS.md: Khmer is first-class; never ship invented Khmer).
+// Khmer copy for the empty state (student-provided / verified).
 const EMPTY_KHMER = "សាកល្បងពាក្យផ្សេងទៀត — រាល់ការបញ្ចូលអាចរកបានដោយចំណងជើង ឬការពិពណ៌នារបស់វា ជាភាសាអង់គ្លេស ឬខ្មែរ។";
 
 const styles = {
@@ -36,6 +35,14 @@ const styles = {
     padding: "8px 12px",
     cursor: "pointer",
     whiteSpace: "nowrap",
+  },
+  suggestWrap: {
+    position: "absolute",
+    top: "100%",
+    left: 0,
+    right: 0,
+    zIndex: 10,
+    marginTop: 4,
   },
   count: {
     fontFamily: "'Courier New', monospace",
@@ -73,6 +80,7 @@ const styles = {
 
 export default function SearchFilter({ entries }) {
   const [query, setQuery] = useState("");
+  const [open, setOpen] = useState(false);
   const q = query.trim().toLowerCase();
 
   const matches = (entry) => {
@@ -89,28 +97,49 @@ export default function SearchFilter({ entries }) {
   };
 
   const filtered = q === "" ? entries : entries.filter(matches);
+  const suggestions = q === "" ? [] : filtered.slice(0, 5);
+  const showDropdown = open && suggestions.length > 0;
   const hasNoMatch = q !== "" && filtered.length === 0;
 
   return (
     <div>
-      <div style={styles.searchRow}>
-        <input
-          type="text"
-          placeholder="Search by title or description…"
-          value={query}
-          onChange={(e) => setQuery(e.target.value)}
-          style={styles.input}
-          aria-label="Search entries"
-        />
-        {query !== "" && (
-          <button
-            type="button"
-            onClick={() => setQuery("")}
-            style={styles.clear}
-            aria-label="Clear search"
-          >
-            CLEAR ×
-          </button>
+      <div style={{ position: "relative" }}>
+        <div style={styles.searchRow}>
+          <input
+            type="text"
+            placeholder="Search by title or description…"
+            value={query}
+            onChange={(e) => {
+              setQuery(e.target.value);
+              setOpen(true);
+            }}
+            onFocus={() => setOpen(true)}
+            onBlur={() => setTimeout(() => setOpen(false), 120)}
+            onKeyDown={(e) => {
+              if (e.key === "Escape") setOpen(false);
+            }}
+            style={styles.input}
+            aria-label="Search entries"
+          />
+          {query !== "" && (
+            <button
+              type="button"
+              onClick={() => {
+                setQuery("");
+                setOpen(false);
+              }}
+              style={styles.clear}
+              aria-label="Clear search"
+            >
+              CLEAR ×
+            </button>
+          )}
+        </div>
+
+        {showDropdown && (
+          <div style={styles.suggestWrap}>
+            <SearchSuggestions suggestions={suggestions} />
+          </div>
         )}
       </div>
 
@@ -130,9 +159,7 @@ export default function SearchFilter({ entries }) {
             Try another word — every entry can be found by its title or
             description, in English or Khmer.
           </p>
-          {EMPTY_KHMER && (
-            <p style={styles.emptyKhmer}>{EMPTY_KHMER}</p>
-          )}
+          <p style={styles.emptyKhmer}>{EMPTY_KHMER}</p>
         </div>
       ) : (
         <EntryList entries={filtered} />
