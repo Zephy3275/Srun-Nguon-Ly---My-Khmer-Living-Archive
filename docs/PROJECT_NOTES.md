@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 2 (phase 2) - Supabase + Auth**, started week 5.
+> Current phase: **SPRINT 2 (phase 2) - Supabase + Auth**, week 5. Lab 5 tasks 1-3 implemented; live security/deploy verification pending.
 
 ---
 
@@ -27,13 +27,13 @@ STEP 1 - Orient yourself (don't skip):
   - Skim docs/CHANGES*.md, then data/entries.js, collection.config.js, and the
     components/ and app/ folders to confirm current state.
 
-CURRENT STATE (as of start of Sprint 2):
-  - Next.js 15 App Router app; homepage (/), browse (/browse with search), and a
-    per-entry detail route (/entries/[id]).
+CURRENT STATE (Sprint 2, after Lab 5):
+  - Next.js 15 App Router app; homepage (/), browse (/browse with search), a per-entry
+    route (/entries/[id]), and /login + /signup (Supabase email/password auth).
   - data/entries.js = 9 real entries (image, source, English description, Khmer
     fields). collection.config.js = archive identity.
-  - Supabase is NOT integrated yet. A gitignored `.env.local` exists for auth
-    keys; Vercel env vars for deploy. NEVER read/commit its contents.
+  - Supabase INTEGRATED (plumbing / doors / signal done). Code reads env vars:
+    NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (gitignored .env.local + Vercel).
 
 SPRINT 2 FOCUS (Supabase + Auth):
   - Backend via Supabase; add login/signup; possibly security (e.g. RLS).
@@ -65,7 +65,7 @@ assume.
 ```
 ---
 
-## Current repo state (accurate, start of Sprint 2)
+## Current repo state (accurate, Sprint 2 - after Lab 5)
 
 ```
 Srun-Nguon-Ly---My-Khmer-Living-Archive\
@@ -74,6 +74,10 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   +-- page.js        (homepage: identity + ContextAbout + all entries)
 |   +-- browse
 |   |   +-- page.js    (browse page -> SearchFilter)
+| |   +-- login
+| |   |   +-- page.js      (/login -> LoginForm)
+| |   +-- signup
+| |       +-- page.js      (/signup -> SignupForm)
 |   +-- entries
 |       +-- [id]
 |           +-- page.js  (per-entry detail page, EN + Khmer, not-found fallback)
@@ -83,16 +87,27 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   +-- SearchFilter.js     ("use client" search: empty state + clear + dropdown)
 |   +-- SearchSuggestions.js(as-you-type dropdown -> /entries/[id])
 |   +-- ContextAbout.js     (homepage "About the Mooncake")
+| |   +-- LoginForm.js        ("use client" sign-in; fixed invalid message)
+| |   +-- SignupForm.js       ("use client" create account; min 6 password)
+| |   +-- AuthHeader.js       (server: email+logout OR /login+/signup links)
+| |   +-- LogoutButton.js     ("use client" sign out + refresh)
 +-- data
 |   +-- entries.js          (9 REAL entries: image, source, description, Khmer fields)
 +-- public
 |   +-- images              (9 photos)
 +-- docs
+| |   +-- sprint 2           (Lab 5 changelogs)
 |   +-- CHANGES*.md, PROJECT_NOTES.md (living handoff)
 +-- collection.config.js    (archive identity)
 +-- AGENTS.md               (rules + Sprint 2 dependency amendment)
 +-- .env.local              (Supabase auth config - GITIGNORED, never commit)
 +-- README.md, package.json, next.config.mjs, .gitignore
++-- utils
+|   +-- supabase
+|       +-- client.js         (browser client: createBrowserClient)
+|       +-- server.js         (server client: reads cookies())
+|       +-- middleware.js     (updateSession: token refresh)
++-- middleware.js             (root: runs updateSession; matcher skips static/img)
 ```
 
 Key facts / Sprint 2 security posture:
@@ -100,7 +115,7 @@ Key facts / Sprint 2 security posture:
   and @supabase/ssr (approved).
 - `.env.local` is present and GITIGNORED (`.env*` in .gitignore); verified NOT tracked
   by git. Keep it that way (AGENTS rule 3).
-- Supabase integration not started yet - first task comes from Lab 5.
+- Supabase INTEGRATED and Lab 5 done: plumbing, doors, signal (see changelogs).
 
 ---
 
@@ -112,6 +127,18 @@ suggestions dropdown.
 
 ---
 
+## Sprint 2 progress (Lab 5)
+
+Lab 5 shipped in small scoped steps (changelogs in docs/sprint 2/):
+1. Task 1 "Plumbing" - deps @supabase/supabase-js + @supabase/ssr; utils/supabase/{client,server,middleware}.js + root middleware.js (session/token refresh). Pages untouched.
+2. Task 2 "Doors" - /login + /signup (Supabase email/password). Failed login shows a fixed "Invalid email or password" (no user enumeration); redirect home on success. Signup password field enforces minLength 6 (added after a weak-password error surfaced behind the generic message).
+3. Task 3 "Signal" - home page nav is auth-aware: logged-in -> email + LogoutButton; logged-out -> /login + /signup links (AuthHeader.js is a server component reading getUser()).
+
+Confirm-email is OFF (per lab). Env vars the code reads: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY.
+
+Local verification (20 Sep): login and logout confirmed working locally (test user created directly in the Supabase dashboard to avoid the public-signup rate limiter). Still pending: push/merge to main, watch the Vercel deploy, then run the Lab 5 Part 3/4 attacker checklist on the live URL.
+
+---
 ## Sprint 2 - scoped (Supabase + Auth)
 
 Focus: Supabase backend, auth login / signup, possibly security (e.g. RLS).
@@ -125,13 +152,13 @@ Configuration / secrets:
 - Local: .env.local (gitignored). Deploy: Vercel environment variables.
 - Never read/print/commit .env.local contents. Confirm git status stays free of
   it before every commit.
-- The task (Lab 5) will define exactly which env var names are required.
+- Env var names the code reads: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY.
 
 Professor's caution (quoting intent): this sprint is volatile and can go sideways
 quickly. Mitigation: build in small committed steps, keep a revertible base, and
 apply "stop / revert to last good commit / re-prompt smaller" on any fix chain.
 
-Known first task: from the student's Lab 5 (pending - add once shared).
+Lab 5 tasks 1-3 complete (plumbing, doors, signal); login/logout verified locally. Pending: push/merge to main + live security checklist.
 ---
 
 ## Peer-review points (partner test) - status
@@ -187,5 +214,8 @@ Not worth carrying (moot): "don't touch EntryCard" / "image:'' broken slot"; pas
 
 - docs/CHANGES.md, CHANGES_2_DataEntries.md, CHANGES2_Browse.md, CHANGES2_Search.md
 - docs/CHANGES3_Description.md, CHANGES3_Description2.md, CHANGES3_SearchPolish.md
+- docs/sprint 2/CHANGES4_SupaBasePlumbling.md   (Lab 5 Task 1 - Supabase plumbing)
+- docs/sprint 2/CHANGES4_TheDoors.md            (Lab 5 Task 2 - login/signup pages)
+- docs/sprint 2/CHANGES4_TheSignal.md           (Lab 5 Task 3 - auth-aware home header)
 
 Next: add an entry for the Sprint 2 Supabase/auth work once Lab 5 scopes it.
