@@ -2,6 +2,7 @@ import Link from "next/link";
 import collection from "../collection.config.js";
 import EntryCard from "../components/EntryCard.js";
 import ContextAbout from "../components/ContextAbout.js";
+import AuthHeader from "../components/AuthHeader.js";
 import entries from "../data/entries.js";
 
 const styles = {
@@ -17,6 +18,9 @@ const styles = {
     letterSpacing: 1,
   },
   nav: {
+    display: "flex",
+    alignItems: "center",
+    gap: 24,
     marginBottom: 40,
   },
   navLink: {
@@ -83,6 +87,7 @@ export default function Home() {
         <Link href="/browse" style={styles.navLink}>
           BROWSE THE COLLECTION ↗
         </Link>
+        <AuthHeader />
       </nav>
 
       <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
