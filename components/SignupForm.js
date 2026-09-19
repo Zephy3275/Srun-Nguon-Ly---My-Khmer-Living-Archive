@@ -43,6 +43,11 @@ const styles = {
     fontSize: 14,
     margin: "16px 0 0",
   },
+  hint: {
+    fontSize: 12,
+    color: "#7C8698",
+    margin: 0,
+  },
   linkRow: {
     fontFamily: "'Courier New', monospace",
     fontSize: 14,
@@ -117,8 +122,11 @@ export default function SignupForm() {
         onChange={(e) => setPassword(e.target.value)}
         placeholder="••••••••"
         style={styles.input}
+        minLength={6}
+        title="At least 6 characters"
         required
       />
+      <p style={styles.hint}>At least 6 characters.</p>
 
       <button type="submit" disabled={loading} style={styles.button}>
         {loading ? "CREATING ACCOUNT…" : "CREATE ACCOUNT"}
