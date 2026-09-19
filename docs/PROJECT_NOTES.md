@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **START OF SPRINT 2 (phase 2)**. Sprint 1 shipped.
+> Current phase: **SPRINT 2 (phase 2) - Supabase + Auth**, started week 5.
 
 ---
 
@@ -14,59 +14,58 @@ Copy everything in the block below into the new chat:
 ```
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
-JavaScript only, plain React, no TypeScript, exactly 3 dependencies.
+JavaScript only, plain React, no TypeScript.
 
-PHASE: Catch up to the repo state below, then we start Sprint 2 (details to come
-from the student).
+PHASE: SPRINT 2 (phase 2) - Supabase + Auth (login / signup), possibly security.
+This sprint is VOLATILE per the professor and can go sideways quickly. Build in
+small committed steps, keep a revertible base, and if a fix breaks a second thing
+follow "stop, revert to the last good commit, re-prompt smaller".
 
 STEP 1 - Orient yourself (don't skip):
-  - Read AGENTS.md (rules - hard requirements).
+  - Read AGENTS.md (rules - hard requirements + the Sprint 2 dependency amendment).
   - Read this living context file: docs/PROJECT_NOTES.md
   - Skim docs/CHANGES*.md, then data/entries.js, collection.config.js, and the
     components/ and app/ folders to confirm current state.
 
-CURRENT STATE (as of end of Sprint 1):
-  - app/page.js        homepage: identity + ContextAbout + lists all 9 entries
-  - components/ContextAbout.js  homepage "About the Mooncake" section
-  - app/browse/page.js browse page; renders SearchFilter
-  - components/SearchFilter.js  client search: case-insensitive over title,
-        description, titleKhmer, descriptionKhmer. Query-aware bilingual empty
-        state, a CLEAR x button, and a suggestions dropdown (up to 5).
-  - components/SearchSuggestions.js  as-you-type dropdown linking to /entries/[id]
-  - components/EntryList.js          grid mapping entries -> EntryCard
-  - components/EntryCard.js          clickable card (image/source/title/desc + Khmer)
-  - app/entries/[id]/page.js         per-entry detail page (English + Khmer, not-found)
-  - data/entries.js                  source of truth: 9 real entries (all with image,
-        English description, titleKhmer, descriptionKhmer, real source)
-  - collection.config.js             archive identity
-  - public/images/                   9 real photos
+CURRENT STATE (as of start of Sprint 2):
+  - Next.js 15 App Router app; homepage (/), browse (/browse with search), and a
+    per-entry detail route (/entries/[id]).
+  - data/entries.js = 9 real entries (image, source, English description, Khmer
+    fields). collection.config.js = archive identity.
+  - Supabase is NOT integrated yet. A gitignored `.env.local` exists for auth
+    keys; Vercel env vars for deploy. NEVER read/commit its contents.
 
-SPRINT 1 DELIVERED: data fill (9 entries), page-per-entry detail route, Khmer
-content, Khmer search, bilingual display, query-aware empty state, clear button,
-suggestions dropdown.
+SPRINT 2 FOCUS (Supabase + Auth):
+  - Backend via Supabase; add login/signup; possibly security (e.g. RLS).
+  - Dependency change: exactly TWO packages are now APPROVED for Sprint 2 only:
+      @supabase/supabase-js   @supabase/ssr
+    Do NOT add any other dependency without stopping and asking.
+  - All other AGENTS.md hard rules still stand, especially rule 3: never put
+    keys/tokens/passwords in any committed file.
+  - Auth config lives in .env.local (local) + Vercel env vars (deploy).
 
-SPRINT 2: student will specify details. Known outstanding item (announced): refine
-/ proofread the Khmer descriptionKhmer text (family/native review).
-
-NON-NEGOTIABLE RULES (from AGENTS.md):
-  - Do NOT add dependencies (only next, react, react-dom allowed).
+NON-NEGOTIABLE RULES (from AGENTS.md, incl. Sprint 2 amendment):
+  - Dependencies: next, react, react-dom + (Sprint 2 only) @supabase/supabase-js
+    and @supabase/ssr. Nothing else.
   - Do NOT touch package.json / package-lock.json / next.config.mjs / .gitignore
-    unless the task explicitly names them.
-  - NEVER write an API key/token/password into any file (repo is public).
+    unless the current task explicitly names them.
+  - NEVER write an API key/token/password into any file; .env.local stays
+    gitignored. This repository is public.
   - Keep diffs scoped; say which file + why before editing beyond the ask.
   - One component per file, plain function components, ~80 lines or less.
-  - Khmer text is first-class - never strip/transliterate/"fix" it; use real
-    student content, never invented/lorem ipsum.
+  - Khmer text is first-class - never strip/transliterate/"fix" it; real student
+    content, never invented.
   - Styling: inline style objects or plain CSS. No CSS/component libs.
   - JavaScript only. Plan first for anything beyond a one-file change.
   - Student reviews & approves every diff; code must be explainable line-by-line.
 
 Working agreement: propose a short plan before writing, make small scoped steps,
-keep each feature as its own commit, and surface what you assume.
+commit early and often, keep each feature as its own commit, and surface what you
+assume.
 ```
 ---
 
-## Current repo state (accurate, end of Sprint 1)
+## Current repo state (accurate, start of Sprint 2)
 
 ```
 Srun-Nguon-Ly---My-Khmer-Living-Archive\
@@ -85,104 +84,108 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   +-- SearchSuggestions.js(as-you-type dropdown -> /entries/[id])
 |   +-- ContextAbout.js     (homepage "About the Mooncake")
 +-- data
-|   +-- entries.js          (9 REAL entries: image, source, description,
-|                            titleKhmer, descriptionKhmer, ingredients[], taste)
-+-- docs
-|   +-- CHANGES.md, CHANGES_2_DataEntries.md, CHANGES2_Browse.md, CHANGES2_Search.md
-|   +-- CHANGES3_Description.md, CHANGES3_Description2.md, CHANGES3_SearchPolish.md
-|   +-- PROJECT_NOTES.md     (THIS living handoff)
+|   +-- entries.js          (9 REAL entries: image, source, description, Khmer fields)
 +-- public
-|   +-- images               (9 photos: 2 egg, lotus x2, bean paste, pandan lotus,
-|                             pia big / round / small)
-+-- collection.config.js, AGENTS.md, README.md, package.json, ...
+|   +-- images              (9 photos)
++-- docs
+|   +-- CHANGES*.md, PROJECT_NOTES.md (living handoff)
++-- collection.config.js    (archive identity)
++-- AGENTS.md               (rules + Sprint 2 dependency amendment)
++-- .env.local              (Supabase auth config - GITIGNORED, never commit)
++-- README.md, package.json, next.config.mjs, .gitignore
 ```
 
-Key facts:
-- Stack: Next.js 15 (App Router), React 19, JS only, inline styles. Deps: next / react / react-dom (only).
-- Identity in collection.config.js.
-- 9 entries, all real now (real image, source, description, Khmer fields). Sources filled
-  (e.g. "My uncle's shop: Tea Tek Bouy Bakery").
-- Search: case-insensitive substring over title / description / titleKhmer / descriptionKhmer;
-  live count; query-aware bilingual empty state; CLEAR x; suggestions dropdown (<=5).
-- Per-entry detail page at /entries/[id], linked from every card.
-- Khmer descriptionKhmer is NOT yet family-proofread (Sprint 2 open item).
+Key facts / Sprint 2 security posture:
+- Existing deps: next, react, react-dom. Sprint 2 adds exactly @supabase/supabase-js
+  and @supabase/ssr (approved).
+- `.env.local` is present and GITIGNORED (`.env*` in .gitignore); verified NOT tracked
+  by git. Keep it that way (AGENTS rule 3).
+- Supabase integration not started yet - first task comes from Lab 5.
 
 ---
 
 ## Sprint 1 - summary (complete)
 
-Delivered and verified (separate commits):
-1. Data fill: 9 real entries (images, English descriptions, Khmer fields).
-2. Page-per-entry: dynamic /entries/[id] route + clickable cards.
-3. Khmer display + Khmer search (EntryCard, detail page, SearchFilter).
-4. UX: query-aware empty state + CLEAR x button.
-5. Suggestions dropdown (SearchSuggestions + SearchFilter wiring) - done at start of Sprint 2.
+Delivered and verified (separate commits): data fill (9 entries), page-per-entry
+route, Khmer display + Khmer search, query-aware empty state, CLEAR x button,
+suggestions dropdown.
 
-## Sprint 2 - upcoming (placeholder)
+---
 
-Details from the student to come. Outstanding items so far:
-- Refine / proofread Khmer descriptionKhmer text (family/native review).
-- (Anything else the student specifies - update this section when provided.)
+## Sprint 2 - scoped (Supabase + Auth)
+
+Focus: Supabase backend, auth login / signup, possibly security (e.g. RLS).
+
+Approved dependency change (AGENTS.md amendment):
+- @supabase/supabase-js
+- @supabase/ssr
+- Only these two. Do not add any other package without stopping and asking.
+
+Configuration / secrets:
+- Local: .env.local (gitignored). Deploy: Vercel environment variables.
+- Never read/print/commit .env.local contents. Confirm git status stays free of
+  it before every commit.
+- The task (Lab 5) will define exactly which env var names are required.
+
+Professor's caution (quoting intent): this sprint is volatile and can go sideways
+quickly. Mitigation: build in small committed steps, keep a revertible base, and
+apply "stop / revert to last good commit / re-prompt smaller" on any fix chain.
+
+Known first task: from the student's Lab 5 (pending - add once shared).
 ---
 
 ## Peer-review points (partner test) - status
 
-Both requested improvements from the Sprint 1 peer review are now met:
-1. Empty cards / bilingual content / UX: DONE - IMAGE PENDING fallback, English +
-   Khmer displayed on cards and detail page.
-2. Search results in Khmer: DONE - Khmer fields are searched AND rendered.
-Extra UX answered (Lab 4): query-aware empty state, CLEAR x button, suggestions dropdown.
-Still to fully close peer-review note 1's "improve the UX/UI": ongoing, subjective - polish
-as time allows in Sprint 2.
+Both Sprint 1 peer-review improvements are met: (1) empty cards / bilingual content /
+UX, (2) search results in Khmer. Extra UX shipped (Lab 4): query-aware empty state,
+CLEAR x, suggestions dropdown. Remaining "improve the UX/UI" is ongoing / optional.
 
 ---
 
-## Stated rules & constraints (authoritative source: AGENTS.md)
+## Stated rules & constraints (authoritative source: AGENTS.md + Sprint 2 amendment)
 
-1. No new dependencies. The three in package.json are the whole list. If a task seems to
-   need a package, stop and say so instead of installing it.
-2. Do not touch package.json, package-lock.json, next.config.mjs, or .gitignore unless the
-   task explicitly names them.
-3. Never write an API key, token, or password into any file. This repository is public.
-4. Keep diffs scoped to what was asked. If the task honestly requires another file, say
-   which file and why before editing it.
+1. Dependencies: next, react, react-dom. Sprint 2 ADDS exactly two approved packages:
+   @supabase/supabase-js and @supabase/ssr. Nothing else - if a task seems to need a
+   package, stop and say so instead of installing it.
+2. Do not touch package.json, package-lock.json, next.config.mjs, or .gitignore unless
+   the current task explicitly names them.
+3. NEVER write an API key, token, or password into any file. This repository is public.
+   Auth config lives in .env.local (gitignored) and Vercel env vars.
+4. Keep diffs scoped to what was asked. If the task honestly requires another file,
+   say which file and why before editing it.
 5. One component per file in components/, plain function components, ~80 lines or less.
-6. Khmer text is first-class content, not an edge case. Never strip/transliterate/"fix" it.
-   Sample data comes from the student's real entries, never lorem ipsum.
+6. Khmer text is first-class content, not an edge case. Never strip/transliterate/"fix"
+   it. Sample data comes from the student's real entries, never lorem ipsum.
 
-Also (README): "You own what you ship. Every line that lands in this repository is yours
-   to explain, whoever or whatever wrote it."
+Also (README): "You own what you ship. Every line that lands in this repository is
+   yours to explain, whoever or whatever wrote it."
 
 ---
 
 ## Soft context worth carrying forward
 
 Carry:
-- Build small & scoped; one step at a time.
-- Khmer/Chinese text comes from the student, not the model - never invent heritage strings.
+- Build small & scoped; one step at a time. Especially this volatile sprint: commit
+  early and often, keep a revertible base.
+- Khmer/Chinese text comes from the student, not the model - never invent heritage
+  strings.
 - Own every line; student must be able to defend it in a code review.
 - One feature = one commit; separate commits matter.
 - Keep the changelog habit; each round documented in docs/.
-- Styling consistency: dark #14181F, green accent #2EE6A8, Courier New monospace kickers.
+- Styling consistency: dark #14181F, green accent #2EE6A8, Courier kickers.
+- Security hygiene: .env.local stays gitignored; never print secrets.
 
 Optional:
-- Keep homepage lean.
-- Empty-state text stays in the archive's voice.
+- Keep homepage lean. Empty-state text stays in the archive's voice.
 
-Not worth carrying (moot):
-- "Don't touch EntryCard" / "image:'' shows broken slot" - superseded.
-- Past tooling/path fumbles.
+Not worth carrying (moot): "don't touch EntryCard" / "image:'' broken slot"; past
+   tooling/path fumbles.
 
 ---
 
 ## Changelog index (append as you go)
 
-- docs/CHANGES.md                  - earliest (EntryCard, page updates)
-- docs/CHANGES_2_DataEntries.md    - moving entries to data/entries.js
-- docs/CHANGES2_Browse.md          - browse page + homepage nav link
-- docs/CHANGES2_Search.md          - search feature (incl. Khmer/Chinese deferral note)
-- docs/CHANGES3_Description.md     - real descriptions (EN+Khmer), data fields
-- docs/CHANGES3_Description2.md    - session: page-per-entry, Khmer display/search, About
-- docs/CHANGES3_SearchPolish.md    - query-aware empty state, clear button, suggestions dropdown
+- docs/CHANGES.md, CHANGES_2_DataEntries.md, CHANGES2_Browse.md, CHANGES2_Search.md
+- docs/CHANGES3_Description.md, CHANGES3_Description2.md, CHANGES3_SearchPolish.md
 
-Next: add an entry for the Sprint 2 work once scoped.
+Next: add an entry for the Sprint 2 Supabase/auth work once Lab 5 scopes it.
