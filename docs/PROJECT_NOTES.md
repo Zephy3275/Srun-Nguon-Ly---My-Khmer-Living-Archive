@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 2 (phase 2) - Supabase + Auth**, week 5. Lab 5 tasks 1-3 implemented; live security/deploy verification pending.
+> Current phase: **SPRINT 2 (phase 2)**, week 6. Lab 5 (Supabase + Auth) complete, deployed and live-verified. Current task: Lab 6 - Intro to database (entries -> Supabase DB, SQL).
 
 ---
 
@@ -16,7 +16,7 @@ Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
 JavaScript only, plain React, no TypeScript.
 
-PHASE: SPRINT 2 (phase 2) - Supabase + Auth (login / signup), possibly security.
+PHASE: SPRINT 2 (phase 2) - Supabase + Auth (login / signup), possibly security. Week 5 (Lab 5) done; current task is Week 6 (Lab 6) - Intro to database (entries -> DB, SQL).
 This sprint is VOLATILE per the professor and can go sideways quickly. Build in
 small committed steps, keep a revertible base, and if a fix breaks a second thing
 follow "stop, revert to the last good commit, re-prompt smaller".
@@ -27,7 +27,7 @@ STEP 1 - Orient yourself (don't skip):
   - Skim docs/CHANGES*.md, then data/entries.js, collection.config.js, and the
     components/ and app/ folders to confirm current state.
 
-CURRENT STATE (Sprint 2, after Lab 5):
+CURRENT STATE (Sprint 2, after Lab 5; into Lab 6):
   - Next.js 15 App Router app; homepage (/), browse (/browse with search), a per-entry
     route (/entries/[id]), and /login + /signup (Supabase email/password auth).
   - data/entries.js = 9 real entries (image, source, English description, Khmer
@@ -74,10 +74,10 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   +-- page.js        (homepage: identity + ContextAbout + all entries)
 |   +-- browse
 |   |   +-- page.js    (browse page -> SearchFilter)
-| |   +-- login
-| |   |   +-- page.js      (/login -> LoginForm)
-| |   +-- signup
-| |       +-- page.js      (/signup -> SignupForm)
+|   +-- login
+|   |   +-- page.js      (/login -> LoginForm)
+|   +-- signup
+|       +-- page.js      (/signup -> SignupForm)
 |   +-- entries
 |       +-- [id]
 |           +-- page.js  (per-entry detail page, EN + Khmer, not-found fallback)
@@ -87,16 +87,16 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   +-- SearchFilter.js     ("use client" search: empty state + clear + dropdown)
 |   +-- SearchSuggestions.js(as-you-type dropdown -> /entries/[id])
 |   +-- ContextAbout.js     (homepage "About the Mooncake")
-| |   +-- LoginForm.js        ("use client" sign-in; fixed invalid message)
-| |   +-- SignupForm.js       ("use client" create account; min 6 password)
-| |   +-- AuthHeader.js       (server: email+logout OR /login+/signup links)
-| |   +-- LogoutButton.js     ("use client" sign out + refresh)
+|   +-- LoginForm.js        ("use client" sign-in; fixed invalid message)
+|   +-- SignupForm.js       ("use client" create account; min 6 password)
+|   +-- AuthHeader.js       (server: email+logout OR /login+/signup links)
+|   +-- LogoutButton.js     ("use client" sign out + refresh)
 +-- data
 |   +-- entries.js          (9 REAL entries: image, source, description, Khmer fields)
 +-- public
 |   +-- images              (9 photos)
 +-- docs
-| |   +-- sprint 2           (Lab 5 changelogs)
+|   +-- sprint 2           (Lab 5 changelogs)
 |   +-- CHANGES*.md, PROJECT_NOTES.md (living handoff)
 +-- collection.config.js    (archive identity)
 +-- AGENTS.md               (rules + Sprint 2 dependency amendment)
@@ -136,7 +136,7 @@ Lab 5 shipped in small scoped steps (changelogs in docs/sprint 2/):
 
 Confirm-email is OFF (per lab). Env vars the code reads: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY.
 
-Local verification (20 Sep): login and logout confirmed working locally (test user created directly in the Supabase dashboard to avoid the public-signup rate limiter). Still pending: push/merge to main, watch the Vercel deploy, then run the Lab 5 Part 3/4 attacker checklist on the live URL.
+Verification: login/logout confirmed working locally (test user created directly in the Supabase dashboard to avoid the public-signup rate limiter), then merged to main, deployed to Vercel, and the Lab 5 Part 3/4 attacker checklist passed on the live URL. Week 5 (Lab 5) complete; current work is Lab 6 (intro to database).
 
 ---
 ## Sprint 2 - scoped (Supabase + Auth)
@@ -158,7 +158,7 @@ Professor's caution (quoting intent): this sprint is volatile and can go sideway
 quickly. Mitigation: build in small committed steps, keep a revertible base, and
 apply "stop / revert to last good commit / re-prompt smaller" on any fix chain.
 
-Lab 5 tasks 1-3 complete (plumbing, doors, signal); login/logout verified locally. Pending: push/merge to main + live security checklist.
+Lab 5 (plumbing, doors, signal) complete: merged to main, deployed, and live-verified (incl. attacker checklist). Still in Sprint 2; current task is Week 6 / Lab 6 - intro to database (entries -> Supabase DB, SQL).
 ---
 
 ## Peer-review points (partner test) - status
@@ -218,4 +218,4 @@ Not worth carrying (moot): "don't touch EntryCard" / "image:'' broken slot"; pas
 - docs/sprint 2/CHANGES4_TheDoors.md            (Lab 5 Task 2 - login/signup pages)
 - docs/sprint 2/CHANGES4_TheSignal.md           (Lab 5 Task 3 - auth-aware home header)
 
-Next: add an entry for the Sprint 2 Supabase/auth work once Lab 5 scopes it.
+Next: week 6 (Lab 6) - add changelog entries for the new sprint's tasks as they land.
