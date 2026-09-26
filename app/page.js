@@ -3,7 +3,7 @@ import collection from "../collection.config.js";
 import EntryCard from "../components/EntryCard.js";
 import ContextAbout from "../components/ContextAbout.js";
 import AuthHeader from "../components/AuthHeader.js";
-import entries from "../data/entries.js";
+import { createClient } from "../utils/supabase/server.js";
 
 const styles = {
   wrap: {
@@ -71,6 +71,16 @@ const styles = {
     gap: 24,
     marginTop: 24,
   },
+  notice: {
+    marginTop: 24,
+    padding: 24,
+    backgroundColor: "#1C222C",
+    border: "1px solid #2E3644",
+    borderRadius: 10,
+    fontSize: 15,
+    color: "#97A1B3",
+    lineHeight: 1.7,
+  },
   footer: {
     marginTop: 64,
     paddingTop: 24,
@@ -80,7 +90,16 @@ const styles = {
   },
 };
 
-export default function Home() {
+export default async function Home() {
+  const supabase = await createClient();
+  const { data, error } = await supabase
+    .from("entries")
+    .select(
+      "id, title, titleKhmer:title_khmer, source, description, descriptionKhmer:description_khmer, image:photo_url"
+    )
+    .order("created_at", { ascending: false });
+  const entries = data ?? [];
+
   return (
     <main style={styles.wrap}>
       <nav style={styles.nav}>
@@ -109,13 +128,23 @@ export default function Home() {
 
       <ContextAbout />
 
-      <p style={styles.count}>entries in the archive: {entries.length}</p>
+      {error ? (
+        <p style={styles.notice}>
+          We couldn't load the archive right now. Please try again in a moment.
+        </p>
+      ) : entries.length === 0 ? (
+        <p style={styles.notice}>No entries in the archive yet.</p>
+      ) : (
+        <>
+          <p style={styles.count}>entries in the archive: {entries.length}</p>
 
-      <div style={styles.grid}>
-        {entries.map((entry) => (
-          <EntryCard key={entry.id} {...entry} />
-        ))}
-      </div>
+          <div style={styles.grid}>
+            {entries.map((entry) => (
+              <EntryCard key={entry.id} {...entry} />
+            ))}
+          </div>
+        </>
+      )}
 
       <footer style={styles.footer}>
         Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall

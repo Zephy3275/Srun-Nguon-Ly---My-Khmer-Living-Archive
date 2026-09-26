@@ -1,5 +1,5 @@
 import Link from "next/link";
-import entries from "../../../data/entries.js";
+import { createClient } from "../../../utils/supabase/server.js";
 
 const styles = {
   wrap: {
@@ -64,7 +64,32 @@ const styles = {
 
 export default async function EntryPage({ params }) {
   const { id } = await params;
-  const entry = entries.find((e) => e.id === id);
+
+  const supabase = await createClient();
+  const { data: entry, error } = await supabase
+    .from("entries")
+    .select(
+      "id, title, titleKhmer:title_khmer, source, description, descriptionKhmer:description_khmer, image:photo_url"
+    )
+    .eq("id", id)
+    .maybeSingle();
+
+  // 22P02 = Postgres saying the id is not a valid uuid (e.g. an old slug link);
+  // that counts as not found. Any other error is a real failure to reach the data.
+  if (error && error.code !== "22P02") {
+    return (
+      <main style={styles.wrap}>
+        <Link href="/browse" style={styles.back}>
+          ← BACK TO BROWSE
+        </Link>
+        <p style={styles.kicker}>ARCHIVE ENTRY</p>
+        <h1 style={styles.title}>Couldn't load this entry</h1>
+        <p style={styles.description}>
+          We couldn't reach the archive right now. Please try again in a moment.
+        </p>
+      </main>
+    );
+  }
 
   if (!entry) {
     return (
