@@ -12,6 +12,8 @@
 Copy everything in the block below into the new chat:
 
 ```
+Current: Sprint 2 - Week 6/ Lab 6 (Intro to databases / Into the databases)
+
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
 JavaScript only, plain React, no TypeScript.
