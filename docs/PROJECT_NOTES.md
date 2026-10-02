@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 2 (phase 2)**, week 6. Lab 5 (Supabase + Auth) complete, deployed and live-verified. Lab 6 (Intro to database) COMPLETE: `entries` table + RLS, 9 entries migrated, site cutover to read from Supabase, security checklist verified, merged to `main`, pushed, deployed to Vercel, and live-verified (entries load, search works on the live URL). Next: **Lab 7** — details not posted yet.
+> Current phase: **SPRINT 2 (phase 2)**, week 7. Lab 5 (Supabase + Auth) and Lab 6 (Intro to database) complete, merged, deployed, live-verified. Current task: **Lab 7 — "The Doors Open"**: contribution form + photo, login-gated add, rules for the database (RLS), edit + delete own entries. Goal by end of lab: any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's. 5 parts total — not yet broken down (student will work it part by part in a new chat).
 
 ---
 
@@ -12,13 +12,21 @@
 Copy everything in the block below into the new chat:
 
 ```
-Current: Sprint 2 - Week 6/ Lab 6 (Intro to databases) COMPLETE, merged, deployed, live-verified. Week 7/Lab 7 not started (no details posted yet).
+Current: Sprint 2 - Week 7 / Lab 7 ("The Doors Open"). Week 6 (Lab 6) COMPLETE, merged, deployed, live-verified. Lab 7 details are posted; working it part by part, 5 parts total, none started yet.
 
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
 JavaScript only, plain React, no TypeScript.
 
-PHASE: SPRINT 2 (phase 2) - Supabase + Auth (login / signup), possibly security. Week 5 (Lab 5) done; Week 6 (Lab 6, intro to database) done: merged to main, pushed, deployed to Vercel, live-verified. Next: Lab 7, once the professor posts its details.
+PHASE: SPRINT 2 (phase 2) - Supabase + Auth, now extending into contributor
+write-access. Week 5 (Lab 5, auth) and Week 6 (Lab 6, database) done: merged to
+main, pushed, deployed to Vercel, live-verified. Week 7 (Lab 7, "The Doors
+Open") is the current task - contribution form + photo upload, gated to logged-in
+users; database rules (RLS) for who can add/edit/delete; edit + delete UI for a
+user's own entries. End-of-lab goal: any account holder can add an entry with a
+photo and edit/delete their own entries; nobody can touch anyone else's. 5 parts
+total - ask the student for Part 1's exact text before writing anything, same
+pattern as every Lab 6 part.
 This sprint is VOLATILE per the professor and can go sideways quickly. Build in
 small committed steps, keep a revertible base, and if a fix breaks a second thing
 follow "stop, revert to the last good commit, re-prompt smaller".
@@ -180,7 +188,63 @@ Lab 6 shipped in 4 parts, each its own commit (changelogs in docs/sprint 2/):
 4. Part 4 "Verify like an attacker" - full checklist run on localhost (site wasn't deployed yet at that point): logged-out browse/search pass; a logged-out REST `POST` to `entries` was refused by RLS, screenshotted; repo + full git history confirmed clean of the publishable key; the seed owner's uuid appears once, in a changelog, which the lab calls harmless. Phone/mobile-data step deferred at the time (LAN test to the dev server failed to connect; real version needed the deploy anyway).
 5. Part 5 "Ship and write" - merged `experiment` into `main`, pushed, Vercel deployed. Live-verified by the student on the real URL: entries load, search works. Canvas submission (live URL + 2-3 sentences) and the week's discussion post (an assumption caught in the cutover code, and why the AI made it) are separate coursework, drafted in chat but intentionally not stored in this repo.
 
-Confirm-email is still OFF. Week 6 (Lab 6) COMPLETE end to end: merged, pushed, deployed, live-verified. Next is Lab 7, once posted.
+Confirm-email is still OFF. Week 6 (Lab 6) COMPLETE end to end: merged, pushed, deployed, live-verified.
+
+---
+
+## Sprint 2 - scoped (Lab 7, "The Doors Open") — IN PROGRESS
+
+Professor's framing: contribution form + photo, login, rules for the database,
+edit + delete entries. 5 parts total; not yet broken into individual tasks —
+this file will be updated part by part as the student pastes each one's exact
+text, same pattern as Lab 6.
+
+End-of-lab goal: anyone with an account can add an entry with a photo, and can
+edit or delete their own entries. Nobody can touch anyone else's.
+
+What this almost certainly touches, going in:
+- A **contribution form** (new page or route) for adding an entry, gated to
+  logged-in users only (logged-out visitors should not see/reach it).
+- **Photo upload** — likely Supabase Storage, since no new package is approved
+  (still only @supabase/supabase-js and @supabase/ssr). Confirm with the
+  professor's exact text before assuming Storage vs. another approach.
+- **RLS rules already exist** from Lab 6 (`insert`/`update`/`delete` gated on
+  `auth.uid() = owner`) — Lab 7 likely builds the UI that exercises them for
+  the first time, rather than writing new policies from scratch. Check the
+  exact lab text; it may ask for additional/adjusted policies (e.g. a required
+  `owner` on insert, or checks beyond simple ownership).
+- **Edit + delete UI** for a user's own entries only — will need to read
+  `auth.uid()` client- or server-side and compare to each entry's `owner`,
+  the same pattern already used by `AuthHeader.js`.
+- Possibly a change to `EntryCard`/the detail page to show edit/delete
+  controls only to the owner.
+
+### Lab 7 progress
+
+- **Part 0 (before class, student ran it in the SQL Editor):** public Storage bucket `photos`
+  (5 MB max, jpeg/png/webp only) + two storage policies: authenticated users can insert/delete
+  only inside a folder named after their own `auth.uid()`. No update policy, so uploads use
+  `upsert: false`. Dashboard only, not a repo file.
+- **Part 1 "The contribution form, with a photo" - BUILT and tested locally (student added a
+  "Test Entry" that renders; a real entry is deferred - student will talk to the professor).
+  Live counters on title, title_khmer, description, description_khmer; "ADD AN ENTRY +" nav
+  link on the home page. Ready to commit** (`docs/sprint 2/CHANGES6_ContributionForm.md`). New: `app/contribute/page.js`,
+  `components/ContributeForm.js`, `components/FormField.js`, `utils/entryFields.js`,
+  `utils/validateEntry.js`, `utils/photoCheck.js`, `utils/submitEntry.js`. Validation rules:
+  `Week7_Lab7/TableRule_Refined.md` (outside the repo, refined from the student's Tuesday
+  draft `TableRule.md`). Old photos are `/images/...` paths, new ones are full Supabase
+  Storage URLs; pages render `photo_url` as-is so both work. Known limits: no DB length
+  checks yet (optional later), EXIF/GPS not stripped (student's decision), no link to
+  /contribute from the home page yet. Commit message: `sprint 2: contribution form with photo
+  upload (AI-assisted)`.
+- Parts 2-5: not yet received.
+
+Original scoping note (before the parts arrived) follows. Not yet known at that time: the
+5 parts' exact scope/order, and whether this is still
+labeled "Sprint 2" or begins what AGENTS.md calls the "own-your-entries"
+feature (the project's four-feature skeleton: browse/search, contributor
+accounts, own-your-entries, submit-review-publish). Don't assume; ask or wait
+for the lab text to say.
 
 ---
 ## Sprint 2 - scoped (Supabase + Auth)
@@ -202,7 +266,7 @@ Professor's caution (quoting intent): this sprint is volatile and can go sideway
 quickly. Mitigation: build in small committed steps, keep a revertible base, and
 apply "stop / revert to last good commit / re-prompt smaller" on any fix chain.
 
-Lab 5 (plumbing, doors, signal) complete: merged to main, deployed, and live-verified (incl. attacker checklist). Lab 6 (intro to database: table, RLS, seed, cutover, security checklist, ship) complete: merged to main, deployed, and live-verified. Next: Lab 7, once posted.
+Lab 5 (plumbing, doors, signal) complete: merged to main, deployed, and live-verified (incl. attacker checklist). Lab 6 (intro to database: table, RLS, seed, cutover, security checklist, ship) complete: merged to main, deployed, and live-verified. Current: Lab 7, "The Doors Open" (see dedicated section above) - in progress.
 ---
 
 ## Peer-review points (partner test) - status
@@ -270,5 +334,7 @@ Lab 6 Part 5 (ship + write) has no changelog file of its own — it was the
 merge/push/deploy/live-check plus a Canvas submission and discussion post kept
 outside this repo, not new code.
 
-Next: Lab 7 - no details from the professor yet. Add changelog entries for that
-sprint's tasks as they land.
+- docs/sprint 2/CHANGES6_ContributionForm.md    (Lab 7 Part 1 - /contribute form + photo upload)
+
+Next: Lab 7 Part 2 onward. Add changelog entries for each part as they land, same
+pattern as `docs/sprint 2/CHANGES5_*.md` for Lab 6.

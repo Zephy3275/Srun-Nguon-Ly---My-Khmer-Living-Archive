@@ -106,6 +106,9 @@ export default async function Home() {
         <Link href="/browse" style={styles.navLink}>
           BROWSE THE COLLECTION ↗
         </Link>
+        <Link href="/contribute" style={styles.navLink}>
+          ADD AN ENTRY +
+        </Link>
         <AuthHeader />
       </nav>
 
