@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 2 (phase 2)**, week 6. Lab 5 (Supabase + Auth) complete, deployed and live-verified. Lab 6 (Intro to database) complete on localhost: `entries` table + RLS, 9 entries migrated, site cutover to read from Supabase, security checklist verified. Committed locally on `experiment` (5 commits ahead of origin, not pushed) — next up is Part 5 (ship + write) / Lab 7.
+> Current phase: **SPRINT 2 (phase 2)**, week 6. Lab 5 (Supabase + Auth) complete, deployed and live-verified. Lab 6 (Intro to database) COMPLETE: `entries` table + RLS, 9 entries migrated, site cutover to read from Supabase, security checklist verified, merged to `main`, pushed, deployed to Vercel, and live-verified (entries load, search works on the live URL). Next: **Lab 7** — details not posted yet.
 
 ---
 
@@ -12,13 +12,13 @@
 Copy everything in the block below into the new chat:
 
 ```
-Current: Sprint 2 - Week 6/ Lab 6 (Intro to databases) COMPLETE on localhost, committed - not yet pushed/deployed
+Current: Sprint 2 - Week 6/ Lab 6 (Intro to databases) COMPLETE, merged, deployed, live-verified. Week 7/Lab 7 not started (no details posted yet).
 
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
 JavaScript only, plain React, no TypeScript.
 
-PHASE: SPRINT 2 (phase 2) - Supabase + Auth (login / signup), possibly security. Week 5 (Lab 5) done; Week 6 (Lab 6, intro to database) done on localhost, committed locally on the `experiment` branch (5 commits ahead of origin/experiment, not yet pushed). Next: push, merge to main, deploy to Vercel (Part 5 / ship + write), then Lab 7.
+PHASE: SPRINT 2 (phase 2) - Supabase + Auth (login / signup), possibly security. Week 5 (Lab 5) done; Week 6 (Lab 6, intro to database) done: merged to main, pushed, deployed to Vercel, live-verified. Next: Lab 7, once the professor posts its details.
 This sprint is VOLATILE per the professor and can go sideways quickly. Build in
 small committed steps, keep a revertible base, and if a fix breaks a second thing
 follow "stop, revert to the last good commit, re-prompt smaller".
@@ -177,9 +177,10 @@ Lab 6 shipped in 4 parts, each its own commit (changelogs in docs/sprint 2/):
 1. Part 1 "The worksheet becomes SQL" - `Week6_Lab6/Data_Model_Worksheet.md` completed first (student's own design, extended with title_khmer/description_khmer/source after review), then turned into a `create table entries` statement (15 columns) plus RLS: enable + 4 policies (select: anyone; insert/update/delete: `auth.uid() = owner`). Run by hand in the Supabase SQL Editor - dashboard only, no repo file runs SQL.
 2. Part 2 "Your entries move in" - the 9 Sprint 1 entries generated into INSERT statements from `data/entries.js` (Khmer text copied and verified byte-for-byte by script, not retyped), `filling`/`shape`/`color` proposed from the 9 photos + descriptions and approved by the student (these three didn't exist as fields before), all rows owned by the Lab 5 `archive.test.one` test user. Run in the SQL Editor; Table Editor confirmed 9 rows with Khmer intact.
 3. Part 3 "The cutover" - `app/page.js`, `app/browse/page.js`, `app/entries/[id]/page.js` now read Supabase instead of importing `data/entries.js`; column aliases (`titleKhmer:title_khmer` etc.) keep every component unchanged. Handles zero-entries and query-error states distinctly, plus a new `app/loading.js`. The data file was deliberately KEPT (student wants it as a staging area for future entries before they go into Supabase) - lab's own step 4 (retire the file) was skipped on purpose. Detail page was also brought into scope beyond the lab's literal text, since cards now link to uuids the old data-file lookup couldn't find.
-4. Part 4 "Verify like an attacker" - full checklist run on localhost (site not deployed yet, so no live URL exists): logged-out browse/search pass; a logged-out REST `POST` to `entries` was refused by RLS, screenshotted; repo + full git history confirmed clean of the publishable key; the seed owner's uuid appears once, in a changelog, which the lab calls harmless. Phone/mobile-data step deferred (LAN test to the dev server failed to connect; real version needs Part 5's deploy anyway).
+4. Part 4 "Verify like an attacker" - full checklist run on localhost (site wasn't deployed yet at that point): logged-out browse/search pass; a logged-out REST `POST` to `entries` was refused by RLS, screenshotted; repo + full git history confirmed clean of the publishable key; the seed owner's uuid appears once, in a changelog, which the lab calls harmless. Phone/mobile-data step deferred at the time (LAN test to the dev server failed to connect; real version needed the deploy anyway).
+5. Part 5 "Ship and write" - merged `experiment` into `main`, pushed, Vercel deployed. Live-verified by the student on the real URL: entries load, search works. Canvas submission (live URL + 2-3 sentences) and the week's discussion post (an assumption caught in the cutover code, and why the AI made it) are separate coursework, drafted in chat but intentionally not stored in this repo.
 
-Confirm-email is still OFF. Not yet merged/pushed/deployed - see header for branch state. Week 6 (Lab 6) complete on localhost; next is Part 5 (ship + write) / Lab 7.
+Confirm-email is still OFF. Week 6 (Lab 6) COMPLETE end to end: merged, pushed, deployed, live-verified. Next is Lab 7, once posted.
 
 ---
 ## Sprint 2 - scoped (Supabase + Auth)
@@ -201,7 +202,7 @@ Professor's caution (quoting intent): this sprint is volatile and can go sideway
 quickly. Mitigation: build in small committed steps, keep a revertible base, and
 apply "stop / revert to last good commit / re-prompt smaller" on any fix chain.
 
-Lab 5 (plumbing, doors, signal) complete: merged to main, deployed, and live-verified (incl. attacker checklist). Lab 6 (intro to database: table, RLS, seed, cutover, security checklist) complete on localhost, committed on `experiment`, not yet pushed/deployed. Next: push/merge/deploy (Part 5), then Lab 7.
+Lab 5 (plumbing, doors, signal) complete: merged to main, deployed, and live-verified (incl. attacker checklist). Lab 6 (intro to database: table, RLS, seed, cutover, security checklist, ship) complete: merged to main, deployed, and live-verified. Next: Lab 7, once posted.
 ---
 
 ## Peer-review points (partner test) - status
@@ -265,5 +266,9 @@ Not worth carrying (moot): "don't touch EntryCard" / "image:'' broken slot"; pas
 - docs/sprint 2/CHANGES5_TheCutover.md          (Lab 6 Part 3 - site reads from Supabase)
 - docs/sprint 2/CHANGES5_VerifyLikeAttacker.md  (Lab 6 Part 4 - security checklist)
 
-Next: push/merge/deploy Lab 6 (Part 5, ship + write), then Lab 7 - add changelog
-entries for that sprint's tasks as they land.
+Lab 6 Part 5 (ship + write) has no changelog file of its own — it was the
+merge/push/deploy/live-check plus a Canvas submission and discussion post kept
+outside this repo, not new code.
+
+Next: Lab 7 - no details from the professor yet. Add changelog entries for that
+sprint's tasks as they land.
