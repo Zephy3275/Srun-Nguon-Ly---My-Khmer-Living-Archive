@@ -1,4 +1,4 @@
-# CHANGES 7 — Edit and delete, your own only (Sprint 2, Lab 7 Part 2)
+# CHANGES 6 — Edit and delete, your own only (Sprint 2, Lab 7 Part 2)
 
 Session log for **Lab 7, Part 2**. Entry pages show Edit and Delete only to the entry's
 owner; Edit opens the same form as `/contribute`, pre-filled; Delete asks first. After every
@@ -63,12 +63,15 @@ Done in the session:
   update never sends `owner`; add still sends `owner` from the session and 13 columns; null
   optional columns become `""` / strings for the form.
 
-**Student to test in the browser** (use `archive.test.two`, not the account that owns the real entries):
-1. Open entries as `test.two`: no Edit/Delete on `test.one`'s entries.
-2. `/contribute`: add a throwaway entry. Open it: EDIT and DELETE show.
-3. Edit it (change text, once without and once with a new photo). Then delete it via the inline confirm.
-4. As `test.one`, edit the Test Entry's source text. Never delete one of the 9 real entries.
-5. Optional: as `test.two`, open `/entries/<a test.one entry id>/edit`: "You can't edit this entry", no form.
+**Browser test, done by the student as `archive.test.two`** (the account that owns no real entries):
+- Added a throwaway entry at `/contribute`: works.
+- Edited its source text without a new photo: works.
+- Edited it again with a new photo: the entry shows the new photo.
+- Deleted it: gone from the archive.
+- Typed `/edit` onto the URL of `test.one`'s Test Entry: "You can't edit this entry", no form.
+- Supabase Storage check: both of `test.two`'s photos (the replaced one and the deleted entry's)
+  are still in the `photos` bucket under that user's folder. This is the expected result of the
+  skipped photo cleanup (section 4), not a bug.
 
 ## 6. Known limits
 
@@ -78,4 +81,4 @@ Done in the session:
 
 ## Changelog index (append to `docs/PROJECT_NOTES.md`)
 
-- `docs/sprint 2/CHANGES7_EditDelete.md`   (Lab 7 Part 2 — edit and delete own entries)
+- `docs/sprint 2/CHANGES6_EditDelete.md`   (Lab 7 Part 2 — edit and delete own entries)

@@ -238,14 +238,19 @@ What this almost certainly touches, going in:
   /contribute from the home page yet. Commit message: `sprint 2: contribution form with photo
   upload (AI-assisted)`.
   COMMITTED as 35dedc2.
-- **Part 2 "Edit and delete, your own only" - BUILT and build-checked, awaiting browser test +
-  commit** (`docs/sprint 2/CHANGES7_EditDelete.md`). Owner-only EDIT/DELETE on the entry page,
+- **Part 2 "Edit and delete, your own only" - DONE: built, browser-tested by the student as
+  test.two, committed** (`docs/sprint 2/CHANGES6_EditDelete.md`). Owner-only EDIT/DELETE on the entry page,
   `/entries/[id]/edit` (same form, pre-filled, new photo optional), inline delete confirm,
   zero-row check ("That change wasn't saved.") on both update and delete. Photo cleanup on
   delete/replace SKIPPED on purpose. Test with `archive.test.two` (owns nothing real); the 9
   real entries + Test Entry belong to `archive.test.one` (uid starts de54d832). Student uses
   their own commit-message style.
-- Parts 3-5: not yet received.
+- **Part 3 "The checklist, top to bottom" - DONE: browser checklist passed, 9 length check
+  constraints added in the SQL Editor and verified (11 check rows on `entries`); no repo code
+  changed** (`docs/sprint 2/CHANGES7_Validation.md`). Length-only on purpose (no regex rules).
+  Constraint names: `entries_{title,title_khmer,description,description_khmer,source,filling,
+  shape,color,texture}_length`. Throwaway test entries kept on `archive.test.two`.
+- Parts 4-5: not yet received.
 
 Original scoping note (before the parts arrived) follows. Not yet known at that time: the
 5 parts' exact scope/order, and whether this is still
@@ -344,7 +349,9 @@ outside this repo, not new code.
 
 - docs/sprint 2/CHANGES6_ContributionForm.md    (Lab 7 Part 1 - /contribute form + photo upload)
 
-- docs/sprint 2/CHANGES7_EditDelete.md          (Lab 7 Part 2 - edit + delete own entries)
+- docs/sprint 2/CHANGES6_EditDelete.md          (Lab 7 Part 2 - edit + delete own entries)
 
-Next: Lab 7 Part 3 onward. Add changelog entries for each part as they land, same
+- docs/sprint 2/CHANGES7_Validation.md          (Lab 7 Part 3 - validation checklist + check constraints)
+
+Next: Lab 7 Part 4 onward. Add changelog entries for each part as they land, same
 pattern as `docs/sprint 2/CHANGES5_*.md` for Lab 6.
