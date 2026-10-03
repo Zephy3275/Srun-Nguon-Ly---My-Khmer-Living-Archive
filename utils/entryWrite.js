@@ -19,9 +19,9 @@ export async function getSessionUser(supabase) {
 export function entryColumns(values) {
   return {
     title: values.title,
-    title_khmer: values.title_khmer,
+    title_khmer: values.title_khmer || null,
     description: values.description,
-    description_khmer: values.description_khmer,
+    description_khmer: values.description_khmer || null,
     source: values.source,
     filling: values.filling,
     shape: values.shape,

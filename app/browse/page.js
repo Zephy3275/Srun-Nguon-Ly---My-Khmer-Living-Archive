@@ -1,3 +1,4 @@
+import Link from "next/link";
 import collection from "../../collection.config.js";
 import { createClient } from "../../utils/supabase/server.js";
 import SearchFilter from "../../components/SearchFilter.js";
@@ -7,6 +8,13 @@ const styles = {
     maxWidth: 720,
     margin: "0 auto",
     padding: "80px 24px",
+  },
+  back: {
+    fontFamily: "'Courier New', monospace",
+    fontSize: 14,
+    letterSpacing: 1,
+    color: "#2EE6A8",
+    textDecoration: "none",
   },
   kicker: {
     fontFamily: "'Courier New', monospace",
@@ -44,6 +52,9 @@ export default async function Browse() {
 
   return (
     <main style={styles.wrap}>
+      <Link href="/" style={styles.back}>
+        ← BACK TO ARCHIVE
+      </Link>
       <p style={styles.kicker}>BROWSE THE COLLECTION</p>
       <h1 style={styles.title}>{collection.name}</h1>
 

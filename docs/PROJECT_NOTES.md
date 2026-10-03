@@ -247,10 +247,21 @@ What this almost certainly touches, going in:
   their own commit-message style.
 - **Part 3 "The checklist, top to bottom" - DONE: browser checklist passed, 9 length check
   constraints added in the SQL Editor and verified (11 check rows on `entries`); no repo code
-  changed** (`docs/sprint 2/CHANGES7_Validation.md`). Length-only on purpose (no regex rules).
+  changed** (`docs/sprint 2/CHANGES6_Validation.md`). Length-only on purpose (no regex rules).
   Constraint names: `entries_{title,title_khmer,description,description_khmer,source,filling,
   shape,color,texture}_length`. Throwaway test entries kept on `archive.test.two`.
-- Parts 4-5: not yet received.
+- **Part 4 "Attack a classmate's archive" - DONE for the student's attack on the teammate's
+  site: every attack refused as expected (update/delete `data: []`, `.txt` upload refused for
+  mime type); no repo code changed** (`docs/sprint 2/CHANGES6_AttackLog.md`). `experiment`
+  was merged into `main` (16cc987) and deployed before the swap. The teammate reported only
+  the delete attempt on the student's site (nothing deleted). Teammate feedback logged, no
+  action yet: Khmer fields optional?, back-to-home arrow on Browse, contributor-name field.
+  **Follow-up (done, browser-tested, SQL run):** the student chose to make `title_khmer` and
+  `description_khmer` OPTIONAL (SQL: drop not null + two constraints now `is null or ...`;
+  code: validateEntry/entryFields/entryWrite) and added the Browse back link; contributor-name
+  field skipped on purpose (`docs/sprint 2/CHANGES6_AttackFeedback.md`). The Khmer fields now
+  accept any language; the old Khmer-only/brackets rules no longer apply to them.
+- Part 5: not yet received.
 
 Original scoping note (before the parts arrived) follows. Not yet known at that time: the
 5 parts' exact scope/order, and whether this is still
@@ -351,7 +362,10 @@ outside this repo, not new code.
 
 - docs/sprint 2/CHANGES6_EditDelete.md          (Lab 7 Part 2 - edit + delete own entries)
 
-- docs/sprint 2/CHANGES7_Validation.md          (Lab 7 Part 3 - validation checklist + check constraints)
+- docs/sprint 2/CHANGES6_Validation.md          (Lab 7 Part 3 - validation checklist + check constraints)
 
-Next: Lab 7 Part 4 onward. Add changelog entries for each part as they land, same
+- docs/sprint 2/CHANGES6_AttackLog.md           (Lab 7 Part 4 - attack a classmate's archive)
+- docs/sprint 2/CHANGES6_AttackFeedback.md      (after Part 4 - optional Khmer fields + Browse back link)
+
+Next: Lab 7 Part 5 onward. Add changelog entries for each part as they land, same
 pattern as `docs/sprint 2/CHANGES5_*.md` for Lab 6.

@@ -11,9 +11,9 @@
 
 export const FIELDS = [
   { name: "title", label: "TITLE", kind: "text", counter: { unit: "characters", max: 120 }, hint: "Required. Up to 120 characters." },
-  { name: "title_khmer", label: "TITLE (KHMER)", kind: "text", lang: "km", counter: { unit: "characters", max: 500 }, hint: "Required. Khmer letters only, no English." },
+  { name: "title_khmer", label: "TITLE (KHMER)", kind: "text", lang: "km", counter: { unit: "characters", max: 500 }, hint: "Optional. Up to 500 characters. Leave it empty if you don't know Khmer." },
   { name: "description", label: "DESCRIPTION", kind: "textarea", counter: { unit: "words", max: 1000 }, hint: "Required. Up to 1,000 words." },
-  { name: "description_khmer", label: "DESCRIPTION (KHMER)", kind: "textarea", lang: "km", counter: { unit: "characters", max: 6000 }, hint: "Required. Up to 6,000 characters. English only inside (brackets)." },
+  { name: "description_khmer", label: "DESCRIPTION (KHMER)", kind: "textarea", lang: "km", counter: { unit: "characters", max: 6000 }, hint: "Optional. Up to 6,000 characters. Leave it empty if you don't know Khmer." },
   { name: "source", label: "SOURCE", kind: "text", hint: "Required. Who or where this comes from. Up to 300 characters." },
   { name: "filling", label: "FILLING", kind: "text", hint: "Required. Up to 120 characters." },
   { name: "shape", label: "SHAPE", kind: "text", hint: "Required. Up to 120 characters." },
