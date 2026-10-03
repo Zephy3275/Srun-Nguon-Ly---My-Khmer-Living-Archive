@@ -28,3 +28,16 @@ export const FIELDS = [
 export const EMPTY_VALUES = Object.fromEntries(
   FIELDS.map((f) => [f.name, f.kind === "file" ? null : ""])
 );
+
+// Starting values for the edit form, from a row of the entries table (the field
+// names are the column names). null columns become "", numbers become strings
+// for the dropdowns. The photo starts as null: a file picker can't be
+// pre-filled, so "no file chosen" means "keep the current photo".
+export function valuesFromEntry(entry) {
+  return Object.fromEntries(
+    FIELDS.map((f) => [
+      f.name,
+      f.kind === "file" ? null : entry[f.name] == null ? "" : String(entry[f.name]),
+    ])
+  );
+}

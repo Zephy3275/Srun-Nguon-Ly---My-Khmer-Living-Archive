@@ -1,4 +1,5 @@
 import Link from "next/link";
+import EntryOwnerActions from "../../../components/EntryOwnerActions.js";
 import { createClient } from "../../../utils/supabase/server.js";
 
 const styles = {
@@ -69,10 +70,11 @@ export default async function EntryPage({ params }) {
   const { data: entry, error } = await supabase
     .from("entries")
     .select(
-      "id, title, titleKhmer:title_khmer, source, description, descriptionKhmer:description_khmer, image:photo_url"
+      "id, owner, title, titleKhmer:title_khmer, source, description, descriptionKhmer:description_khmer, image:photo_url"
     )
     .eq("id", id)
     .maybeSingle();
+  const { data: { user } } = await supabase.auth.getUser();
 
   // 22P02 = Postgres saying the id is not a valid uuid (e.g. an old slug link);
   // that counts as not found. Any other error is a real failure to reach the data.
@@ -126,6 +128,8 @@ export default async function EntryPage({ params }) {
       {entry.descriptionKhmer && (
         <p style={styles.descriptionKhmer}>{entry.descriptionKhmer}</p>
       )}
+      {/* Politeness only: the owner-only database policies are the real refusal. */}
+      {user && user.id === entry.owner && <EntryOwnerActions id={entry.id} />}
     </main>
   );
 }
