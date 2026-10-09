@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 2 (phase 2)**, week 7. Lab 5 (Supabase + Auth) and Lab 6 (Intro to database) complete, merged, deployed, live-verified. Current task: **Lab 7 — "The Doors Open"**: contribution form + photo, login-gated add, rules for the database (RLS), edit + delete own entries. Goal by end of lab: any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's. 5 parts total — not yet broken down (student will work it part by part in a new chat).
+> Current phase: **SPRINT 2 (phase 2)**, between week 7 and week 8. Lab 5 (Supabase + Auth), Lab 6 (Intro to database) and **Lab 7 ("The Doors Open") are complete, merged to `main`, deployed to Vercel and live-verified.** Any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's (attack-tested by a classmate). **Next: Week 8 / Lab 8 - details not received yet** (see the placeholder section "Lab 8" below). Lab 7's Canvas submission, discussion post and journal are separate coursework, drafted in chat, not stored in this repo.
 
 ---
 
@@ -12,21 +12,19 @@
 Copy everything in the block below into the new chat:
 
 ```
-Current: Sprint 2 - Week 7 / Lab 7 ("The Doors Open"). Week 6 (Lab 6) COMPLETE, merged, deployed, live-verified. Lab 7 details are posted; working it part by part, 5 parts total, none started yet.
+Current: Sprint 2 - Lab 7 ("The Doors Open") is COMPLETE (all 5 parts), merged to main, deployed to Vercel, live-verified. Next is Week 8 / Lab 8 - the student has NOT received its details yet: ask for the exact text of Part 1 before writing anything, and work it part by part, same pattern as Labs 6 and 7.
 
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
 JavaScript only, plain React, no TypeScript.
 
-PHASE: SPRINT 2 (phase 2) - Supabase + Auth, now extending into contributor
-write-access. Week 5 (Lab 5, auth) and Week 6 (Lab 6, database) done: merged to
-main, pushed, deployed to Vercel, live-verified. Week 7 (Lab 7, "The Doors
-Open") is the current task - contribution form + photo upload, gated to logged-in
-users; database rules (RLS) for who can add/edit/delete; edit + delete UI for a
-user's own entries. End-of-lab goal: any account holder can add an entry with a
-photo and edit/delete their own entries; nobody can touch anyone else's. 5 parts
-total - ask the student for Part 1's exact text before writing anything, same
-pattern as every Lab 6 part.
+PHASE: SPRINT 2 (phase 2) - Supabase + Auth + contributor write-access. Week 5
+(Lab 5, auth), Week 6 (Lab 6, database) and Week 7 (Lab 7, "The Doors Open":
+contribution form + photo upload, edit/delete own entries, validation, attack
+test) are all done: merged to main, pushed, deployed to Vercel, live-verified.
+Any account holder can add an entry with a photo and edit/delete their own
+entries; nobody can touch anyone else's. WEEK 8 / LAB 8: not received yet - ask
+the student for the exact text of its first part before writing anything.
 This sprint is VOLATILE per the professor and can go sideways quickly. Build in
 small committed steps, keep a revertible base, and if a fix breaks a second thing
 follow "stop, revert to the last good commit, re-prompt smaller".
@@ -38,13 +36,18 @@ STEP 1 - Orient yourself (don't skip):
     (kept but no longer read by the app - see below), collection.config.js, and
     the components/ and app/ folders to confirm current state.
 
-CURRENT STATE (Sprint 2, after Lab 6):
-  - Next.js 15 App Router app; homepage (/), browse (/browse with search), a per-entry
-    route (/entries/[id]), and /login + /signup (Supabase email/password auth).
-  - Home, browse and the entry-detail page now READ FROM SUPABASE (table
-    `entries`, 15 columns, RLS enabled with 4 policies), not from the data file.
-    All three handle a query error and a zero-rows case, and app/loading.js
-    covers the loading state.
+CURRENT STATE (Sprint 2, after Lab 7):
+  - Next.js 15 App Router app; homepage (/), browse (/browse with search and a
+    back-to-archive link), a per-entry route (/entries/[id]), /login + /signup
+    (Supabase email/password auth), /contribute (add an entry + photo, login-gated)
+    and /entries/[id]/edit (owner-only edit). The entry page shows EDIT and DELETE
+    only to the entry's owner.
+  - Home, browse and the entry-detail page READ FROM SUPABASE (table
+    `entries`, 15 columns, RLS enabled with 4 policies, 9 length check constraints,
+    Storage bucket `photos`), not from the data file. All handle a query error
+    and a zero-rows case, and app/loading.js covers the loading state.
+  - Form rules live in utils/validateEntry.js; the two Khmer fields are OPTIONAL
+    and accept any language; empty optional fields are saved as null.
   - data/entries.js is KEPT ON PURPOSE (student's own decision) as a staging
     file for drafting new entries before they go into Supabase. Nothing imports
     it any more; it is inert. New entries only appear on the site once inserted
@@ -84,62 +87,91 @@ assume.
 ```
 ---
 
-## Current repo state (accurate, Sprint 2 - after Lab 6)
+## Current repo state (accurate, Sprint 2 - after Lab 7)
 
 ```
 Srun-Nguon-Ly---My-Khmer-Living-Archive\
 +-- app
 |   +-- layout.js      (root layout, dark theme)
-|   +-- loading.js     (NEW, Lab 6: "LOADING THE ARCHIVE..." while a page awaits Supabase)
-|   +-- page.js        (homepage: identity + ContextAbout + all entries; READS SUPABASE)
+|   +-- loading.js     (Lab 6: "LOADING THE ARCHIVE..." while a page awaits Supabase)
+|   +-- page.js        (homepage: identity + ContextAbout + all entries; READS SUPABASE;
+|   |                   nav has BROWSE + ADD AN ENTRY +)
 |   +-- browse
-|   |   +-- page.js    (browse page -> SearchFilter; READS SUPABASE)
+|   |   +-- page.js    (browse page -> SearchFilter; READS SUPABASE; BACK TO ARCHIVE link)
+|   +-- contribute
+|   |   +-- page.js    (Lab 7: /contribute; logged-out -> log-in link, logged-in -> ContributeForm)
 |   +-- login
 |   |   +-- page.js      (/login -> LoginForm)
 |   +-- signup
-|       +-- page.js      (/signup -> SignupForm)
+|   |   +-- page.js      (/signup -> SignupForm)
 |   +-- entries
 |       +-- [id]
-|           +-- page.js  (per-entry detail page, EN + Khmer; READS SUPABASE by uuid;
-|                         not-found fallback also covers invalid/old slug ids)
+|           +-- page.js  (per-entry detail page, EN + Khmer; READS SUPABASE by uuid; EDIT/DELETE
+|           |             shown only when user.id === entry.owner; not-found fallback also
+|           |             covers invalid/old slug ids)
+|           +-- edit
+|               +-- page.js (Lab 7: owner-only edit page; same form, pre-filled)
 +-- components
 |   +-- EntryCard.js        (clickable card; image/source/title/desc + Khmer; IMAGE PENDING fallback)
 |   +-- EntryList.js        (grid: entries -> EntryCard)
-|   +-- SearchFilter.js     ("use client" search: empty state + clear + dropdown; unchanged by Lab 6)
+|   +-- SearchFilter.js     ("use client" search: empty state + clear + dropdown)
 |   +-- SearchSuggestions.js(as-you-type dropdown -> /entries/[id])
 |   +-- ContextAbout.js     (homepage "About the Mooncake")
 |   +-- LoginForm.js        ("use client" sign-in; fixed invalid message)
 |   +-- SignupForm.js       ("use client" create account; min 6 password)
 |   +-- AuthHeader.js       (server: email+logout OR /login+/signup links)
 |   +-- LogoutButton.js     ("use client" sign out + refresh)
+|   +-- ContributeForm.js   (Lab 7: "use client" add/edit form; optional `entry` prop = edit mode)
+|   +-- EntryFormFields.js  (Lab 7: the field list rendered; shows current photo when editing)
+|   +-- FormField.js        (Lab 7: one label + control + hint/error)
+|   +-- FieldCounter.js     (Lab 7: live "used / max" counter under a field)
+|   +-- EntryOwnerActions.js(Lab 7: EDIT link + DeleteEntryButton, owner only)
+|   +-- DeleteEntryButton.js(Lab 7: "use client" inline two-step delete confirm, zero-row check)
 +-- data
 |   +-- entries.js          (9 REAL entries; KEPT ON PURPOSE as a drafting file - nothing
 |                            imports it any more since Lab 6's cutover; not synced with Supabase)
 +-- public
 |   +-- images              (9 photos)
 +-- docs
-|   +-- sprint 2           (Lab 5 + Lab 6 changelogs)
+|   +-- sprint 2           (Lab 5, 6 and 7 changelogs)
 |   +-- CHANGES*.md, PROJECT_NOTES.md (living handoff)
 +-- collection.config.js    (archive identity)
 +-- AGENTS.md               (rules + Sprint 2 dependency amendment)
 +-- .env.local              (Supabase auth config - GITIGNORED, never commit)
 +-- README.md, package.json, next.config.mjs, .gitignore
 +-- utils
+|   +-- entryFields.js        (Lab 7: the form's field list + starting values + hints/counters)
+|   +-- validateEntry.js      (Lab 7: pure text validation + trimValues; Khmer fields optional)
+|   +-- photoCheck.js         (Lab 7: photo size + real type from the file's first bytes)
+|   +-- entryWrite.js         (Lab 7: shared by add + edit: getSessionUser, entryColumns,
+|   |                          uploadPhoto, removeUploadedPhoto)
+|   +-- submitEntry.js        (Lab 7: add = upload photo, then insert; owner from the session)
+|   +-- updateEntry.js        (Lab 7: edit = optional new photo, update, zero-row check)
 |   +-- supabase
 |       +-- client.js         (browser client: createBrowserClient)
-|       +-- server.js         (server client: reads cookies(); now also used by
-|                              app/page.js, app/browse/page.js, app/entries/[id]/page.js)
+|       +-- server.js         (server client: reads cookies(); used by the server pages)
 |       +-- middleware.js     (updateSession: token refresh)
 +-- middleware.js             (root: runs updateSession; matcher skips static/img)
 ```
 
-Database (Supabase, created in Lab 6 - dashboard only, not repo files):
-- Table `entries`, 15 columns: `id, created_at, owner` (given) + `title, title_khmer,
-  description, description_khmer, source, filling, shape, color` (not null) +
-  `texture, sweetness, saltiness, photo_url` (nullable - no real taste data yet).
+Database (Supabase, created in Labs 6-7 - dashboard only, not repo files):
+- Table `entries`, 15 columns: `id, created_at, owner` (given) + `title, description,
+  source, filling, shape, color` (not null) + `title_khmer, description_khmer`
+  (nullable since the Lab 7 follow-up: Khmer is optional) + `texture, sweetness,
+  saltiness, photo_url` (nullable).
 - Row Level Security ON, 4 policies: anyone can `select`; `insert`/`update`/`delete`
   each gated on `auth.uid() = owner`.
-- Seeded with the 9 Sprint 1 entries, all owned by the Lab 5 `archive.test.one` test user.
+- Check constraints (Lab 7 Part 3): `entries_{title,title_khmer,description,
+  description_khmer,source,filling,shape,color,texture}_length` using
+  `char_length(trim(col))` (title 1-120, title_khmer 1-500 or null, description 1-10000,
+  description_khmer 1-6000 or null, source 1-300, filling/shape/color 1-120, texture
+  null or 1-120), plus the Lab 6 `sweetness`/`saltiness` 1-5 checks (11 check rows total).
+  Length-only on purpose (no regex/letter rules in the database).
+- Storage bucket `photos` (Lab 7 Part 0): public, 5 MB max, jpeg/png/webp only. Storage
+  policies on `storage.objects`: authenticated users can insert and delete only inside a
+  folder named after their own `auth.uid()`. No update policy (uploads use `upsert: false`).
+- Seeded with the 9 Sprint 1 entries, all owned by the Lab 5 `archive.test.one` test user
+  (uid starts de54d832). `archive.test.two` is the account used for testing add/edit/delete.
 - Design worksheet: `Week6_Lab6/Data_Model_Worksheet.md` (outside the repo, on disk).
 
 Key facts / Sprint 2 security posture:
@@ -150,6 +182,15 @@ Key facts / Sprint 2 security posture:
   that way (AGENTS rule 3).
 - Supabase INTEGRATED: Lab 5 (plumbing, doors, signal) + Lab 6 (table, RLS, seed,
   cutover, security checklist) - see changelogs.
+- Lab 7 security posture (three layers): the FORM is politeness (validation, counters, hidden
+  buttons); the POLICIES decide who (owner-only RLS + folder-per-user storage policies);
+  the CONSTRAINTS decide what (length checks + bucket type/size limits). `owner` always comes
+  from the login session, never the form; inserts/updates name their columns (no spreads);
+  errors show short fixed messages, real errors go to `console.error`; no
+  `dangerouslySetInnerHTML` anywhere. A classmate attacked the live site from the console
+  (update/delete -> `data: []`, `.txt` upload refused) - see `CHANGES6_AttackLog.md`.
+  Known, deliberate gaps: photos are not deleted from Storage on entry delete/replace;
+  EXIF/GPS is not stripped from photos; the form's trim is stricter than the database's.
 - Lab 6 Part 4 security checklist: logged-out browse/search pass; a logged-out
   REST POST to `entries` was refused by RLS (screenshotted); repo + full git history
   clean of the publishable key; the seed owner's uuid appears once, in a changelog,
@@ -192,32 +233,14 @@ Confirm-email is still OFF. Week 6 (Lab 6) COMPLETE end to end: merged, pushed, 
 
 ---
 
-## Sprint 2 - scoped (Lab 7, "The Doors Open") — IN PROGRESS
+## Sprint 2 progress (Lab 7, "The Doors Open") - COMPLETE
 
 Professor's framing: contribution form + photo, login, rules for the database,
-edit + delete entries. 5 parts total; not yet broken into individual tasks —
-this file will be updated part by part as the student pastes each one's exact
-text, same pattern as Lab 6.
-
-End-of-lab goal: anyone with an account can add an entry with a photo, and can
-edit or delete their own entries. Nobody can touch anyone else's.
-
-What this almost certainly touches, going in:
-- A **contribution form** (new page or route) for adding an entry, gated to
-  logged-in users only (logged-out visitors should not see/reach it).
-- **Photo upload** — likely Supabase Storage, since no new package is approved
-  (still only @supabase/supabase-js and @supabase/ssr). Confirm with the
-  professor's exact text before assuming Storage vs. another approach.
-- **RLS rules already exist** from Lab 6 (`insert`/`update`/`delete` gated on
-  `auth.uid() = owner`) — Lab 7 likely builds the UI that exercises them for
-  the first time, rather than writing new policies from scratch. Check the
-  exact lab text; it may ask for additional/adjusted policies (e.g. a required
-  `owner` on insert, or checks beyond simple ownership).
-- **Edit + delete UI** for a user's own entries only — will need to read
-  `auth.uid()` client- or server-side and compare to each entry's `owner`,
-  the same pattern already used by `AuthHeader.js`.
-- Possibly a change to `EntryCard`/the detail page to show edit/delete
-  controls only to the owner.
+edit + delete entries. 5 parts (0-5). End-of-lab goal, met: anyone with an account can
+add an entry with a photo and edit or delete their own entries; nobody can touch anyone
+else's. Everything is merged to `main` (03c5d24 at the time of writing), pushed, deployed
+to Vercel and live-verified. Student's commit style: `Sprint 2, week7/lab7: <what>
+(AI-assisted)`.
 
 ### Lab 7 progress
 
@@ -225,19 +248,17 @@ What this almost certainly touches, going in:
   (5 MB max, jpeg/png/webp only) + two storage policies: authenticated users can insert/delete
   only inside a folder named after their own `auth.uid()`. No update policy, so uploads use
   `upsert: false`. Dashboard only, not a repo file.
-- **Part 1 "The contribution form, with a photo" - BUILT and tested locally (student added a
-  "Test Entry" that renders; a real entry is deferred - student will talk to the professor).
-  Live counters on title, title_khmer, description, description_khmer; "ADD AN ENTRY +" nav
-  link on the home page. Ready to commit** (`docs/sprint 2/CHANGES6_ContributionForm.md`). New: `app/contribute/page.js`,
-  `components/ContributeForm.js`, `components/FormField.js`, `utils/entryFields.js`,
-  `utils/validateEntry.js`, `utils/photoCheck.js`, `utils/submitEntry.js`. Validation rules:
+- **Part 1 "The contribution form, with a photo" - DONE, committed as 35dedc2**
+  (`docs/sprint 2/CHANGES6_ContributionForm.md`). `/contribute` form with photo upload;
+  live counters on title, title_khmer, description, description_khmer; "ADD AN ENTRY +" nav
+  link on the home page. New: `app/contribute/page.js`, `components/ContributeForm.js`,
+  `components/FormField.js`, `utils/entryFields.js`, `utils/validateEntry.js`,
+  `utils/photoCheck.js`, `utils/submitEntry.js`. Validation rules:
   `Week7_Lab7/TableRule_Refined.md` (outside the repo, refined from the student's Tuesday
-  draft `TableRule.md`). Old photos are `/images/...` paths, new ones are full Supabase
-  Storage URLs; pages render `photo_url` as-is so both work. Known limits: no DB length
-  checks yet (optional later), EXIF/GPS not stripped (student's decision), no link to
-  /contribute from the home page yet. Commit message: `sprint 2: contribution form with photo
-  upload (AI-assisted)`.
-  COMMITTED as 35dedc2.
+  draft `TableRule.md`; later changed for the Khmer fields, see the Part 4 follow-up). Old
+  photos are `/images/...` paths, new ones are full Supabase Storage URLs; pages render
+  `photo_url` as-is so both work. The "Test Entry" on the shared database also appears on
+  the deployed site. EXIF/GPS not stripped (student's decision).
 - **Part 2 "Edit and delete, your own only" - DONE: built, browser-tested by the student as
   test.two, committed** (`docs/sprint 2/CHANGES6_EditDelete.md`). Owner-only EDIT/DELETE on the entry page,
   `/entries/[id]/edit` (same form, pre-filled, new photo optional), inline delete confirm,
@@ -253,22 +274,56 @@ What this almost certainly touches, going in:
 - **Part 4 "Attack a classmate's archive" - DONE for the student's attack on the teammate's
   site: every attack refused as expected (update/delete `data: []`, `.txt` upload refused for
   mime type); no repo code changed** (`docs/sprint 2/CHANGES6_AttackLog.md`). `experiment`
-  was merged into `main` (16cc987) and deployed before the swap. The teammate reported only
-  the delete attempt on the student's site (nothing deleted). Teammate feedback logged, no
-  action yet: Khmer fields optional?, back-to-home arrow on Browse, contributor-name field.
+  was merged into `main` (16cc987) and deployed before the swap. The teammate's
+  console results on the student's site (read ok, update/delete `data: []`, `.txt` refused)
+  came as a result table; he also said afterwards, in conversation, that the interface steps
+  worked (no Edit/Delete on entries that aren't his, `/edit` by id refused, `<script>` title
+  entry fine) - second-hand, no screenshots. Teammate feedback logged: Khmer fields optional?,
+  back-to-home arrow on Browse, contributor-name field (decisions below).
   **Follow-up (done, browser-tested, SQL run):** the student chose to make `title_khmer` and
   `description_khmer` OPTIONAL (SQL: drop not null + two constraints now `is null or ...`;
   code: validateEntry/entryFields/entryWrite) and added the Browse back link; contributor-name
   field skipped on purpose (`docs/sprint 2/CHANGES6_AttackFeedback.md`). The Khmer fields now
   accept any language; the old Khmer-only/brackets rules no longer apply to them.
-- Part 5: not yet received.
+- **Part 5 "Ship and write" - DONE.** `experiment` merged into `main` (fast-forward) and
+  pushed; Vercel built and deployed. Live-verified by the student on the real URL: back arrow
+  on Browse; added an entry with a photo (Khmer fields empty), edited it (added Khmer +
+  English text), then deleted an entry; all worked. Photos from deleted/replaced entries stay
+  in Storage as expected. The Canvas submission (live URL + 2-3 sentences), the Week 7
+  discussion post and the journal entry are separate coursework, drafted in chat, not stored
+  in this repo. No changelog file of its own (no new code).
 
-Original scoping note (before the parts arrived) follows. Not yet known at that time: the
-5 parts' exact scope/order, and whether this is still
-labeled "Sprint 2" or begins what AGENTS.md calls the "own-your-entries"
-feature (the project's four-feature skeleton: browse/search, contributor
-accounts, own-your-entries, submit-review-publish). Don't assume; ask or wait
-for the lab text to say.
+Open items / leftovers (none blocking):
+- Test data: throwaway entries on `archive.test.two`; the "Test Entry" owned by `test.one`;
+  the teammate's test account on the student's project and the student's on the teammate's
+  (delete from the Supabase dashboard when done).
+- Photo orphans in Storage after delete/replace (see above); EXIF/GPS not stripped.
+- A contributor-name field was suggested by the teammate and skipped on purpose (nothing in
+  Lab 7 asks for it; would be one nullable column + constraint + form field).
+- `Week7_Lab7/TableRule_Refined2.md` (outside the repo) is the CURRENT rules file, written at
+  the end of Lab 7. `TableRule_Refined.md` (Part 1) still describes the old Khmer-only rules
+  and is kept as history; the code is the final source of truth.
+- The student's real archive is still the 9 Sprint 1 entries (owned by `archive.test.one`);
+  adding real contributions is up to the student.
+
+---
+
+## Week 8 / Lab 8 - PLACEHOLDER (details not received yet)
+
+Not yet known: the lab's title, how many parts it has, what it builds, or whether it is
+still "Sprint 2" or the start of what AGENTS.md calls the next skeleton feature (the
+project's four features: browse/search, contributor accounts, own-your-entries,
+submit-review-publish; the first three now exist in some form, the fourth, a
+review/publish step, does not). Don't assume. When the student pastes the lab text:
+1. Ask for the exact text of Part 1 (and each part in turn) before writing anything.
+2. Propose a short plan first, make small scoped steps, one commit per step.
+3. Check AGENTS.md for any new dependency approval (still only @supabase/supabase-js and
+   @supabase/ssr) before installing anything.
+4. Add a section here titled "Sprint 2 progress (Lab 8)" and a changelog file per part
+   (`docs/sprint 2/CHANGES7_*.md` if the student keeps the week-number prefix convention;
+   ask which prefix to use).
+
+Lab 8 progress: _(none yet)_
 
 ---
 ## Sprint 2 - scoped (Supabase + Auth)
@@ -290,7 +345,7 @@ Professor's caution (quoting intent): this sprint is volatile and can go sideway
 quickly. Mitigation: build in small committed steps, keep a revertible base, and
 apply "stop / revert to last good commit / re-prompt smaller" on any fix chain.
 
-Lab 5 (plumbing, doors, signal) complete: merged to main, deployed, and live-verified (incl. attacker checklist). Lab 6 (intro to database: table, RLS, seed, cutover, security checklist, ship) complete: merged to main, deployed, and live-verified. Current: Lab 7, "The Doors Open" (see dedicated section above) - in progress.
+Lab 5 (plumbing, doors, signal) complete: merged to main, deployed, and live-verified (incl. attacker checklist). Lab 6 (intro to database: table, RLS, seed, cutover, security checklist, ship) complete: merged to main, deployed, and live-verified. Lab 7 ("The Doors Open": contribution form + photo, edit/delete own entries, validation, attack test, ship) complete: merged to main, deployed, and live-verified. Current: waiting for Week 8 / Lab 8 (see the placeholder section above).
 ---
 
 ## Peer-review points (partner test) - status
@@ -367,5 +422,8 @@ outside this repo, not new code.
 - docs/sprint 2/CHANGES6_AttackLog.md           (Lab 7 Part 4 - attack a classmate's archive)
 - docs/sprint 2/CHANGES6_AttackFeedback.md      (after Part 4 - optional Khmer fields + Browse back link)
 
-Next: Lab 7 Part 5 onward. Add changelog entries for each part as they land, same
-pattern as `docs/sprint 2/CHANGES5_*.md` for Lab 6.
+Lab 7 Part 5 (ship + write) has no changelog file of its own: it was the merge/push/deploy/
+live-check plus a Canvas submission, discussion post and journal kept outside this repo.
+
+Next: Lab 8. Add changelog entries for each part as they land, same pattern as
+`docs/sprint 2/CHANGES5_*.md` for Lab 6 and `CHANGES6_*.md` for Lab 7.

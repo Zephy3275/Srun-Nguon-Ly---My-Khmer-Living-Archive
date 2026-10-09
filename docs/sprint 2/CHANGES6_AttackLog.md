@@ -52,9 +52,15 @@ Console results reported by the teammate (as a table of what each result means):
 | Upload `test.txt` | `mime type text/plain is not supported` | Yes |
 
 The teammate also said the delete "returned success" but the entries were not deleted, which
-matches the student's own result. The teammate did not report the interface steps (no
-Edit/Delete buttons on the student's entries, the `<script>` title entry), so those are **not
-recorded as tested** on the student's site.
+matches the student's own result.
+
+**Interface steps, reported afterwards (second-hand):** the day after the swap the teammate
+told the student, in conversation, that apart from the feedback in section 5 everything else
+worked: no Edit/Delete buttons on entries that aren't his, editing a student's entry by typing
+`/edit` after its id in the URL was refused, and adding an entry titled
+`<script>alert(1)</script>` worked (shown as text). There is no screenshot or log of these
+three, so they are recorded as **reported by the teammate**, not independently verified. The
+console results in the table above came with a result table and are the firmer evidence.
 
 ## 4. Leftovers to clean up
 
