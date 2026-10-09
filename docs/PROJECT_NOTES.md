@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 2 (phase 2)**, between week 7 and week 8. Lab 5 (Supabase + Auth), Lab 6 (Intro to database) and **Lab 7 ("The Doors Open") are complete, merged to `main`, deployed to Vercel and live-verified.** Any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's (attack-tested by a classmate). **Next: Week 8 / Lab 8 - details not received yet** (see the placeholder section "Lab 8" below). Lab 7's Canvas submission, discussion post and journal are separate coursework, drafted in chat, not stored in this repo.
+> Current phase: **SPRINT 2 (phase 2)**, between week 7 and week 8. Lab 5 (Supabase + Auth), Lab 6 (Intro to database) and **Lab 7 ("The Doors Open") are complete, merged to `main`, deployed to Vercel and live-verified.** Any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's (attack-tested by a classmate). **Now: Week 8, "The Proof" - the last week of Sprint 2.** It has NO lab guide: the MAIN FOCUS is fixing everything two outside testers reported (10+ fixes, ~3-4 functional, the rest mostly UI redesign); re-running the old checklists is only a light final sanity check. The student will give the exact fix list in a new chat; see the section "Week 8" below. Lab 7's Canvas submission, discussion post and journal are separate coursework, drafted in chat, not stored in this repo.
 
 ---
 
@@ -12,7 +12,7 @@
 Copy everything in the block below into the new chat:
 
 ```
-Current: Sprint 2 - Lab 7 ("The Doors Open") is COMPLETE (all 5 parts), merged to main, deployed to Vercel, live-verified. Next is Week 8 / Lab 8 - the student has NOT received its details yet: ask for the exact text of Part 1 before writing anything, and work it part by part, same pattern as Labs 6 and 7.
+Current: Sprint 2 - Lab 7 ("The Doors Open") is COMPLETE (all 5 parts), merged to main, deployed to Vercel, live-verified. NOW: Week 8 ("The Proof"), the last week of Sprint 2: no lab guide; the main focus is the fix list from two outside testers (10+ items: ~3-4 functional fixes, the rest mostly UI redesign); re-running old checklists is secondary. The student will paste the full feedback/fix list in the first message of the new chat: read it, group it, propose a plan (order, risk, what touches the database), and wait for approval before changing anything.
 
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
@@ -308,22 +308,120 @@ Open items / leftovers (none blocking):
 
 ---
 
-## Week 8 / Lab 8 - PLACEHOLDER (details not received yet)
+## Week 8, "The Proof" (last week of Sprint 2) - STARTING
 
-Not yet known: the lab's title, how many parts it has, what it builds, or whether it is
-still "Sprint 2" or the start of what AGENTS.md calls the next skeleton feature (the
-project's four features: browse/search, contributor accounts, own-your-entries,
-submit-review-publish; the first three now exist in some form, the fourth, a
-review/publish step, does not). Don't assume. When the student pastes the lab text:
-1. Ask for the exact text of Part 1 (and each part in turn) before writing anything.
-2. Propose a short plan first, make small scoped steps, one commit per step.
-3. Check AGENTS.md for any new dependency approval (still only @supabase/supabase-js and
-   @supabase/ssr) before installing anything.
-4. Add a section here titled "Sprint 2 progress (Lab 8)" and a changelog file per part
-   (`docs/sprint 2/CHANGES7_*.md` if the student keeps the week-number prefix convention;
-   ask which prefix to use).
+**What it is (from the student, 2026-10-09):** there is NO lab guide this week. Officially it
+is a re-test to "prove" everything works, but the student stressed that is NOT the important
+part. The real work: the student got **two outside people to test the live archive** and
+wrote down their feedback: **10+ fixes**, roughly **3-4 functional fixes** and the rest
+**mostly UI redesign**. A week of iteration, bug fixes, maintenance and redesign. It will be
+messier than Labs 6-7 (no parts, no fixed order), so it gets its own new chat.
 
-Lab 8 progress: _(none yet)_
+**Source document on disk:** `Week8/Sprint2_Review_Checklist.md` (outside the repo, pasted
+from Canvas). It is the REVIEWER'S checklist for Sprint 2 (used twice: on a partner's archive
+on Tuesday, and on your own archive before submitting). It is NOT the fix list. Its sections:
+stranger (logged out), new contributor, the ownership attack, the repository, "ask the
+author". Reviewers end with their three most useful findings, ordered; those are the
+author's fix list ("Friday exists to burn it down"). It mostly repeats Week 7 (validation,
+ownership attack) and the student considers it LOW PRIORITY for this week (the testers' fix
+list is what matters). For awareness only, these points differ slightly from Week 7:
+- Logged-out: Khmer renders everywhere a visitor looks; photos load in reasonable time on a
+  phone; **no unreviewed junk, lorem ipsum or placeholder entries visible anywhere** (the
+  shared database still has the "Test Entry" and throwaway test entries - clean them up
+  before submitting).
+- Contributor: an added entry should appear "**correctly credited**", and "**a single name
+  gets through the form**". The archive has no contributor-name field (it was suggested by a
+  teammate and skipped on purpose in Week 7; entries only show `source`). **CONFIRMED by the
+  professor (2026-10-09): the contributor field IS necessary.** See "Confirmed requirement"
+  below.
+- Repository: no secrets at any point in history (re-checked 2026-10-09: no secret-key, JWT or
+  password patterns in any commit, no `.env*` file tracked); small commits with AI-assisted
+  work marked; the instructor (GitHub user jesseorndorff) is a collaborator (the student must
+  confirm in the repo's Settings -> Collaborators; not verifiable from the CLI).
+- "Ask the author": the student should be ready to explain ONE ownership rule (a policy or a
+  constraint): what it does, why it's there, what breaks without it.
+
+**Confirmed requirement - contributor (credit) field (professor, 2026-10-09; student will do
+it later in the week, not first):** add a contributor name to the add-entry form
+(`/contribute`) so each entry is credited. Expected scope (plan and ask before building):
+- Database (SQL run by hand, in a fresh SQL Editor tab, BEFORE deploying the code): a new
+  `contributor` column on `entries` plus a length check constraint (same
+  `char_length(trim(...))` style as the nine existing ones). Open decisions to ask the
+  student: required or optional? (if required, the existing 9 + test rows need a value first,
+  or the column must allow null / get a default); label and length limit (suggest up to
+  ~120); no new table needed.
+- Code: `utils/entryFields.js` (field + hint), `utils/validateEntry.js` (**a single name must
+  pass** - no first+last rule; Khmer names must pass; any language), `utils/entryWrite.js`
+  (`entryColumns` names the column; empty -> null if optional), the edit form pre-fills
+  automatically from the field list, and DISPLAY the credit on the entry page and probably on
+  cards. Check `owner` is still never taken from the form (contributor is a display label,
+  not identity; `owner` stays the real accountability).
+- Docs: rules file (`Week7_Lab7/TableRule_Refined2.md` is current; write a new version, e.g.
+  `TableRule_Refined3.md`, mention it was made for the Week 8 contributor field), a changelog
+  file, and this notes file (DB section + repo tree).
+- Test: add an entry with a single name and with Khmer text; edit it; confirm it shows on the
+  entry page; run the length constraint test.
+
+**Not received yet:** the actual fix list from the two testers. The student pastes it in the
+first message of the new chat. Until then do not guess what the fixes are, and do not start
+redesigning.
+
+**How to run the week (agree with the student, same working style as Labs 6-7):**
+1. Read the pasted feedback, then triage into three buckets: (a) functional bugs / behavior
+   changes, (b) UI/visual redesign, (c) things that need the database (SQL run by hand by the
+   student in a fresh SQL Editor tab, BEFORE the code that depends on it) or that touch
+   security. Say which items are risky or ambiguous and ask before assuming.
+2. Propose a plan: order (functional fixes first, then UI), grouping into small steps, what
+   each step touches. Wait for approval. Show each diff; the student reviews and approves.
+3. One fix (or one tight group) = one commit, in the student's style
+   (`Sprint 2, week8: <what> (AI-assisted)`). The student commits and pushes; I do not.
+4. Keep the changelog habit: `docs/sprint 2/` files per round of fixes. ASK the student which
+   filename prefix to use (Lab 7 used `CHANGES6_*`; the next one may be `CHANGES7_*`).
+5. Update this section as fixes land (a checklist below), and fill the repo tree / database
+   sections above if files or schema change.
+
+**Rules that still apply (AGENTS.md):** no new dependencies (only next, react, react-dom,
+@supabase/supabase-js, @supabase/ssr); do not touch package.json / package-lock.json /
+next.config.mjs / .gitignore without the task naming them; no keys/tokens/passwords in any
+file (public repo); one component per file in `components/`, ~80 lines or less (a redesign
+tends to bloat components: split them); plain React, no CSS frameworks or component libs
+(inline style objects or a plain CSS file); JavaScript only; Khmer text is first-class and
+must never be stripped, transliterated or "fixed" (check that any new font/CSS still renders
+Khmer correctly). Current look: dark `#14181F` background, green accent `#2EE6A8`, Courier
+kickers; a redesign may change this, so ask before replacing the palette.
+
+**Light regression guard (secondary, not the focus: glance at these after changes and do a
+quick pass on the LIVE URL at the end; full list in `Week7_Lab7/ValidationChecklist.md`):**
+- Required fields are required and say so before submit; text trimmed and length-limited
+  (form + the 9 database check constraints); Khmer fields optional, any language.
+- Photos: JPG/PNG/WebP by magic bytes, 5 MB max, upload to `<user id>/<random uuid>.<ext>`.
+- `owner` comes from the login session, never the form; inserts/updates name their columns.
+- Error messages are short and fixed; real errors go to `console.error` (no `error.message`
+  on screen); no `dangerouslySetInnerHTML` anywhere.
+- A title of `<script>alert(1)</script>` shows as plain text.
+- Owner-only Edit/Delete buttons AND owner-only RLS: a stranger's console update/delete
+  returns `data: []`; a `.txt` upload is refused (the attack kit is in
+  `docs/sprint 2/CHANGES6_AttackLog.md`).
+Any fix that adds a field or changes how data is saved must also be checked against these
+(validator, `entryColumns`, the database constraints, edit mode, search, cards).
+
+**Where the code stands going in:** branch `experiment` (the student works there); `main` =
+03c5d24 is what is deployed on Vercel. `experiment` is one docs-only commit ahead of `main`
+(90ee07c) - nothing functional. Merge `experiment` into `main` and push to deploy (the
+student does this).
+
+**Known leftovers that testers may also hit (from Week 7):** photos of deleted/replaced
+entries stay in Storage; EXIF/GPS is not stripped from photos; test data still around
+(throwaway entries on `archive.test.two`, cross-project test accounts); the real archive is
+still the 9 Sprint 1 entries + a Test Entry.
+
+**Week 8 progress:** _(none yet - waiting for the student's fix list)_
+
+Fix list / status (fill in once received):
+| # | Fix | Type (functional / UI / DB) | Status |
+|---|---|---|---|
+| C | Contributor (credit) field on the add/edit form + display + SQL + rules file (professor-confirmed requirement) | functional + DB | not started (student will do it later this week) |
+| - | _(the testers' fixes go here once pasted)_ | | |
 
 ---
 ## Sprint 2 - scoped (Supabase + Auth)
@@ -345,7 +443,7 @@ Professor's caution (quoting intent): this sprint is volatile and can go sideway
 quickly. Mitigation: build in small committed steps, keep a revertible base, and
 apply "stop / revert to last good commit / re-prompt smaller" on any fix chain.
 
-Lab 5 (plumbing, doors, signal) complete: merged to main, deployed, and live-verified (incl. attacker checklist). Lab 6 (intro to database: table, RLS, seed, cutover, security checklist, ship) complete: merged to main, deployed, and live-verified. Lab 7 ("The Doors Open": contribution form + photo, edit/delete own entries, validation, attack test, ship) complete: merged to main, deployed, and live-verified. Current: waiting for Week 8 / Lab 8 (see the placeholder section above).
+Lab 5 (plumbing, doors, signal) complete: merged to main, deployed, and live-verified (incl. attacker checklist). Lab 6 (intro to database: table, RLS, seed, cutover, security checklist, ship) complete: merged to main, deployed, and live-verified. Lab 7 ("The Doors Open": contribution form + photo, edit/delete own entries, validation, attack test, ship) complete: merged to main, deployed, and live-verified. Current: Week 8, "The Proof" (see the Week 8 section above) - no lab guide, a fix-and-redesign week driven by two outside testers' feedback.
 ---
 
 ## Peer-review points (partner test) - status
@@ -425,5 +523,6 @@ outside this repo, not new code.
 Lab 7 Part 5 (ship + write) has no changelog file of its own: it was the merge/push/deploy/
 live-check plus a Canvas submission, discussion post and journal kept outside this repo.
 
-Next: Lab 8. Add changelog entries for each part as they land, same pattern as
-`docs/sprint 2/CHANGES5_*.md` for Lab 6 and `CHANGES6_*.md` for Lab 7.
+Next: Week 8 fixes. Add a changelog entry per round of fixes as they land, same pattern as
+`docs/sprint 2/CHANGES5_*.md` for Lab 6 and `CHANGES6_*.md` for Lab 7 (ask the student which
+prefix to use for Week 8).
