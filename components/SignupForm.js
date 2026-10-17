@@ -27,6 +27,7 @@ const styles = {
     color: "#E8EDF2",
     outline: "none",
     boxSizing: "border-box",
+    fontFamily: "inherit",
   },
   button: {
     padding: "12px 16px",
@@ -58,6 +59,17 @@ const styles = {
     color: "#2EE6A8",
     textDecoration: "none",
   },
+  // A fieldset lets `disabled` lock every field and the button at once. Reset
+  // its default border/padding and give it the same stacked layout as the form.
+  fields: {
+    border: 0,
+    margin: 0,
+    padding: 0,
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 16,
+  },
 };
 
 export default function SignupForm() {
@@ -69,6 +81,7 @@ export default function SignupForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (loading) return;
     setError("");
     setLoading(true);
 
@@ -99,38 +112,40 @@ export default function SignupForm() {
 
   return (
     <form onSubmit={handleSubmit} style={styles.form} noValidate>
-      <label style={styles.label} htmlFor="signup-email">
-        EMAIL
-      </label>
-      <input
-        id="signup-email"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="you@example.com"
-        style={styles.input}
-        required
-      />
+      <fieldset disabled={loading} style={styles.fields}>
+        <label style={styles.label} htmlFor="signup-email">
+          EMAIL
+        </label>
+        <input
+          id="signup-email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+          style={styles.input}
+          required
+        />
 
-      <label style={styles.label} htmlFor="signup-password">
-        PASSWORD
-      </label>
-      <input
-        id="signup-password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="••••••••"
-        style={styles.input}
-        minLength={6}
-        title="At least 6 characters"
-        required
-      />
-      <p style={styles.hint}>At least 6 characters.</p>
+        <label style={styles.label} htmlFor="signup-password">
+          PASSWORD
+        </label>
+        <input
+          id="signup-password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="••••••••"
+          style={styles.input}
+          minLength={6}
+          title="At least 6 characters"
+          required
+        />
+        <p style={styles.hint}>At least 6 characters.</p>
 
-      <button type="submit" disabled={loading} style={styles.button}>
-        {loading ? "CREATING ACCOUNT…" : "CREATE ACCOUNT"}
-      </button>
+        <button type="submit" style={styles.button}>
+          {loading ? "CREATING ACCOUNT…" : "CREATE ACCOUNT"}
+        </button>
+      </fieldset>
 
       {error && <p style={styles.error}>{error}</p>}
 

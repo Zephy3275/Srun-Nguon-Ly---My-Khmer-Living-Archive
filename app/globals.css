@@ -1,0 +1,43 @@
+/* Global rules that inline style objects cannot express (pseudo-classes,
+   keyframes). Everything else in this project stays as inline styles. */
+
+/* Tell the browser the whole site is dark, so its own pieces (autofill,
+   dropdown lists, scrollbars, the file picker) draw dark too. */
+:root {
+  color-scheme: dark;
+}
+
+/* When the browser auto-fills a saved email or password, it paints its own
+   pale background over the input. Paint the input's normal dark colour over
+   it again and keep the text light. Two separate blocks on purpose: if a
+   browser does not know one selector, it would drop the whole list. */
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 1000px #1c222c inset;
+  -webkit-text-fill-color: #e8edf2;
+  caret-color: #e8edf2;
+}
+
+input:autofill {
+  box-shadow: 0 0 0 1000px #1c222c inset;
+  -webkit-text-fill-color: #e8edf2;
+  caret-color: #e8edf2;
+}
+
+/* While a form is logging in or saving, its fieldset is disabled. The inline
+   styles give disabled controls no different look, so dim them here to make
+   the lock visible. The fields are dimmed inside a disabled fieldset; a
+   disabled button is dimmed on its own (so a button inside a fieldset is not
+   dimmed twice). */
+fieldset:disabled input,
+fieldset:disabled textarea,
+fieldset:disabled select {
+  opacity: 0.6;
+}
+
+button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

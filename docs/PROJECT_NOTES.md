@@ -12,7 +12,7 @@
 Copy everything in the block below into the new chat:
 
 ```
-Current: Sprint 2 - Lab 7 ("The Doors Open") is COMPLETE (all 5 parts), merged to main, deployed to Vercel, live-verified. NOW: Week 8 ("The Proof"), the last week of Sprint 2: no lab guide; the main focus is the fix list from two outside testers (10+ items: ~3-4 functional fixes, the rest mostly UI redesign); re-running old checklists is secondary. The student will paste the full feedback/fix list in the first message of the new chat: read it, group it, propose a plan (order, risk, what touches the database), and wait for approval before changing anything.
+Current: Sprint 2 - Lab 7 ("The Doors Open") is COMPLETE (all 5 parts), merged to main, deployed to Vercel, live-verified. NOW: Week 8 ("The Proof"), the last week of Sprint 2: no lab guide; the main focus is the fix list from two outside testers (10+ items: ~3-4 functional fixes, the rest mostly UI redesign); re-running old checklists is secondary. The fix list is already received and triaged in Week8/Tester_Feedback_Triage.md (outside the repo; it has the groups, the order, the decisions and a status table): read it, continue with the next group, propose a plan, and wait for approval before changing anything.
 
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
@@ -23,8 +23,8 @@ PHASE: SPRINT 2 (phase 2) - Supabase + Auth + contributor write-access. Week 5
 contribution form + photo upload, edit/delete own entries, validation, attack
 test) are all done: merged to main, pushed, deployed to Vercel, live-verified.
 Any account holder can add an entry with a photo and edit/delete their own
-entries; nobody can touch anyone else's. WEEK 8 / LAB 8: not received yet - ask
-the student for the exact text of its first part before writing anything.
+entries; nobody can touch anyone else's. WEEK 8: the testers' fix list is received and
+triaged in Week8/Tester_Feedback_Triage.md (outside the repo): read it first.
 This sprint is VOLATILE per the professor and can go sideways quickly. Build in
 small committed steps, keep a revertible base, and if a fix breaks a second thing
 follow "stop, revert to the last good commit, re-prompt smaller".
@@ -94,6 +94,7 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 +-- app
 |   +-- layout.js      (root layout, dark theme)
 |   +-- loading.js     (Lab 6: "LOADING THE ARCHIVE..." while a page awaits Supabase)
+|   +-- globals.css    (Week 8: plain CSS for what inline styles can't do: dark autofill, disabled look; imported in layout.js)
 |   +-- page.js        (homepage: identity + ContextAbout + all entries; READS SUPABASE;
 |   |                   nav has BROWSE + ADD AN ENTRY +)
 |   +-- browse
@@ -362,9 +363,11 @@ it later in the week, not first):** add a contributor name to the add-entry form
 - Test: add an entry with a single name and with Khmer text; edit it; confirm it shows on the
   entry page; run the length constraint test.
 
-**Not received yet:** the actual fix list from the two testers. The student pastes it in the
-first message of the new chat. Until then do not guess what the fixes are, and do not start
-redesigning.
+**Received (2026-10-16):** the testers' list (Lyching + Kimyoo, 14 points) is in
+`Week8/Tester_Feedback_Triage.md` (outside the repo): original list, sorted groups, decisions,
+open questions and a status table. Keep that table updated. Order agreed: group A bugs and
+behavior -> group B small UI polish -> group C redesign -> contributor field -> (language
+toggle SKIPPED by the student). Changelog prefix for Week 8: `CHANGES7_`.
 
 **How to run the week (agree with the student, same working style as Labs 6-7):**
 1. Read the pasted feedback, then triage into three buckets: (a) functional bugs / behavior
@@ -415,13 +418,35 @@ entries stay in Storage; EXIF/GPS is not stripped from photos; test data still a
 (throwaway entries on `archive.test.two`, cross-project test accounts); the real archive is
 still the 9 Sprint 1 entries + a Test Entry.
 
-**Week 8 progress:** _(none yet - waiting for the student's fix list)_
+**Week 8 progress:**
+- **Group A (bugs/behavior): DONE and browser-tested by the student (2026-10-17); all in
+  `docs/sprint 2/CHANGES7_FunctionalFixes.md`; one commit by the student.** Not browser-tested:
+  long paste into the description, a levels line with a real value (final pass).
+  #13 autofill white box fixed (new `app/globals.css`, imported in `layout.js`; student-tested);
+  #14 form locked while logging in / signing up / saving (`fieldset disabled`); #7 hard stop at
+  the limits (`maxLength` + `clipWords` for the 1,000-word description, counters on the five
+  fields that had none); small extra: sweetness/saltiness shown on the entry page.
+- **#3 (make sweetness/saltiness required) DROPPED by the student:** ratings are subjective;
+  they stay optional.
+- **#10 language toggle SKIPPED by the student** (whole-interface Khmer would need every UI
+  string translated).
+- **Working rule learned in Week 8:** never run `next build` while the student's `npm run dev` is
+  running (both write `.next`; the build broke the student's session once). Check port 3000
+  first; verify by requesting pages from the running dev server instead. Story in section 6 of
+  `CHANGES7_FunctionalFixes.md`.
+- Favicon image is ready outside the repo (`Week8/icon.png`, 128x128); goes in as `app/icon.png`
+  in group B.
 
 Fix list / status (fill in once received):
 | # | Fix | Type (functional / UI / DB) | Status |
 |---|---|---|---|
 | C | Contributor (credit) field on the add/edit form + display + SQL + rules file (professor-confirmed requirement) | functional + DB | not started (student will do it later this week) |
-| - | _(the testers' fixes go here once pasted)_ | | |
+| 13 | Autofill white box (Kimyoo) | functional (CSS) | done, student-tested |
+| 14 | Lock form while logging in / saving (Kimyoo) | functional | done, student-tested |
+| 7 | Hard stop at character/word limit (Lyching) | functional | done, student-tested on the title field (word clip script-tested only) |
+| 3 | Sweetness/saltiness required (Lyching) | functional | DROPPED (stays optional) |
+| 10 | English/Khmer toggle (Lyching) | feature | SKIPPED by the student |
+| - | Groups B (polish) and C (redesign), then contributor field C: see `Week8/Tester_Feedback_Triage.md` | UI | not started |
 
 ---
 ## Sprint 2 - scoped (Supabase + Auth)
@@ -519,6 +544,7 @@ outside this repo, not new code.
 
 - docs/sprint 2/CHANGES6_AttackLog.md           (Lab 7 Part 4 - attack a classmate's archive)
 - docs/sprint 2/CHANGES6_AttackFeedback.md      (after Part 4 - optional Khmer fields + Browse back link)
+- docs/sprint 2/CHANGES7_FunctionalFixes.md     (Week 8 group A - autofill + global CSS, lock while saving, hard-stop limits, levels on entry page)
 
 Lab 7 Part 5 (ship + write) has no changelog file of its own: it was the merge/push/deploy/
 live-check plus a Canvas submission, discussion post and journal kept outside this repo.

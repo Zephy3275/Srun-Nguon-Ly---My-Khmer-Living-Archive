@@ -27,6 +27,7 @@ const styles = {
     color: "#E8EDF2",
     outline: "none",
     boxSizing: "border-box",
+    fontFamily: "inherit",
   },
   button: {
     padding: "12px 16px",
@@ -53,6 +54,17 @@ const styles = {
     color: "#2EE6A8",
     textDecoration: "none",
   },
+  // A fieldset lets `disabled` lock every field and the button at once. Reset
+  // its default border/padding and give it the same stacked layout as the form.
+  fields: {
+    border: 0,
+    margin: 0,
+    padding: 0,
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 16,
+  },
 };
 
 export default function LoginForm() {
@@ -64,6 +76,7 @@ export default function LoginForm() {
 
   async function handleSubmit(e) {
     e.preventDefault();
+    if (loading) return;
     setError("");
     setLoading(true);
 
@@ -87,35 +100,37 @@ export default function LoginForm() {
 
   return (
     <form onSubmit={handleSubmit} style={styles.form} noValidate>
-      <label style={styles.label} htmlFor="login-email">
-        EMAIL
-      </label>
-      <input
-        id="login-email"
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="you@example.com"
-        style={styles.input}
-        required
-      />
+      <fieldset disabled={loading} style={styles.fields}>
+        <label style={styles.label} htmlFor="login-email">
+          EMAIL
+        </label>
+        <input
+          id="login-email"
+          type="email"
+          value={email}
+          onChange={(e) => setEmail(e.target.value)}
+          placeholder="you@example.com"
+          style={styles.input}
+          required
+        />
 
-      <label style={styles.label} htmlFor="login-password">
-        PASSWORD
-      </label>
-      <input
-        id="login-password"
-        type="password"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="••••••••"
-        style={styles.input}
-        required
-      />
+        <label style={styles.label} htmlFor="login-password">
+          PASSWORD
+        </label>
+        <input
+          id="login-password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="••••••••"
+          style={styles.input}
+          required
+        />
 
-      <button type="submit" disabled={loading} style={styles.button}>
-        {loading ? "SIGNING IN…" : "SIGN IN"}
-      </button>
+        <button type="submit" style={styles.button}>
+          {loading ? "SIGNING IN…" : "SIGN IN"}
+        </button>
+      </fieldset>
 
       {error && <p style={styles.error}>{error}</p>}
 

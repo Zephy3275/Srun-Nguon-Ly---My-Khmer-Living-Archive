@@ -12,6 +12,20 @@ const CONTROL = /\p{Cc}/u; // invisible control characters, e.g. a null byte
 // Exported so the live counters on the form count exactly what validation counts.
 export const size = (s) => [...s].length;
 export const words = (s) => s.split(/\s+/).filter(Boolean).length;
+
+// Keep only the first `max` words of `s`, exactly as typed (spaces and line
+// breaks between the kept words are untouched). Text that is already within the
+// limit comes back unchanged. Used by the form to stop typing/pasting at the
+// word limit; the same words are counted as in `words` above.
+export function clipWords(s, max) {
+  let count = 0;
+  let end = 0;
+  for (const match of s.matchAll(/\S+/g)) {
+    count += 1;
+    if (count <= max) end = match.index + match[0].length;
+  }
+  return count > max ? s.slice(0, end) : s;
+}
 // Descriptions may contain line breaks; nothing else invisible is allowed.
 const hasControl = (s) => CONTROL.test(s.replace(/[\n\r\t]/g, ""));
 

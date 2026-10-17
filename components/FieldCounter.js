@@ -1,7 +1,8 @@
 import { size, words } from "../utils/validateEntry.js";
 
 // Live "used / max" count shown under a field. Counts the trimmed text with the
-// same functions validation uses, and turns red once the limit is passed.
+// same functions validation uses, and turns red when the limit is reached (the
+// form stops accepting more at that point, so the colour explains why).
 
 const styles = {
   count: {
@@ -22,7 +23,7 @@ export default function FieldCounter({ value, counter }) {
   const text = value.trim();
   const used = counter.unit === "words" ? words(text) : size(text);
   return (
-    <span style={used > counter.max ? styles.over : styles.count}>
+    <span style={used >= counter.max ? styles.over : styles.count}>
       {used.toLocaleString("en-US")} / {counter.max.toLocaleString("en-US")}{" "}
       {counter.unit}
     </span>

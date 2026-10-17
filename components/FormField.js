@@ -4,6 +4,7 @@
 // in entryFields.js also show a live count at the right.
 
 import FieldCounter from "./FieldCounter.js";
+import { clipWords } from "../utils/validateEntry.js";
 
 const styles = {
   wrap: { display: "flex", flexDirection: "column", gap: 6 },
@@ -35,11 +36,18 @@ export default function FormField({ field, value, error, onChange }) {
   const common = {
     id,
     lang: field.lang,
+    maxLength: field.maxLength, // undefined for the dropdowns and the file picker: not drawn
     "aria-invalid": error ? true : undefined,
     "aria-describedby": `${id}-note`,
     style: error ? { ...styles.input, ...styles.inputError } : styles.input,
   };
-  const change = (e) => onChange(field.name, e.target.value);
+  // A word-limited field (the description) can't use maxLength, so anything
+  // typed or pasted past the last allowed word is cut off here.
+  const change = (e) => {
+    const text = e.target.value;
+    const limit = field.counter?.unit === "words" ? field.counter.max : null;
+    onChange(field.name, limit ? clipWords(text, limit) : text);
+  };
 
   let control;
   if (field.kind === "textarea") {

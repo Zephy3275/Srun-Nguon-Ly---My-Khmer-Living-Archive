@@ -70,7 +70,7 @@ export default async function EntryPage({ params }) {
   const { data: entry, error } = await supabase
     .from("entries")
     .select(
-      "id, owner, title, titleKhmer:title_khmer, source, description, descriptionKhmer:description_khmer, image:photo_url"
+      "id, owner, title, titleKhmer:title_khmer, source, sweetness, saltiness, description, descriptionKhmer:description_khmer, image:photo_url"
     )
     .eq("id", id)
     .maybeSingle();
@@ -108,6 +108,13 @@ export default async function EntryPage({ params }) {
     );
   }
 
+  // Sweetness and saltiness are optional (null when nobody rated them): only
+  // the ones that exist are shown, and the whole line is skipped if neither does.
+  const levels = [
+    entry.sweetness != null && `SWEETNESS: ${entry.sweetness}/5`,
+    entry.saltiness != null && `SALTINESS: ${entry.saltiness}/5`,
+  ].filter(Boolean);
+
   return (
     <main style={styles.wrap}>
       <Link href="/browse" style={styles.back}>
@@ -119,6 +126,7 @@ export default async function EntryPage({ params }) {
         <h2 style={styles.titleKhmer}>{entry.titleKhmer}</h2>
       )}
       <p style={styles.label}>SOURCE: {entry.source}</p>
+      {levels.length > 0 && <p style={styles.label}>{levels.join(" · ")}</p>}
       {entry.image && (
         <img src={entry.image} alt={entry.title} style={styles.image} />
       )}

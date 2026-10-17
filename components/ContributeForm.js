@@ -26,6 +26,17 @@ const styles = {
     cursor: "pointer",
   },
   error: { color: "#E86A5A", fontSize: 14, margin: 0 },
+  // A fieldset lets `disabled` lock every field at once while the form saves.
+  // Reset its default border/padding and keep the form's stacked layout.
+  fields: {
+    border: 0,
+    margin: 0,
+    padding: 0,
+    minWidth: 0,
+    display: "flex",
+    flexDirection: "column",
+    gap: 20,
+  },
 };
 
 export default function ContributeForm({ entry }) {
@@ -84,12 +95,14 @@ export default function ContributeForm({ entry }) {
 
   return (
     <form onSubmit={handleSubmit} style={styles.form} noValidate>
-      <EntryFormFields
-        values={values}
-        errors={errors}
-        onChange={handleChange}
-        currentPhoto={editing ? entry.photo_url : undefined}
-      />
+      <fieldset disabled={loading} style={styles.fields}>
+        <EntryFormFields
+          values={values}
+          errors={errors}
+          onChange={handleChange}
+          currentPhoto={editing ? entry.photo_url : undefined}
+        />
+      </fieldset>
 
       <button type="submit" disabled={loading} style={styles.button}>
         {loading ? "SAVING…" : editing ? "SAVE CHANGES" : "ADD TO THE ARCHIVE"}

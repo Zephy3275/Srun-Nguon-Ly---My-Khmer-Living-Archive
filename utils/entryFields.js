@@ -6,19 +6,24 @@
 // kind: "text" = one line, "textarea" = paragraph, "scale" = 1-5 dropdown,
 //       "file" = the photo picker.
 // lang: "km" tells the browser to use a Khmer font for that field.
+// maxLength: the browser stops accepting characters at this length, so the
+//            limit is a hard stop while typing or pasting. Same numbers as the
+//            rules in validateEntry.js and the database length checks.
 // counter: shows a live "used / max" count under the field. The max values
-//          must match the limits in validateEntry.js.
+//          must match the limits in validateEntry.js. A "words" counter cannot
+//          use maxLength, so FormField clips the words itself (clipWords).
 
 export const FIELDS = [
-  { name: "title", label: "TITLE", kind: "text", counter: { unit: "characters", max: 120 }, hint: "Required. Up to 120 characters." },
-  { name: "title_khmer", label: "TITLE (KHMER)", kind: "text", lang: "km", counter: { unit: "characters", max: 500 }, hint: "Optional. Up to 500 characters. Leave it empty if you don't know Khmer." },
-  { name: "description", label: "DESCRIPTION", kind: "textarea", counter: { unit: "words", max: 1000 }, hint: "Required. Up to 1,000 words." },
-  { name: "description_khmer", label: "DESCRIPTION (KHMER)", kind: "textarea", lang: "km", counter: { unit: "characters", max: 6000 }, hint: "Optional. Up to 6,000 characters. Leave it empty if you don't know Khmer." },
-  { name: "source", label: "SOURCE", kind: "text", hint: "Required. Who or where this comes from. Up to 300 characters." },
-  { name: "filling", label: "FILLING", kind: "text", hint: "Required. Up to 120 characters." },
-  { name: "shape", label: "SHAPE", kind: "text", hint: "Required. Up to 120 characters." },
-  { name: "color", label: "COLOR", kind: "text", hint: "Required. Up to 120 characters." },
-  { name: "texture", label: "TEXTURE", kind: "text", hint: "Optional. Words, not numbers. Up to 120 characters." },
+  { name: "title", label: "TITLE", kind: "text", maxLength: 120, counter: { unit: "characters", max: 120 }, hint: "Required. Up to 120 characters." },
+  { name: "title_khmer", label: "TITLE (KHMER)", kind: "text", lang: "km", maxLength: 500, counter: { unit: "characters", max: 500 }, hint: "Optional. Up to 500 characters. Leave it empty if you don't know Khmer." },
+  // The description is limited in words (1,000) AND, as a backstop, in characters (10,000).
+  { name: "description", label: "DESCRIPTION", kind: "textarea", maxLength: 10000, counter: { unit: "words", max: 1000 }, hint: "Required. Up to 1,000 words." },
+  { name: "description_khmer", label: "DESCRIPTION (KHMER)", kind: "textarea", lang: "km", maxLength: 6000, counter: { unit: "characters", max: 6000 }, hint: "Optional. Up to 6,000 characters. Leave it empty if you don't know Khmer." },
+  { name: "source", label: "SOURCE", kind: "text", maxLength: 300, counter: { unit: "characters", max: 300 }, hint: "Required. Who or where this comes from. Up to 300 characters." },
+  { name: "filling", label: "FILLING", kind: "text", maxLength: 120, counter: { unit: "characters", max: 120 }, hint: "Required. Up to 120 characters." },
+  { name: "shape", label: "SHAPE", kind: "text", maxLength: 120, counter: { unit: "characters", max: 120 }, hint: "Required. Up to 120 characters." },
+  { name: "color", label: "COLOR", kind: "text", maxLength: 120, counter: { unit: "characters", max: 120 }, hint: "Required. Up to 120 characters." },
+  { name: "texture", label: "TEXTURE", kind: "text", maxLength: 120, counter: { unit: "characters", max: 120 }, hint: "Optional. Words, not numbers. Up to 120 characters." },
   { name: "sweetness", label: "SWEETNESS", kind: "scale", hint: "Optional. 1 to 5." },
   { name: "saltiness", label: "SALTINESS", kind: "scale", hint: "Optional. 1 to 5." },
   { name: "photo", label: "PHOTO", kind: "file", hint: "Required. JPG, PNG or WebP, up to 5 MB." },
