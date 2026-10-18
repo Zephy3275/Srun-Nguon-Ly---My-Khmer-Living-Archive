@@ -26,7 +26,7 @@ export default async function Browse() {
   const { data, error } = await supabase
     .from("entries")
     .select(
-      "id, title, titleKhmer:title_khmer, source, description, descriptionKhmer:description_khmer, image:photo_url"
+      "id, title, titleKhmer:title_khmer, source, contributor, description, descriptionKhmer:description_khmer, image:photo_url"
     )
     .order("created_at", { ascending: false });
   const entries = data ?? [];

@@ -22,6 +22,9 @@ export const FIELDS = [
   { name: "description", required: true, label: "DESCRIPTION", kind: "textarea", maxLength: 10000, counter: { unit: "words", max: 1000 }, hint: "Required. Up to 1,000 words." },
   { name: "description_khmer", label: "DESCRIPTION (KHMER)", kind: "textarea", lang: "km", maxLength: 6000, counter: { unit: "characters", max: 6000 }, hint: "Optional. Up to 6,000 characters. Leave it empty if you don't know Khmer." },
   { name: "source", required: true, label: "SOURCE", kind: "text", maxLength: 300, counter: { unit: "characters", max: 300 }, hint: "Required. Who or where this comes from. Up to 300 characters." },
+  // Who gets the credit: a display name typed by the contributor (any language, a single name is fine).
+  // It is a label, not identity: the real accountability is still `owner`, taken from the login session.
+  { name: "contributor", required: true, label: "CONTRIBUTOR", kind: "text", maxLength: 120, counter: { unit: "characters", max: 120 }, hint: "Required. Your name, as you want it shown. Up to 120 characters." },
   { name: "filling", required: true, label: "FILLING", kind: "text", maxLength: 120, counter: { unit: "characters", max: 120 }, hint: "Required. Up to 120 characters." },
   { name: "shape", required: true, label: "SHAPE", kind: "text", maxLength: 120, counter: { unit: "characters", max: 120 }, hint: "Required. Up to 120 characters." },
   { name: "color", required: true, label: "COLOR", kind: "text", maxLength: 120, counter: { unit: "characters", max: 120 }, hint: "Required. Up to 120 characters." },

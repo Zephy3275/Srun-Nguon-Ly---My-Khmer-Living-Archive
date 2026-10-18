@@ -50,7 +50,7 @@ export default async function EditEntryPage({ params }) {
   const { data: entry, error } = await supabase
     .from("entries")
     .select(
-      "id, owner, title, title_khmer, description, description_khmer, source, filling, shape, color, texture, sweetness, saltiness, photo_url"
+      "id, owner, title, title_khmer, description, description_khmer, source, contributor, filling, shape, color, texture, sweetness, saltiness, photo_url"
     )
     .eq("id", id)
     .maybeSingle();

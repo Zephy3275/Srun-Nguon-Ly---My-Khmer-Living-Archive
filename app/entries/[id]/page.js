@@ -57,7 +57,7 @@ export default async function EntryPage({ params }) {
   const { data: entry, error } = await supabase
     .from("entries")
     .select(
-      "id, owner, title, titleKhmer:title_khmer, source, sweetness, saltiness, description, descriptionKhmer:description_khmer, image:photo_url"
+      "id, owner, title, titleKhmer:title_khmer, source, contributor, sweetness, saltiness, description, descriptionKhmer:description_khmer, image:photo_url"
     )
     .eq("id", id)
     .maybeSingle();
@@ -104,6 +104,9 @@ export default async function EntryPage({ params }) {
         <h2 style={styles.titleKhmer}>{entry.titleKhmer}</h2>
       )}
       <p style={styles.label}>SOURCE: {entry.source}</p>
+      {entry.contributor && (
+        <p style={styles.label}>CONTRIBUTED BY: {entry.contributor}</p>
+      )}
       {levels.length > 0 && <p style={styles.label}>{levels.join(" · ")}</p>}
       {entry.image && (
         <img src={entry.image} alt={entry.title} style={styles.image} />

@@ -89,6 +89,7 @@ export default function SearchFilter({ entries }) {
       entry.description,
       entry.titleKhmer,
       entry.descriptionKhmer,
+      entry.contributor,
     ]
       .filter(Boolean)
       .join(" ")
@@ -107,7 +108,7 @@ export default function SearchFilter({ entries }) {
         <div style={styles.searchRow}>
           <input
             type="text"
-            placeholder="Search by title or description…"
+            placeholder="Search by title, description or contributor…"
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);

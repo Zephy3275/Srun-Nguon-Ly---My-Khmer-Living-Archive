@@ -23,6 +23,7 @@ export function entryColumns(values) {
     description: values.description,
     description_khmer: values.description_khmer || null,
     source: values.source,
+    contributor: values.contributor,
     filling: values.filling,
     shape: values.shape,
     color: values.color,

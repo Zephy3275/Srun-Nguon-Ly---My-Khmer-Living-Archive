@@ -47,6 +47,8 @@ export function validateEntry(v) {
 
   plain("title", 120, "Add a title (up to 120 characters).");
   plain("source", 300, "Say where this comes from (up to 300 characters).");
+  // One name is enough (no first + last rule), in any language: it only needs a letter.
+  plain("contributor", 120, "Add the contributor's name (up to 120 characters).");
   plain("filling", 120, "Describe the filling (up to 120 characters).");
   plain("shape", 120, "Describe the shape (up to 120 characters).");
   plain("color", 120, "Describe the color (up to 120 characters).");

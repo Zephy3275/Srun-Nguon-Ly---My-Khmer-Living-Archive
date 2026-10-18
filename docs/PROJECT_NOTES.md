@@ -163,7 +163,8 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 ```
 
 Database (Supabase, created in Labs 6-7 - dashboard only, not repo files):
-- Table `entries`, 15 columns: `id, created_at, owner` (given) + `title, description,
+- **Week 8 update:** `entries` now has **16 columns**: `contributor` (text, nullable in the database, REQUIRED in the form), plus check `entries_contributor_length` (`null`, or `char_length(trim(contributor))` 1-120), so 12 check rows in total (ten length + the two Lab 6 sweetness/saltiness checks). The 9 seed entries were credited with the student's name by an `UPDATE`. Current rules file: `Week7_Lab7/TableRule_Refined3.md`. Details and the SQL: `docs/sprint 2/CHANGES7_ContributorField.md`.
+- Table `entries`, 15 columns (as of Lab 7): `id, created_at, owner` (given) + `title, description,
   source, filling, shape, color` (not null) + `title_khmer, description_khmer`
   (nullable since the Lab 7 follow-up: Khmer is optional) + `texture, sweetness,
   saltiness, photo_url` (nullable).
@@ -349,8 +350,8 @@ list is what matters). For awareness only, these points differ slightly from Wee
 - "Ask the author": the student should be ready to explain ONE ownership rule (a policy or a
   constraint): what it does, why it's there, what breaks without it.
 
-**Confirmed requirement - contributor (credit) field (professor, 2026-10-09; student will do
-it later in the week, not first):** add a contributor name to the add-entry form
+**Confirmed requirement - contributor (credit) field (professor, 2026-10-09; DONE
+2026-10-19, see "Week 8 progress"):** add a contributor name to the add-entry form
 (`/contribute`) so each entry is credited. Expected scope (plan and ask before building):
 - Database (SQL run by hand, in a fresh SQL Editor tab, BEFORE deploying the code): a new
   `contributor` column on `entries` plus a length check constraint (same
@@ -449,6 +450,7 @@ still the 9 Sprint 1 entries + a Test Entry.
   delete. Back links on login/signup/contribute now say BACK TO HOMEPAGE. NOTE: the student plans
   a bigger UI/UX overhaul later (professor: get off the default design); keep the shared pieces
   central and easy to restyle.
+- **Contributor field (professor requirement): DONE and browser-tested by the student (2026-10-19). SQL run (column, constraint, credit on the 9 real entries); the first UPDATE also credited 8 test entries, corrected back to NULL and verified.** In `docs/sprint 2/CHANGES7_ContributorField.md`: required form field `CONTRIBUTOR` (one name passes, any language), saved via `entryColumns`, shown as `CONTRIBUTED BY` on the entry page only (not on cards), searchable on Browse; the edit page's hand-written `select` includes it so editing never blanks the name. `owner` still never comes from the form.
 - **#3 (make sweetness/saltiness required) DROPPED by the student:** ratings are subjective;
   they stay optional.
 - **#10 language toggle SKIPPED by the student** (whole-interface Khmer would need every UI
@@ -469,7 +471,7 @@ Fix list / status (fill in once received):
 | 10 | English/Khmer toggle (Lyching) | feature | SKIPPED by the student |
 | 2, 12, 1, 4+8, 5, 6 | Group B small UI polish (Lyching + Kimyoo) | UI | done, student-tested |
 | 11, 9 | Group C redesign: sticky header, shared headings, login/signup look, mooncake loader + save progress (Kimyoo, Lyching) | UI | done, student-tested incl. the rich page-load loader |
-| C | Contributor field (professor requirement): see `Week8/Tester_Feedback_Triage.md` part 4 | functional + DB | not started |
+| C | Contributor field (professor requirement) | functional + DB | done, student-tested (SQL run, test rows corrected) |
 
 ---
 ## Sprint 2 - scoped (Supabase + Auth)
@@ -567,6 +569,7 @@ outside this repo, not new code.
 
 - docs/sprint 2/CHANGES6_AttackLog.md           (Lab 7 Part 4 - attack a classmate's archive)
 - docs/sprint 2/CHANGES6_AttackFeedback.md      (after Part 4 - optional Khmer fields + Browse back link)
+- docs/sprint 2/CHANGES7_ContributorField.md    (Week 8 - contributor field: the one Week 8 change that touched the database; includes the SQL)
 - docs/sprint 2/CHANGES7_Redesign.md            (Week 8 group C - sticky header, shared headings, login/signup look, mooncake loader and save progress text)
 - docs/sprint 2/CHANGES7_UIPolish.md            (Week 8 group B - homepage link, label removal, card line clamp, required asterisks, photo preview, favicon)
 - docs/sprint 2/CHANGES7_FunctionalFixes.md     (Week 8 group A - autofill + global CSS, lock while saving, hard-stop limits, levels on entry page)
