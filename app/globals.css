@@ -41,3 +41,90 @@ button:disabled {
   opacity: 0.6;
   cursor: not-allowed;
 }
+
+/* ---- Shared look for links and buttons (used by the site header, the back
+   links and the main form buttons) ---- */
+
+/* A clear keyboard focus ring on every link and button. */
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid #2ee6a8;
+  outline-offset: 2px;
+}
+
+/* Plain header link (BROWSE, LOG IN): bold light text, soft highlight on hover. */
+.nav-link,
+.nav-btn {
+  display: inline-block;
+  padding: 8px 12px;
+  font: 700 15px "Courier New", monospace;
+  letter-spacing: 1px;
+  text-decoration: none;
+  border-radius: 6px;
+  cursor: pointer;
+}
+
+.nav-link {
+  color: #e8edf2;
+}
+
+.nav-link:hover {
+  background-color: #1c222c;
+  color: #2ee6a8;
+}
+
+/* "← BACK TO …" links: underline on hover. */
+.back-link {
+  text-decoration: none;
+}
+
+.back-link:hover {
+  text-decoration: underline;
+}
+
+/* Buttons. Filled = the main action on a page; outline = a quieter one.
+   Size and spacing come from the element's own style or from .nav-btn. */
+.btn-filled {
+  background-color: #2ee6a8;
+  color: #14181f;
+  border: 1px solid #2ee6a8;
+}
+
+.btn-filled:hover:not(:disabled) {
+  filter: brightness(1.12);
+}
+
+.btn-outline {
+  background-color: transparent;
+  color: #2ee6a8;
+  border: 1px solid #2e3644;
+}
+
+.btn-outline:hover:not(:disabled) {
+  border-color: #2ee6a8;
+}
+
+/* Loader (components/Loader.js): the mooncake icon turns slowly. Visitors whose
+   system asks for reduced motion get it standing still. */
+@keyframes mooncake-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.loader-icon {
+  animation: mooncake-spin 1.8s linear infinite;
+}
+
+/* The big loader: only the orbiting rings turn, slowly; the mooncake in the
+   middle stays still. */
+.loader-rings {
+  animation: mooncake-spin 12s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .loader-icon,
+  .loader-rings {
+    animation: none;
+  }
+}

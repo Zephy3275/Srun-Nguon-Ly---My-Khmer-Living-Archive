@@ -1,32 +1,13 @@
-import Link from "next/link";
 import collection from "../../collection.config.js";
 import { createClient } from "../../utils/supabase/server.js";
+import PageHeading from "../../components/PageHeading.js";
 import SearchFilter from "../../components/SearchFilter.js";
 
 const styles = {
   wrap: {
     maxWidth: 720,
     margin: "0 auto",
-    padding: "80px 24px",
-  },
-  back: {
-    fontFamily: "'Courier New', monospace",
-    fontSize: 14,
-    letterSpacing: 1,
-    color: "#2EE6A8",
-    textDecoration: "none",
-  },
-  kicker: {
-    fontFamily: "'Courier New', monospace",
-    color: "#2EE6A8",
-    fontSize: 14,
-    letterSpacing: 1,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 700,
-    margin: "16px 0 12px",
-    lineHeight: 1.1,
+    padding: "48px 24px 80px",
   },
   notice: {
     marginTop: 32,
@@ -52,11 +33,11 @@ export default async function Browse() {
 
   return (
     <main style={styles.wrap}>
-      <Link href="/" style={styles.back}>
-        ← BACK TO HOMEPAGE
-      </Link>
-      <p style={styles.kicker}>BROWSE THE COLLECTION</p>
-      <h1 style={styles.title}>{collection.name}</h1>
+      <PageHeading
+        back={{ href: "/", label: "← BACK TO HOMEPAGE" }}
+        kicker="BROWSE THE COLLECTION"
+        title={collection.name}
+      />
 
       {error ? (
         <p style={styles.notice}>

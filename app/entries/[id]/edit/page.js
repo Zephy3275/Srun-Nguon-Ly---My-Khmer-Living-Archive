@@ -1,36 +1,13 @@
 import Link from "next/link";
 import ContributeForm from "../../../../components/ContributeForm.js";
+import PageHeading from "../../../../components/PageHeading.js";
 import { createClient } from "../../../../utils/supabase/server.js";
 
 const styles = {
   wrap: {
     maxWidth: 720,
     margin: "0 auto",
-    padding: "80px 24px",
-  },
-  back: {
-    fontFamily: "'Courier New', monospace",
-    fontSize: 14,
-    letterSpacing: 1,
-    color: "#2EE6A8",
-    textDecoration: "none",
-  },
-  kicker: {
-    fontFamily: "'Courier New', monospace",
-    color: "#2EE6A8",
-    fontSize: 14,
-    letterSpacing: 1,
-  },
-  title: {
-    fontSize: 32,
-    fontWeight: 700,
-    margin: "16px 0 12px",
-    lineHeight: 1.1,
-  },
-  description: {
-    fontSize: 16,
-    color: "#97A1B3",
-    margin: "0 0 24px",
+    padding: "48px 24px 80px",
   },
   link: {
     color: "#2EE6A8",
@@ -42,12 +19,13 @@ const styles = {
 function Notice({ id, heading, children }) {
   return (
     <main style={styles.wrap}>
-      <Link href={`/entries/${id}`} style={styles.back}>
-        ← BACK TO ENTRY
-      </Link>
-      <p style={styles.kicker}>EDIT ENTRY</p>
-      <h1 style={styles.title}>{heading}</h1>
-      <p style={styles.description}>{children}</p>
+      <PageHeading
+        back={{ href: `/entries/${id}`, label: "← BACK TO ENTRY" }}
+        kicker="EDIT ENTRY"
+        title={heading}
+      >
+        {children}
+      </PageHeading>
     </main>
   );
 }
@@ -106,15 +84,14 @@ export default async function EditEntryPage({ params }) {
 
   return (
     <main style={styles.wrap}>
-      <Link href={`/entries/${id}`} style={styles.back}>
-        ← BACK TO ENTRY
-      </Link>
-      <p style={styles.kicker}>EDIT ENTRY</p>
-      <h1 style={styles.title}>Edit entry</h1>
-      <p style={styles.description}>
+      <PageHeading
+        back={{ href: `/entries/${id}`, label: "← BACK TO ENTRY" }}
+        kicker="EDIT ENTRY"
+        title="Edit entry"
+      >
         Change anything you like, then save. Your current photo stays unless you
         choose a new one.
-      </p>
+      </PageHeading>
       <ContributeForm entry={entry} />
     </main>
   );

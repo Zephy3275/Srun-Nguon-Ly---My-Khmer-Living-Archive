@@ -93,11 +93,11 @@ assume.
 Srun-Nguon-Ly---My-Khmer-Living-Archive\
 +-- app
 |   +-- layout.js      (root layout, dark theme)
-|   +-- loading.js     (Lab 6: "LOADING THE ARCHIVE..." while a page awaits Supabase)
+|   +-- loading.js     (Lab 6, redone in Week 8: turning mooncake Loader + "LOADING THE ARCHIVE...")
 |   +-- icon.png       (Week 8: favicon, 128x128; Next.js picks it up by name)
 |   +-- globals.css    (Week 8: plain CSS for what inline styles can't do: dark autofill, disabled look; imported in layout.js)
 |   +-- page.js        (homepage: identity + ContextAbout + all entries; READS SUPABASE;
-|   |                   nav has BROWSE + ADD AN ENTRY +)
+|   |                   the nav now lives in the sitewide SiteHeader, see components/)
 |   +-- browse
 |   |   +-- page.js    (browse page -> SearchFilter; READS SUPABASE; BACK TO ARCHIVE link)
 |   +-- contribute
@@ -121,7 +121,11 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   +-- ContextAbout.js     (homepage "About the Mooncake")
 |   +-- LoginForm.js        ("use client" sign-in; fixed invalid message)
 |   +-- SignupForm.js       ("use client" create account; min 6 password)
-|   +-- AuthHeader.js       (server: email+logout OR /login+/signup links)
+|   +-- SiteHeader.js       (Week 8: sticky bar on every page, rendered by layout.js: brand, BROWSE, ADD AN ENTRY +, AuthHeader)
+|   +-- PageHeading.js      (Week 8: back link + label + title + sentence, shared by browse/login/signup/contribute/edit)
+|   +-- BackLink.js         (Week 8: the "BACK TO ..." link, one look everywhere)
+|   +-- Loader.js           (Week 8: turning mooncake + optional text; big size = rich two-layer picture, small = plain icon; used by loading.js, forms, logout, delete)
+|   +-- AuthHeader.js       (server: the account part of SiteHeader: email+SIGN OUT OR LOG IN + SIGN UP)
 |   +-- LogoutButton.js     ("use client" sign out + refresh)
 |   +-- ContributeForm.js   (Lab 7: "use client" add/edit form; optional `entry` prop = edit mode)
 |   +-- EntryFormFields.js  (Lab 7: the field list rendered; photo preview when adding/editing)
@@ -135,6 +139,7 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |                            imports it any more since Lab 6's cutover; not synced with Supabase)
 +-- public
 |   +-- images              (9 photos)
+|   +-- loader-rings.png, loader-center.png   (Week 8: the two layers of the big page-load loader)
 +-- docs
 |   +-- sprint 2           (Lab 5, 6 and 7 changelogs)
 |   +-- CHANGES*.md, PROJECT_NOTES.md (living handoff)
@@ -434,6 +439,16 @@ still the 9 Sprint 1 entries + a Test Entry.
   #1 card line clamp (3 lines, English and Khmer separately); #4+8 `required` flag, red `*` and
   coral label on the entry form only (not login/signup); #5 `PhotoPreview` on add + edit; #6
   favicon `app/icon.png`.
+- **Group C (redesign): DONE and browser-tested by the student (2026-10-18): header, sign out,
+  login, save/edit progress text, delete, page load. The rich page-load loader (the student's
+  Gemini image in two layers, rings turning around a still mooncake) was added afterwards and
+  also checked: "looks great". Group C is closed; committed by the student.** All in `docs/sprint 2/CHANGES7_Redesign.md`:
+  #11 sticky `SiteHeader` on every page, shared `PageHeading`/`BackLink`, bigger headings, filled
+  green main buttons, login/signup inputs; #9 mooncake `Loader` for page load, login, signup,
+  save (with step text via an optional `onStage`), sign out (which had no loading state) and
+  delete. Back links on login/signup/contribute now say BACK TO HOMEPAGE. NOTE: the student plans
+  a bigger UI/UX overhaul later (professor: get off the default design); keep the shared pieces
+  central and easy to restyle.
 - **#3 (make sweetness/saltiness required) DROPPED by the student:** ratings are subjective;
   they stay optional.
 - **#10 language toggle SKIPPED by the student** (whole-interface Khmer would need every UI
@@ -453,7 +468,8 @@ Fix list / status (fill in once received):
 | 3 | Sweetness/saltiness required (Lyching) | functional | DROPPED (stays optional) |
 | 10 | English/Khmer toggle (Lyching) | feature | SKIPPED by the student |
 | 2, 12, 1, 4+8, 5, 6 | Group B small UI polish (Lyching + Kimyoo) | UI | done, student-tested |
-| - | Group C (redesign: #11 login/signup/browse/titles, #9 loading animation), then the contributor field: see `Week8/Tester_Feedback_Triage.md` | UI | not started |
+| 11, 9 | Group C redesign: sticky header, shared headings, login/signup look, mooncake loader + save progress (Kimyoo, Lyching) | UI | done, student-tested incl. the rich page-load loader |
+| C | Contributor field (professor requirement): see `Week8/Tester_Feedback_Triage.md` part 4 | functional + DB | not started |
 
 ---
 ## Sprint 2 - scoped (Supabase + Auth)
@@ -551,6 +567,7 @@ outside this repo, not new code.
 
 - docs/sprint 2/CHANGES6_AttackLog.md           (Lab 7 Part 4 - attack a classmate's archive)
 - docs/sprint 2/CHANGES6_AttackFeedback.md      (after Part 4 - optional Khmer fields + Browse back link)
+- docs/sprint 2/CHANGES7_Redesign.md            (Week 8 group C - sticky header, shared headings, login/signup look, mooncake loader and save progress text)
 - docs/sprint 2/CHANGES7_UIPolish.md            (Week 8 group B - homepage link, label removal, card line clamp, required asterisks, photo preview, favicon)
 - docs/sprint 2/CHANGES7_FunctionalFixes.md     (Week 8 group A - autofill + global CSS, lock while saving, hard-stop limits, levels on entry page)
 

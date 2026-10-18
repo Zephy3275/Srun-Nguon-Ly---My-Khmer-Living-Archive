@@ -1,4 +1,4 @@
-import Link from "next/link";
+import BackLink from "../../../components/BackLink.js";
 import EntryOwnerActions from "../../../components/EntryOwnerActions.js";
 import { createClient } from "../../../utils/supabase/server.js";
 
@@ -6,17 +6,7 @@ const styles = {
   wrap: {
     maxWidth: 720,
     margin: "0 auto",
-    padding: "80px 24px",
-  },
-  back: {
-    fontFamily: "'Courier New', monospace",
-    fontSize: 14,
-    letterSpacing: 1,
-    color: "#2EE6A8",
-    textDecoration: "none",
-    // Keeps the old gap above the title now that the "ARCHIVE ENTRY" label is gone.
-    display: "inline-block",
-    marginBottom: 16,
+    padding: "48px 24px 80px",
   },
   title: {
     fontSize: 40,
@@ -78,9 +68,7 @@ export default async function EntryPage({ params }) {
   if (error && error.code !== "22P02") {
     return (
       <main style={styles.wrap}>
-        <Link href="/browse" style={styles.back}>
-          ← BACK TO BROWSE
-        </Link>
+        <BackLink href="/browse">← BACK TO BROWSE</BackLink>
         <h1 style={styles.title}>Couldn't load this entry</h1>
         <p style={styles.description}>
           We couldn't reach the archive right now. Please try again in a moment.
@@ -92,9 +80,7 @@ export default async function EntryPage({ params }) {
   if (!entry) {
     return (
       <main style={styles.wrap}>
-        <Link href="/browse" style={styles.back}>
-          ← BACK TO BROWSE
-        </Link>
+        <BackLink href="/browse">← BACK TO BROWSE</BackLink>
         <h1 style={styles.title}>Entry not found</h1>
         <p style={styles.description}>
           There is no entry with that id in the archive yet.
@@ -112,9 +98,7 @@ export default async function EntryPage({ params }) {
 
   return (
     <main style={styles.wrap}>
-      <Link href="/browse" style={styles.back}>
-        ← BACK TO BROWSE
-      </Link>
+      <BackLink href="/browse">← BACK TO BROWSE</BackLink>
       <h1 style={styles.title}>{entry.title}</h1>
       {entry.titleKhmer && (
         <h2 style={styles.titleKhmer}>{entry.titleKhmer}</h2>

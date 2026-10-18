@@ -9,19 +9,22 @@ import { checkPhoto } from "../utils/photoCheck.js";
 import { submitEntry } from "../utils/submitEntry.js";
 import { updateEntry } from "../utils/updateEntry.js";
 import EntryFormFields from "./EntryFormFields.js";
+import Loader from "./Loader.js";
 
 // Used twice: /contribute (no `entry` prop = add a new entry) and the edit page
 // (`entry` = the row being edited, form pre-filled, new photo optional).
 
 const styles = {
   form: { marginTop: 32, display: "flex", flexDirection: "column", gap: 20 },
+  // Colours come from the .btn-filled class in globals.css (the main action).
   button: {
-    padding: "12px 16px",
-    fontSize: 15,
-    fontWeight: 600,
-    backgroundColor: "#1C222C",
-    color: "#2EE6A8",
-    border: "1px solid #2E3644",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "14px 18px",
+    fontSize: 16,
+    fontWeight: 700,
+    letterSpacing: 1,
     borderRadius: 8,
     cursor: "pointer",
   },
@@ -46,6 +49,8 @@ export default function ContributeForm({ entry }) {
   const [errors, setErrors] = useState({});
   const [formError, setFormError] = useState("");
   const [loading, setLoading] = useState(false);
+  // Which step the save is on, shown next to the loader ("UPLOADING PHOTO…").
+  const [stage, setStage] = useState("");
 
   // Editing a field clears that field's message.
   function handleChange(name, value) {
@@ -58,6 +63,7 @@ export default function ContributeForm({ entry }) {
     if (loading) return;
     setFormError("");
     setLoading(true); // disables the button for the whole check + upload + save
+    setStage("CHECKING YOUR ENTRY…");
 
     try {
       const clean = trimValues(values);
@@ -77,8 +83,8 @@ export default function ContributeForm({ entry }) {
 
       const supabase = createClient();
       const result = editing
-        ? await updateEntry(supabase, entry.id, clean, photoType)
-        : await submitEntry(supabase, clean, photoType);
+        ? await updateEntry(supabase, entry.id, clean, photoType, setStage)
+        : await submitEntry(supabase, clean, photoType, setStage);
       if (result.error) {
         setFormError(result.error);
         setLoading(false);
@@ -104,8 +110,14 @@ export default function ContributeForm({ entry }) {
         />
       </fieldset>
 
-      <button type="submit" disabled={loading} style={styles.button}>
-        {loading ? "SAVING…" : editing ? "SAVE CHANGES" : "ADD TO THE ARCHIVE"}
+      <button type="submit" disabled={loading} className="btn-filled" style={styles.button}>
+        {loading ? (
+          <Loader size={20} label={stage || "SAVING…"} />
+        ) : editing ? (
+          "SAVE CHANGES"
+        ) : (
+          "ADD TO THE ARCHIVE"
+        )}
       </button>
 
       {formError && <p style={styles.error}>{formError}</p>}

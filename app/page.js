@@ -1,39 +1,26 @@
-import Link from "next/link";
 import collection from "../collection.config.js";
 import EntryCard from "../components/EntryCard.js";
 import ContextAbout from "../components/ContextAbout.js";
-import AuthHeader from "../components/AuthHeader.js";
 import { createClient } from "../utils/supabase/server.js";
 
 const styles = {
   wrap: {
     maxWidth: 720,
     margin: "0 auto",
-    padding: "80px 24px",
+    padding: "48px 24px 80px",
   },
   kicker: {
     fontFamily: "'Courier New', monospace",
     color: "#2EE6A8",
-    fontSize: 14,
-    letterSpacing: 1,
-  },
-  nav: {
-    display: "flex",
-    alignItems: "center",
-    gap: 24,
-    marginBottom: 40,
-  },
-  navLink: {
-    fontFamily: "'Courier New', monospace",
-    fontSize: 14,
-    letterSpacing: 1,
-    color: "#2EE6A8",
-    textDecoration: "none",
+    fontSize: 16,
+    fontWeight: 700,
+    letterSpacing: 2,
+    margin: 0,
   },
   title: {
     fontSize: 48,
     fontWeight: 700,
-    margin: "16px 0 12px",
+    margin: "8px 0 12px",
     lineHeight: 1.1,
   },
   description: {
@@ -102,16 +89,6 @@ export default async function Home() {
 
   return (
     <main style={styles.wrap}>
-      <nav style={styles.nav}>
-        <Link href="/browse" style={styles.navLink}>
-          BROWSE THE COLLECTION ↗
-        </Link>
-        <Link href="/contribute" style={styles.navLink}>
-          ADD AN ENTRY +
-        </Link>
-        <AuthHeader />
-      </nav>
-
       <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
       <h1 style={styles.title}>{collection.name}</h1>
       <p style={styles.description}>{collection.description}</p>

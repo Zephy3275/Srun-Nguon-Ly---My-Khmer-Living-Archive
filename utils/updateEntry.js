@@ -17,7 +17,9 @@ import {
 
 const NOT_SAVED = "That change wasn't saved.";
 
-export async function updateEntry(supabase, id, values, photoType) {
+// onStage is optional: a function the form passes in to be told which step is
+// running, so it can show it. It changes nothing about what is saved.
+export async function updateEntry(supabase, id, values, photoType, onStage) {
   const user = await getSessionUser(supabase);
   if (!user) return { error: "Your session has ended. Please log in again." };
 
@@ -25,12 +27,14 @@ export async function updateEntry(supabase, id, values, photoType) {
   const columns = entryColumns(values);
   let newPhotoPath = null;
   if (photoType) {
+    onStage?.("UPLOADING PHOTO…");
     const photo = await uploadPhoto(supabase, user.id, values.photo, photoType);
     if (photo.error) return { error: photo.error };
     newPhotoPath = photo.path;
     columns.photo_url = photo.publicUrl;
   }
 
+  onStage?.("SAVING CHANGES…");
   const { data, error } = await supabase
     .from("entries")
     .update(columns)

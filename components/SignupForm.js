@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "../utils/supabase/client.js";
+import Loader from "./Loader.js";
 
 const styles = {
   form: {
@@ -14,13 +15,15 @@ const styles = {
   },
   label: {
     fontFamily: "'Courier New', monospace",
-    fontSize: 12,
-    color: "#97A1B3",
+    fontSize: 13,
+    fontWeight: 700,
+    letterSpacing: 1,
+    color: "#C7CFDB",
   },
   input: {
     width: "100%",
-    padding: "12px 14px",
-    fontSize: 16,
+    padding: "14px 16px",
+    fontSize: 17,
     backgroundColor: "#1C222C",
     border: "1px solid #2E3644",
     borderRadius: 8,
@@ -29,13 +32,15 @@ const styles = {
     boxSizing: "border-box",
     fontFamily: "inherit",
   },
+  // Colours come from the .btn-filled class in globals.css (the main action).
   button: {
-    padding: "12px 16px",
-    fontSize: 15,
-    fontWeight: 600,
-    backgroundColor: "#1C222C",
-    color: "#2EE6A8",
-    border: "1px solid #2E3644",
+    display: "flex",
+    alignItems: "center",
+    justifyContent: "center",
+    padding: "14px 18px",
+    fontSize: 16,
+    fontWeight: 700,
+    letterSpacing: 1,
     borderRadius: 8,
     cursor: "pointer",
   },
@@ -142,8 +147,8 @@ export default function SignupForm() {
         />
         <p style={styles.hint}>At least 6 characters.</p>
 
-        <button type="submit" style={styles.button}>
-          {loading ? "CREATING ACCOUNT…" : "CREATE ACCOUNT"}
+        <button type="submit" className="btn-filled" style={styles.button}>
+          {loading ? <Loader size={20} label="CREATING ACCOUNT…" /> : "CREATE ACCOUNT"}
         </button>
       </fieldset>
 

@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../utils/supabase/client.js";
+import Loader from "./Loader.js";
 
 // Delete with an inline "are you sure?" step. Nothing is deleted until the
 // second click. Like an update, a delete refused by a row-level security
@@ -72,7 +73,7 @@ export default function DeleteEntryButton({ id }) {
     <div style={styles.row}>
       <span style={styles.ask}>Delete this entry? This can't be undone.</span>
       <button type="button" style={styles.delete} disabled={loading} onClick={handleDelete}>
-        {loading ? "DELETING…" : "YES, DELETE"}
+        {loading ? <Loader size={16} label="DELETING…" /> : "YES, DELETE"}
       </button>
       <button
         type="button"
