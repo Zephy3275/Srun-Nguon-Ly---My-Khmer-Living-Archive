@@ -94,6 +94,7 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 +-- app
 |   +-- layout.js      (root layout, dark theme)
 |   +-- loading.js     (Lab 6: "LOADING THE ARCHIVE..." while a page awaits Supabase)
+|   +-- icon.png       (Week 8: favicon, 128x128; Next.js picks it up by name)
 |   +-- globals.css    (Week 8: plain CSS for what inline styles can't do: dark autofill, disabled look; imported in layout.js)
 |   +-- page.js        (homepage: identity + ContextAbout + all entries; READS SUPABASE;
 |   |                   nav has BROWSE + ADD AN ENTRY +)
@@ -123,7 +124,8 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   +-- AuthHeader.js       (server: email+logout OR /login+/signup links)
 |   +-- LogoutButton.js     ("use client" sign out + refresh)
 |   +-- ContributeForm.js   (Lab 7: "use client" add/edit form; optional `entry` prop = edit mode)
-|   +-- EntryFormFields.js  (Lab 7: the field list rendered; shows current photo when editing)
+|   +-- EntryFormFields.js  (Lab 7: the field list rendered; photo preview when adding/editing)
+|   +-- PhotoPreview.js     (Week 8: previews the chosen photo, or the current one when editing)
 |   +-- FormField.js        (Lab 7: one label + control + hint/error)
 |   +-- FieldCounter.js     (Lab 7: live "used / max" counter under a field)
 |   +-- EntryOwnerActions.js(Lab 7: EDIT link + DeleteEntryButton, owner only)
@@ -426,6 +428,12 @@ still the 9 Sprint 1 entries + a Test Entry.
   #14 form locked while logging in / signing up / saving (`fieldset disabled`); #7 hard stop at
   the limits (`maxLength` + `clipWords` for the 1,000-word description, counters on the five
   fields that had none); small extra: sweetness/saltiness shown on the entry page.
+- **Group B (small UI polish): DONE, `next build` passes (dev server stopped first) and the
+  student browser-tested every item (2026-10-18); one commit by the student.** All in
+  `docs/sprint 2/CHANGES7_UIPolish.md`: #2 "Back to homepage"; #12 "ARCHIVE ENTRY" label removed;
+  #1 card line clamp (3 lines, English and Khmer separately); #4+8 `required` flag, red `*` and
+  coral label on the entry form only (not login/signup); #5 `PhotoPreview` on add + edit; #6
+  favicon `app/icon.png`.
 - **#3 (make sweetness/saltiness required) DROPPED by the student:** ratings are subjective;
   they stay optional.
 - **#10 language toggle SKIPPED by the student** (whole-interface Khmer would need every UI
@@ -434,8 +442,6 @@ still the 9 Sprint 1 entries + a Test Entry.
   running (both write `.next`; the build broke the student's session once). Check port 3000
   first; verify by requesting pages from the running dev server instead. Story in section 6 of
   `CHANGES7_FunctionalFixes.md`.
-- Favicon image is ready outside the repo (`Week8/icon.png`, 128x128); goes in as `app/icon.png`
-  in group B.
 
 Fix list / status (fill in once received):
 | # | Fix | Type (functional / UI / DB) | Status |
@@ -446,7 +452,8 @@ Fix list / status (fill in once received):
 | 7 | Hard stop at character/word limit (Lyching) | functional | done, student-tested on the title field (word clip script-tested only) |
 | 3 | Sweetness/saltiness required (Lyching) | functional | DROPPED (stays optional) |
 | 10 | English/Khmer toggle (Lyching) | feature | SKIPPED by the student |
-| - | Groups B (polish) and C (redesign), then contributor field C: see `Week8/Tester_Feedback_Triage.md` | UI | not started |
+| 2, 12, 1, 4+8, 5, 6 | Group B small UI polish (Lyching + Kimyoo) | UI | done, student-tested |
+| - | Group C (redesign: #11 login/signup/browse/titles, #9 loading animation), then the contributor field: see `Week8/Tester_Feedback_Triage.md` | UI | not started |
 
 ---
 ## Sprint 2 - scoped (Supabase + Auth)
@@ -544,6 +551,7 @@ outside this repo, not new code.
 
 - docs/sprint 2/CHANGES6_AttackLog.md           (Lab 7 Part 4 - attack a classmate's archive)
 - docs/sprint 2/CHANGES6_AttackFeedback.md      (after Part 4 - optional Khmer fields + Browse back link)
+- docs/sprint 2/CHANGES7_UIPolish.md            (Week 8 group B - homepage link, label removal, card line clamp, required asterisks, photo preview, favicon)
 - docs/sprint 2/CHANGES7_FunctionalFixes.md     (Week 8 group A - autofill + global CSS, lock while saving, hard-stop limits, levels on entry page)
 
 Lab 7 Part 5 (ship + write) has no changelog file of its own: it was the merge/push/deploy/

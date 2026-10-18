@@ -53,7 +53,7 @@ export default async function Browse() {
   return (
     <main style={styles.wrap}>
       <Link href="/" style={styles.back}>
-        ← BACK TO ARCHIVE
+        ← BACK TO HOMEPAGE
       </Link>
       <p style={styles.kicker}>BROWSE THE COLLECTION</p>
       <h1 style={styles.title}>{collection.name}</h1>

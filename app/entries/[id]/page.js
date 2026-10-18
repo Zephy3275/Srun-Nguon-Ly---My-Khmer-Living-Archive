@@ -14,12 +14,9 @@ const styles = {
     letterSpacing: 1,
     color: "#2EE6A8",
     textDecoration: "none",
-  },
-  kicker: {
-    fontFamily: "'Courier New', monospace",
-    color: "#2EE6A8",
-    fontSize: 14,
-    letterSpacing: 1,
+    // Keeps the old gap above the title now that the "ARCHIVE ENTRY" label is gone.
+    display: "inline-block",
+    marginBottom: 16,
   },
   title: {
     fontSize: 40,
@@ -84,7 +81,6 @@ export default async function EntryPage({ params }) {
         <Link href="/browse" style={styles.back}>
           ← BACK TO BROWSE
         </Link>
-        <p style={styles.kicker}>ARCHIVE ENTRY</p>
         <h1 style={styles.title}>Couldn't load this entry</h1>
         <p style={styles.description}>
           We couldn't reach the archive right now. Please try again in a moment.
@@ -99,7 +95,6 @@ export default async function EntryPage({ params }) {
         <Link href="/browse" style={styles.back}>
           ← BACK TO BROWSE
         </Link>
-        <p style={styles.kicker}>ARCHIVE ENTRY</p>
         <h1 style={styles.title}>Entry not found</h1>
         <p style={styles.description}>
           There is no entry with that id in the archive yet.
@@ -120,7 +115,6 @@ export default async function EntryPage({ params }) {
       <Link href="/browse" style={styles.back}>
         ← BACK TO BROWSE
       </Link>
-      <p style={styles.kicker}>ARCHIVE ENTRY</p>
       <h1 style={styles.title}>{entry.title}</h1>
       {entry.titleKhmer && (
         <h2 style={styles.titleKhmer}>{entry.titleKhmer}</h2>

@@ -13,6 +13,14 @@ const styles = {
     fontSize: 12,
     color: "#97A1B3",
   },
+  // Required fields: label text in a soft coral (lighter than the error red, so a
+  // field that failed validation still stands out) and a red asterisk.
+  labelRequired: {
+    fontFamily: "'Courier New', monospace",
+    fontSize: 12,
+    color: "#F0998D",
+  },
+  star: { color: "#E86A5A" },
   input: {
     width: "100%",
     padding: "12px 14px",
@@ -37,6 +45,7 @@ export default function FormField({ field, value, error, onChange }) {
     id,
     lang: field.lang,
     maxLength: field.maxLength, // undefined for the dropdowns and the file picker: not drawn
+    "aria-required": field.required ? true : undefined,
     "aria-invalid": error ? true : undefined,
     "aria-describedby": `${id}-note`,
     style: error ? { ...styles.input, ...styles.inputError } : styles.input,
@@ -80,8 +89,17 @@ export default function FormField({ field, value, error, onChange }) {
 
   return (
     <div style={styles.wrap}>
-      <label style={styles.label} htmlFor={id}>
+      <label
+        style={field.required ? styles.labelRequired : styles.label}
+        htmlFor={id}
+      >
         {field.label}
+        {field.required && (
+          <span style={styles.star} aria-hidden="true">
+            {" "}
+            *
+          </span>
+        )}
       </label>
       {control}
       <div style={styles.noteRow}>

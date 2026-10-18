@@ -1,5 +1,14 @@
 import Link from "next/link";
 
+// Cut a paragraph off after 3 lines and end it with "…". Used for both the
+// English and the Khmer description so every card stays about the same height.
+const clamp = {
+  display: "-webkit-box",
+  WebkitLineClamp: 3,
+  WebkitBoxOrient: "vertical",
+  overflow: "hidden",
+};
+
 const styles = {
   link: {
     display: "block",
@@ -51,6 +60,7 @@ const styles = {
     color: "#97A1B3",
     lineHeight: 1.5,
     margin: "8px 0 0",
+    ...clamp,
   },
   descriptionKhmer: {
     fontSize: 13,
@@ -58,6 +68,7 @@ const styles = {
     lineHeight: 1.6,
     margin: "10px 0 0",
     paddingTop: 8,
+    ...clamp,
     borderTop: "1px solid #2E3644",
   },
 };
