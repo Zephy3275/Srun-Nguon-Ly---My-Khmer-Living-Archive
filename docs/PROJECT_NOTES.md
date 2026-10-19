@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 2 (phase 2)**, between week 7 and week 8. Lab 5 (Supabase + Auth), Lab 6 (Intro to database) and **Lab 7 ("The Doors Open") are complete, merged to `main`, deployed to Vercel and live-verified.** Any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's (attack-tested by a classmate). **Now: Week 8, "The Proof" - the last week of Sprint 2.** It has NO lab guide: the MAIN FOCUS is fixing everything two outside testers reported (10+ fixes, ~3-4 functional, the rest mostly UI redesign); re-running the old checklists is only a light final sanity check. The student will give the exact fix list in a new chat; see the section "Week 8" below. Lab 7's Canvas submission, discussion post and journal are separate coursework, drafted in chat, not stored in this repo.
+> Current phase: **SPRINT 2 (phase 2)**, between week 7 and week 8. Lab 5 (Supabase + Auth), Lab 6 (Intro to database) and **Lab 7 ("The Doors Open") are complete, merged to `main`, deployed to Vercel and live-verified.** Any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's (attack-tested by a classmate). **Now: Week 8, "The Proof" - the last week of Sprint 2.** No lab guide. ALL fixes from the two outside testers, plus the professor-required contributor field, are DONE, tested and committed on branch `experiment` (see "Week 8" below). **Next: a whole-site UI/UX OVERHAUL** (the professor said to get off the default design; the student wants a Chinese-style mooncake theme). It is at the PLANNING stage: **no overhaul code has been written**. Its living note is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`: read it before touching any styling. Postponed until after the overhaul: merge `experiment` into `main` + deploy, a final live pass, and test-data cleanup. Lab 7's Canvas submission, discussion post and journal are separate coursework, drafted in chat, not stored in this repo.
 
 ---
 
@@ -12,7 +12,7 @@
 Copy everything in the block below into the new chat:
 
 ```
-Current: Sprint 2 - Lab 7 ("The Doors Open") is COMPLETE (all 5 parts), merged to main, deployed to Vercel, live-verified. NOW: Week 8 ("The Proof"), the last week of Sprint 2: no lab guide; the main focus is the fix list from two outside testers (10+ items: ~3-4 functional fixes, the rest mostly UI redesign); re-running old checklists is secondary. The fix list is already received and triaged in Week8/Tester_Feedback_Triage.md (outside the repo; it has the groups, the order, the decisions and a status table): read it, continue with the next group, propose a plan, and wait for approval before changing anything.
+Current: Sprint 2, Week 8 ("The Proof"). ALL tester fixes and the contributor field are DONE, tested and committed (branch `experiment`; `main` is not updated yet, the merge is postponed). NOW: the UI/UX OVERHAUL, still at the planning stage with no code written: the professor said to get off the default design (the dark gray + mint-green look); the student wants the WHOLE site redesigned with a Chinese-style mooncake theme. Read docs/UI-UX overhaul/OVERHAUL_NOTES.md (facts, decisions, phases, rules), then propose a short plan and wait for approval before changing anything.
 
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
@@ -32,6 +32,7 @@ follow "stop, revert to the last good commit, re-prompt smaller".
 STEP 1 - Orient yourself (don't skip):
   - Read AGENTS.md (rules - hard requirements + the Sprint 2 dependency amendment).
   - Read this living context file: docs/PROJECT_NOTES.md
+  - Read docs/UI-UX overhaul/OVERHAUL_NOTES.md (the overhaul's own living note; not mirrored here on purpose)
   - Skim docs/CHANGES*.md and docs/sprint 2/CHANGES5_*.md, then data/entries.js
     (kept but no longer read by the app - see below), collection.config.js, and
     the components/ and app/ folders to confirm current state.
@@ -53,6 +54,9 @@ CURRENT STATE (Sprint 2, after Lab 7):
     it any more; it is inert. New entries only appear on the site once inserted
     into Supabase.
   - collection.config.js = archive identity (unaffected by the database work).
+  - Week 8 additions (after Lab 7): a sticky SiteHeader on every page, shared PageHeading/BackLink,
+    a mooncake Loader, a required CONTRIBUTOR field (shown on the entry page, searchable), hard-stop
+    input limits, photo preview, a favicon; see the Week 8 section and docs/sprint 2/CHANGES7_*.md.
   - Supabase INTEGRATED (plumbing / doors / signal from Lab 5; table / RLS /
     seed / cutover / security checklist from Lab 6). Code reads env vars:
     NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (gitignored .env.local + Vercel).
@@ -317,7 +321,7 @@ Open items / leftovers (none blocking):
 
 ---
 
-## Week 8, "The Proof" (last week of Sprint 2) - STARTING
+## Week 8, "The Proof" (last week of Sprint 2) - TESTER FIXES DONE; OVERHAUL NEXT
 
 **What it is (from the student, 2026-10-09):** there is NO lab guide this week. Officially it
 is a re-test to "prove" everything works, but the student stressed that is NOT the important
@@ -416,17 +420,34 @@ quick pass on the LIVE URL at the end; full list in `Week7_Lab7/ValidationCheckl
 Any fix that adds a field or changes how data is saved must also be checked against these
 (validator, `entryColumns`, the database constraints, edit mode, search, cards).
 
-**Where the code stands going in:** branch `experiment` (the student works there); `main` =
-03c5d24 is what is deployed on Vercel. `experiment` is one docs-only commit ahead of `main`
-(90ee07c) - nothing functional. Merge `experiment` into `main` and push to deploy (the
-student does this).
+**Where the code stands (updated 2026-10-19):** branch `experiment` (the student works there) holds
+every Week 8 commit (group A, group B, group C, contributor field; commit messages
+`Sprint 2, week8: ... (AI-assisted)`). `main` is what Vercel deploys and has NOT been updated with
+Week 8 yet: the merge is postponed until after the overhaul (check with `git log main..experiment`).
+The contributor SQL was already run on the shared database; the old live code simply never reads or
+writes that column, so nothing breaks. Merging is the student's job (merge `experiment` into `main`,
+push, Vercel deploys).
 
 **Known leftovers that testers may also hit (from Week 7):** photos of deleted/replaced
 entries stay in Storage; EXIF/GPS is not stripped from photos; test data still around
-(throwaway entries on `archive.test.two`, cross-project test accounts); the real archive is
-still the 9 Sprint 1 entries + a Test Entry.
+(throwaway entries on `archive.test.two`, cross-project test accounts); the live site still shows 8 test entries (the 9 real entries are the Sprint 1 ones and now carry the contributor credit).
 
 **Week 8 progress:**
+- **NEXT: the UI/UX overhaul.** Planning only; everything is in `docs/UI-UX overhaul/OVERHAUL_NOTES.md`
+  (decisions are open: palette A Midnight & Gold recommended / B / C, typography, ornament level).
+  Rules already settled for it: the UI libraries the student looked at (Magic UI, React Bits, Motion)
+  are NOT used because they break AGENTS.md (they need Tailwind/shadcn or a new dependency, and "no CSS
+  frameworks, no component libraries"); every effect is done in plain CSS. A real image-generation route
+  exists via Antigravity's built-in sub-agent; a Google AI Studio key has no free image quota (HTTP 429
+  tested). Khmer/English text never goes inside generated images.
+- **POSTPONED (student's choice, to do after the overhaul):** merge `experiment` -> `main` and deploy;
+  a final live pass on the Vercel URL; test-data cleanup (delete the 8 test entries by listing their ids
+  first, not with a broad WHERE; deleting a row does not remove its Storage photo).
+- **DEADLINE (confirmed by the student): Monday 2026-10-19, 11:59 PM.** Plan: submit the bare minimum first,
+  then keep working on the overhaul until it is satisfactory. So the postponed items above come FIRST, before the
+  deadline: commit the docs, merge/deploy (the live `main` has none of Week 8 yet: 6 commits only on
+  `experiment`), clean the 8 test entries, a quick live pass, and tag the submitted state. Then continue the
+  overhaul on `experiment`. Details in `docs/UI-UX overhaul/OVERHAUL_NOTES.md`.
 - **Group A (bugs/behavior): DONE and browser-tested by the student (2026-10-17); all in
   `docs/sprint 2/CHANGES7_FunctionalFixes.md`; one commit by the student.** Not browser-tested:
   long paste into the description, a levels line with a real value (final pass).
@@ -577,6 +598,7 @@ outside this repo, not new code.
 Lab 7 Part 5 (ship + write) has no changelog file of its own: it was the merge/push/deploy/
 live-check plus a Canvas submission, discussion post and journal kept outside this repo.
 
-Next: Week 8 fixes. Add a changelog entry per round of fixes as they land, same pattern as
-`docs/sprint 2/CHANGES5_*.md` for Lab 6 and `CHANGES6_*.md` for Lab 7 (ask the student which
-prefix to use for Week 8).
+- docs/UI-UX overhaul/MOCKUP_BRIEFS.md          (the three palette mockup prompts for Antigravity)
+- docs/UI-UX overhaul/OVERHAUL_NOTES.md        (the overhaul's living note: facts, decisions, phases, rules; not a changelog)
+
+Next: the UI/UX overhaul. Its changelog files go in `docs/UI-UX overhaul/` (ask the student which prefix; suggestion `CHANGES8_<Name>.md`; Week 8's tester fixes used `CHANGES7_*` in `docs/sprint 2/`).
