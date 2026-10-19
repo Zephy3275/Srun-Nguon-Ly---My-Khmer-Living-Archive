@@ -28,7 +28,7 @@ const styles = {
     borderRadius: 8,
     cursor: "pointer",
   },
-  error: { color: "#E86A5A", fontSize: 14, margin: 0 },
+  error: { color: "var(--danger)", fontSize: 14, margin: 0 },
   // A fieldset lets `disabled` lock every field at once while the form saves.
   // Reset its default border/padding and keep the form's stacked layout.
   fields: {

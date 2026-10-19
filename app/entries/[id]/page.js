@@ -17,14 +17,14 @@ const styles = {
   titleKhmer: {
     fontSize: 22,
     fontWeight: 500,
-    color: "#C7CFDB",
+    color: "var(--text-soft)",
     margin: "0 0 16px",
     lineHeight: 1.3,
   },
   label: {
     fontFamily: "'Courier New', monospace",
     fontSize: 12,
-    color: "#97A1B3",
+    color: "var(--muted)",
     margin: "0 0 20px",
   },
   image: {
@@ -36,16 +36,16 @@ const styles = {
   },
   description: {
     fontSize: 17,
-    color: "#97A1B3",
+    color: "var(--muted)",
     lineHeight: 1.6,
     marginTop: 24,
   },
   descriptionKhmer: {
     fontSize: 16,
-    color: "#7C8698",
+    color: "var(--muted-dim)",
     lineHeight: 1.8,
     marginTop: 12,
-    borderTop: "1px solid #2E3644",
+    borderTop: "1px solid var(--border)",
     paddingTop: 12,
   },
 };

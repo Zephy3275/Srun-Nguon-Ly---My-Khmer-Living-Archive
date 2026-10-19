@@ -20,7 +20,7 @@ const styles = {
   caption: {
     fontFamily: "'Courier New', monospace",
     fontSize: 12,
-    color: "#97A1B3",
+    color: "var(--muted)",
     margin: 0,
   },
 };

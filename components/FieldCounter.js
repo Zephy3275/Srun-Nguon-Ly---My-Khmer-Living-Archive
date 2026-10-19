@@ -8,13 +8,13 @@ const styles = {
   count: {
     fontFamily: "'Courier New', monospace",
     fontSize: 12,
-    color: "#7C8698",
+    color: "var(--muted-dim)",
     whiteSpace: "nowrap",
   },
   over: {
     fontFamily: "'Courier New', monospace",
     fontSize: 12,
-    color: "#E86A5A",
+    color: "var(--danger)",
     whiteSpace: "nowrap",
   },
 };

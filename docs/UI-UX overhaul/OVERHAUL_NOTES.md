@@ -11,8 +11,11 @@
 > copied into the repo as `docs/UI-UX overhaul/MOCKUP_BRIEFS.md` so any chat can read them. Do not put keys,
 > tokens or passwords in this file or anywhere in the repo (the repository is public).
 
-Status as of 2026-10-19 (end of day): **planning only. No overhaul code has been written yet.** Nothing in the repo
-has been changed for the overhaul. `docs/PROJECT_NOTES.md` now carries a short pointer to this file.
+Status as of 2026-10-19 (later): **P1 (tokens) is DONE and student-checked** (changelog: `CHANGES7.5_CssVariables.md` in this
+folder). The student chose to do the overhaul BEFORE shipping (the professor wants the new design in the shipped
+version) and left the design to the AI ("you cook it"): palette A + cinnabar button, moodboard of 10 images reviewed
+(night-blue/gold-moon family and red/gold-pattern family). **Next: P2 (retheme: change only the values in the `:root`
+block of `app/globals.css`).** `docs/PROJECT_NOTES.md` carries a short pointer to this file.
 
 ---
 
@@ -235,6 +238,7 @@ state), THEN keep working on the overhaul on experiment until it is satisfactory
 
 | Date | What |
 |---|---|
+| 2026-10-19 (P1) | Moodboard (10 images in `../Week8/UX_UI_Overhaul/inspiration/`) reviewed; the student said to skip the mockups and let the AI design. **P1 done:** 120 colour uses in 24 files became CSS variables defined in `app/globals.css` (same values, no visual change); new `--button`, `--on-button`, `--header-bg`. Checked on a throwaway server (port 3100) and by the student's eyes. Rule from now on: no raw hex in components. Changelog `CHANGES7.5_CssVariables.md`. |
 | 2026-10-19 (deadline confirmed) | The student confirmed the deadline: Mon 2026-10-19, 11:59 PM; plan: submit the bare minimum, then keep working on the overhaul. Notes updated. |
 | 2026-10-19 03:18 | The student gave the deadline: "tomorrow". Recorded the minimum-overhaul scope and a recommended order (deploy the finished Week 8 work first). Created `../Week8/UX_UI_Overhaul/inspiration/` for the moodboard. |
 | 2026-10-19 (later) | Settled: no UI libraries (Magic UI / React Bits / Motion break AGENTS.md); AI Studio key image test returned 429 (no free image quota), route dropped; added the moodboard step to P0; the professor's wording is no longer a question. PROJECT_NOTES.md got a pointer. Still no code. |

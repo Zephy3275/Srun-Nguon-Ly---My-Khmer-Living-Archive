@@ -10,7 +10,7 @@ const styles = {
     padding: "48px 24px 80px",
   },
   link: {
-    color: "#2EE6A8",
+    color: "var(--accent)",
     textDecoration: "none",
   },
 };

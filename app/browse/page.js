@@ -12,11 +12,11 @@ const styles = {
   notice: {
     marginTop: 32,
     padding: 24,
-    backgroundColor: "#1C222C",
-    border: "1px solid #2E3644",
+    backgroundColor: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: 10,
     fontSize: 15,
-    color: "#97A1B3",
+    color: "var(--muted)",
     lineHeight: 1.7,
   },
 };

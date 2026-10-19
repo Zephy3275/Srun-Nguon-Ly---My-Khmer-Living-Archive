@@ -2,13 +2,13 @@ const styles = {
   section: {
     marginTop: 48,
     padding: 24,
-    backgroundColor: "#1C222C",
-    border: "1px solid #2E3644",
+    backgroundColor: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: 10,
   },
   kicker: {
     fontFamily: "'Courier New', monospace",
-    color: "#2EE6A8",
+    color: "var(--accent)",
     fontSize: 14,
     letterSpacing: 1,
     margin: 0,
@@ -16,24 +16,24 @@ const styles = {
   heading: { fontSize: 24, fontWeight: 700, margin: "12px 0 16px" },
   intro: {
     fontSize: 16,
-    color: "#97A1B3",
+    color: "var(--muted)",
     lineHeight: 1.7,
     margin: "0 0 16px",
   },
   point: {
     fontSize: 15,
-    color: "#97A1B3",
+    color: "var(--muted)",
     lineHeight: 1.7,
     margin: "0 0 12px",
   },
-  lead: { color: "#E8EDF2" },
+  lead: { color: "var(--text)" },
   closing: {
     fontSize: 15,
-    color: "#97A1B3",
+    color: "var(--muted)",
     lineHeight: 1.7,
     margin: "16px 0 0",
     paddingTop: 16,
-    borderTop: "1px solid #2E3644",
+    borderTop: "1px solid var(--border)",
   },
 };
 

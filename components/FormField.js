@@ -11,32 +11,32 @@ const styles = {
   label: {
     fontFamily: "'Courier New', monospace",
     fontSize: 12,
-    color: "#97A1B3",
+    color: "var(--muted)",
   },
   // Required fields: label text in a soft coral (lighter than the error red, so a
   // field that failed validation still stands out) and a red asterisk.
   labelRequired: {
     fontFamily: "'Courier New', monospace",
     fontSize: 12,
-    color: "#F0998D",
+    color: "var(--danger-soft)",
   },
-  star: { color: "#E86A5A" },
+  star: { color: "var(--danger)" },
   input: {
     width: "100%",
     padding: "12px 14px",
     fontSize: 16,
-    backgroundColor: "#1C222C",
-    border: "1px solid #2E3644",
+    backgroundColor: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: 8,
-    color: "#E8EDF2",
+    color: "var(--text)",
     outline: "none",
     boxSizing: "border-box",
     fontFamily: "inherit",
   },
-  inputError: { border: "1px solid #E86A5A" },
+  inputError: { border: "1px solid var(--danger)" },
   noteRow: { display: "flex", justifyContent: "space-between", gap: 12 },
-  hint: { fontSize: 12, color: "#7C8698", margin: 0 },
-  error: { fontSize: 13, color: "#E86A5A", margin: 0 },
+  hint: { fontSize: 12, color: "var(--muted-dim)", margin: 0 },
+  error: { fontSize: 13, color: "var(--danger)", margin: 0 },
 };
 
 export default function FormField({ field, value, error, onChange }) {

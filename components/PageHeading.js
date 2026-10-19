@@ -12,7 +12,7 @@ const styles = {
     fontSize: 16,
     fontWeight: 700,
     letterSpacing: 2,
-    color: "#2EE6A8",
+    color: "var(--accent)",
     margin: 0,
   },
   title: {
@@ -23,7 +23,7 @@ const styles = {
   },
   description: {
     fontSize: 18,
-    color: "#97A1B3",
+    color: "var(--muted)",
     lineHeight: 1.6,
     margin: "0 0 24px",
   },

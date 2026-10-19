@@ -13,7 +13,7 @@ const styles = {
     display: "flex",
     justifyContent: "center",
     padding: "80px 0",
-    color: "#2EE6A8",
+    color: "var(--accent)",
     fontSize: 15,
   },
 };

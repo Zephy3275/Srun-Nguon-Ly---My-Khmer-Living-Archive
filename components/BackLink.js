@@ -11,7 +11,7 @@ const styles = {
     fontSize: 15,
     fontWeight: 700,
     letterSpacing: 1,
-    color: "#2EE6A8",
+    color: "var(--accent)",
   },
 };
 

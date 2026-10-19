@@ -17,15 +17,15 @@ const base = {
   letterSpacing: 1,
   borderRadius: 8,
   cursor: "pointer",
-  backgroundColor: "#1C222C",
+  backgroundColor: "var(--surface)",
 };
 
 const styles = {
   row: { display: "flex", alignItems: "center", gap: 12, flexWrap: "wrap" },
-  ask: { fontSize: 14, color: "#C7CFDB" },
-  delete: { ...base, color: "#E86A5A", border: "1px solid #E86A5A" },
-  cancel: { ...base, color: "#97A1B3", border: "1px solid #2E3644" },
-  error: { color: "#E86A5A", fontSize: 14, margin: "12px 0 0" },
+  ask: { fontSize: 14, color: "var(--text-soft)" },
+  delete: { ...base, color: "var(--danger)", border: "1px solid var(--danger)" },
+  cancel: { ...base, color: "var(--muted)", border: "1px solid var(--border)" },
+  error: { color: "var(--danger)", fontSize: 14, margin: "12px 0 0" },
 };
 
 export default function DeleteEntryButton({ id }) {

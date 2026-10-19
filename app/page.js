@@ -11,7 +11,7 @@ const styles = {
   },
   kicker: {
     fontFamily: "'Courier New', monospace",
-    color: "#2EE6A8",
+    color: "var(--accent)",
     fontSize: 16,
     fontWeight: 700,
     letterSpacing: 2,
@@ -25,21 +25,21 @@ const styles = {
   },
   description: {
     fontSize: 18,
-    color: "#97A1B3",
+    color: "var(--muted)",
     lineHeight: 1.6,
     margin: 0,
   },
   card: {
     marginTop: 48,
     padding: 24,
-    backgroundColor: "#1C222C",
-    border: "1px solid #2E3644",
+    backgroundColor: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: 10,
   },
   cardLabel: {
     fontFamily: "'Courier New', monospace",
     fontSize: 12,
-    color: "#97A1B3",
+    color: "var(--muted)",
     margin: 0,
   },
   cardValue: {
@@ -49,7 +49,7 @@ const styles = {
   count: {
     fontFamily: "'Courier New', monospace",
     fontSize: 14,
-    color: "#2EE6A8",
+    color: "var(--accent)",
     marginTop: 48,
   },
   grid: {
@@ -61,19 +61,19 @@ const styles = {
   notice: {
     marginTop: 24,
     padding: 24,
-    backgroundColor: "#1C222C",
-    border: "1px solid #2E3644",
+    backgroundColor: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: 10,
     fontSize: 15,
-    color: "#97A1B3",
+    color: "var(--muted)",
     lineHeight: 1.7,
   },
   footer: {
     marginTop: 64,
     paddingTop: 24,
-    borderTop: "1px solid #2E3644",
+    borderTop: "1px solid var(--border)",
     fontSize: 13,
-    color: "#5A6373",
+    color: "var(--faint)",
   },
 };
 

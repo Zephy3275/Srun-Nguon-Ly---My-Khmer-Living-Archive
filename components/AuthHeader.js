@@ -20,7 +20,7 @@ const styles = {
     fontFamily: "'Courier New', monospace",
     fontSize: 13,
     letterSpacing: 1,
-    color: "#97A1B3",
+    color: "var(--muted)",
   },
 };
 

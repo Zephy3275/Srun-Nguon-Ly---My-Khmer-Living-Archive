@@ -5,14 +5,14 @@ const styles = {
     listStyle: "none",
     margin: 0,
     padding: 0,
-    backgroundColor: "#1C222C",
-    border: "1px solid #2E3644",
+    backgroundColor: "var(--surface)",
+    border: "1px solid var(--border)",
     borderRadius: 8,
     overflow: "hidden",
     boxShadow: "0 8px 24px rgba(0,0,0,0.4)",
   },
   item: {
-    borderBottom: "1px solid #2E3644",
+    borderBottom: "1px solid var(--border)",
   },
   link: {
     display: "block",
@@ -23,12 +23,12 @@ const styles = {
   title: {
     display: "block",
     fontSize: 15,
-    color: "#E8EDF2",
+    color: "var(--text)",
   },
   khmer: {
     display: "block",
     fontSize: 14,
-    color: "#C7CFDB",
+    color: "var(--text-soft)",
     lineHeight: 1.4,
   },
 };
