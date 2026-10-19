@@ -1,7 +1,7 @@
 import collection from "../collection.config.js";
 import EntryCard from "../components/EntryCard.js";
 import ContextAbout from "../components/ContextAbout.js";
-import HeroMoon from "../components/HeroMoon.js";
+import HeroBanner from "../components/HeroBanner.js";
 import MoonPhases from "../components/MoonPhases.js";
 import { createClient } from "../utils/supabase/server.js";
 
@@ -9,9 +9,8 @@ const styles = {
   wrap: {
     maxWidth: 720,
     margin: "0 auto",
-    padding: "40px 24px 80px",
+    padding: "8px 24px 80px",
   },
-  hero: { textAlign: "center" },
   kicker: {
     fontFamily: "var(--font-label)",
     color: "var(--accent)",
@@ -93,53 +92,54 @@ export default async function Home() {
   const entries = data ?? [];
 
   return (
-    <main style={styles.wrap}>
-      <section style={styles.hero}>
-        <HeroMoon />
+    <>
+      <HeroBanner>
         <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
         <h1 style={styles.title}>{collection.name}</h1>
         <p style={styles.description}>{collection.description}</p>
-      </section>
-      <MoonPhases />
+      </HeroBanner>
+      <main style={styles.wrap}>
+        <MoonPhases />
 
-      <div style={styles.card}>
-        <p style={styles.cardLabel}>CURATED BY</p>
-        <p style={styles.cardValue}>{collection.curator}</p>
-      </div>
-      <div style={styles.card}>
-        <p style={styles.cardLabel}>SOURCE</p>
-        <p style={styles.cardValue}>{collection.source}</p>
-      </div>
-      <div style={styles.card}>
-        <p style={styles.cardLabel}>CITY</p>
-        <p style={styles.cardValue}>{collection.city}</p>
-      </div>
+        <div style={styles.card}>
+          <p style={styles.cardLabel}>CURATED BY</p>
+          <p style={styles.cardValue}>{collection.curator}</p>
+        </div>
+        <div style={styles.card}>
+          <p style={styles.cardLabel}>SOURCE</p>
+          <p style={styles.cardValue}>{collection.source}</p>
+        </div>
+        <div style={styles.card}>
+          <p style={styles.cardLabel}>CITY</p>
+          <p style={styles.cardValue}>{collection.city}</p>
+        </div>
 
-      <ContextAbout />
+        <ContextAbout />
 
-      {error ? (
-        <p style={styles.notice}>
-          We couldn't load the archive right now. Please try again in a moment.
-        </p>
-      ) : entries.length === 0 ? (
-        <p style={styles.notice}>No entries in the archive yet.</p>
-      ) : (
-        <>
-          <p style={styles.count}>entries in the archive: {entries.length}</p>
+        {error ? (
+          <p style={styles.notice}>
+            We couldn't load the archive right now. Please try again in a moment.
+          </p>
+        ) : entries.length === 0 ? (
+          <p style={styles.notice}>No entries in the archive yet.</p>
+        ) : (
+          <>
+            <p style={styles.count}>entries in the archive: {entries.length}</p>
 
-          <div style={styles.grid}>
-            {entries.map((entry) => (
-              <EntryCard key={entry.id} {...entry} />
-            ))}
-          </div>
-        </>
-      )}
+            <div style={styles.grid}>
+              {entries.map((entry) => (
+                <EntryCard key={entry.id} {...entry} />
+              ))}
+            </div>
+          </>
+        )}
 
-      <footer style={styles.footer}>
-        Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall
-        2026. This archive is under construction all semester. Come back in
-        December.
-      </footer>
-    </main>
+        <footer style={styles.footer}>
+          Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall
+          2026. This archive is under construction all semester. Come back in
+          December.
+        </footer>
+      </main>
+    </>
   );
 }

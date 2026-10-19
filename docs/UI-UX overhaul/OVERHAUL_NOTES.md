@@ -12,7 +12,7 @@
 > tokens or passwords in this file or anywhere in the repo (the repository is public).
 
 Status as of 2026-10-19 (later): **P1 (tokens) and P2 (retheme) are DONE and student-checked** (changelogs:
-`CHANGES7.5_CssVariables.md`, `CHANGES7.5_Retheme.md` in this folder). P3 (fonts, `CHANGES7.5_Fonts.md`) is done and student-checked; P4a (sky, moon hero, phases, `CHANGES7.5_HeroSky.md`) is built and awaits the student's check. Next: P4b (header, lattice, info-card row, wider page). The student chose to do the overhaul BEFORE shipping (the professor wants the new design in the shipped
+`CHANGES7.5_CssVariables.md`, `CHANGES7.5_Retheme.md` in this folder). P3 (fonts, `CHANGES7.5_Fonts.md`) is done and student-checked; P4a (sky, moon hero, phases, `CHANGES7.5_HeroSky.md`), P4a-2 (richer blue, `CHANGES7.5_Atmosphere.md`) and P4a-3 (painted hero from Gemini, `CHANGES7.5_HeroPainting.md`) are built; the student liked the sky and chose the painting. Next: P4b (header, lattice, info-card row, wider page, mooncake photo in an arch frame). The student chose to do the overhaul BEFORE shipping (the professor wants the new design in the shipped
 version) and left the design to the AI ("you cook it"): palette A + cinnabar button, moodboard of 10 images reviewed
 (night-blue/gold-moon family and red/gold-pattern family). **Next: P2 (retheme: change only the values in the `:root`
 block of `app/globals.css`).** `docs/PROJECT_NOTES.md` carries a short pointer to this file.
@@ -105,6 +105,16 @@ Chinese-style vocabulary to use (shapes only, never new words): full-moon circle
 phases as a divider, circular "moon gate" photo frames, faint window-lattice or cloud-scroll
 patterns, gold hairline frames, a blank red seal square, the carved mooncake-mould pattern. The
 student's Khmer and Chinese text is theirs alone (AGENTS rule 6); never add or alter heritage text.
+
+### Decision log (updated 2026-10-20; supersedes the OPEN table above)
+
+| # | Decision | Result |
+|---|---|---|
+| 1 | Palette | **Decided by the AI ("you cook it"): "Midnight & Gold"**: midnight blues, moon cream and gold, cinnabar-red main button, then enriched with cobalt and teal glows and stars (see `CHANGES7.5_Retheme.md`, `CHANGES7.5_Atmosphere.md`). No A/B/C mockups were made. |
+| 2 | Main button | cinnabar `#B8301F` with cream text (5.1:1; the first red `#C8372D` was only 4.42:1) |
+| 3 | Typography | **Done (P3):** Cormorant Garamond headings, Jost body and labels, Noto Serif/Sans Khmer, via `next/font/google` (`CHANGES7.5_Fonts.md`). Student-checked, Khmer fine. |
+| 4 | Ornament level | **Rich, built in steps.** The student wants it "majestic": a painted hero from Gemini is in; lattice, arch frames, gold hairlines, motion are next. Photo-style and CSS pieces only, no heritage text. |
+| 5 | Order | P1, P2, P3 done; P4 split into P4a (sky, hero), P4b (structure), P4c (cards, entry page), P4d (forms, 404). |
 
 ## 5. Proposed phases (one commit each; student commits; plan before code)
 
@@ -199,7 +209,22 @@ The student looked at Magic UI, React Bits and Motion. **None of them is used.**
 - The student's browser tests are the real visual check; say clearly what could not be checked
   from outside (looks, sticky behaviour, Khmer rendering, narrow windows).
 
-## 9. Opening message to paste into the new chat
+## 9b. SHORT opening message for the next chat (use this one; section 9 below is the original, now outdated)
+
+```
+Continuing the UI/UX overhaul of my Khmer Living Archive (Sprint 2, Week 8, branch `experiment`).
+Read, in this order: AGENTS.md, then docs/UI-UX overhaul/OVERHAUL_NOTES.md (start with the status line at
+the top and section 11 "Where we stopped"). You do not need to re-read the whole of docs/PROJECT_NOTES.md.
+Check `git status` and `git log -5` first: I may or may not have committed the last steps.
+Working agreement: short plan first, small steps, I commit myself ("Sprint 2, week8/PartN: ... (AI-assisted)"),
+never run `next build` while my dev server is running, no new dependencies, no secrets in files, Khmer text is
+never altered, you edit the repo and Gemini only makes images (it is opened on a small image folder, never the
+repo and never the Week8 root because of an API key file). You can take screenshots of the site yourself with
+headless Edge (command in section 11). I direct the look, you cook it.
+Next: P4b (see section 11).
+```
+
+## 9. Opening message to paste into the new chat (ORIGINAL, written before the overhaul started)
 
 **Open the new chat with the workspace set to the `ICT340 Projects` folder (the PARENT of the repo folder)**, the way
 the Week 8 chat was, so the `Week8` files (outside the repo) can be read. If the chat is opened in the repo folder
@@ -238,6 +263,9 @@ state), THEN keep working on the overhaul on experiment until it is satisfactory
 
 | Date | What |
 |---|---|
+| 2026-10-20 (3 AM wrap-up) | Student: hero "absolutely amazing". Open issue: the page background gets dimmer/darker and plain as you scroll (to fix later with effects and interactions). Extra Gemini images organised in `Week8/Gemini_images_from_antigravity/Brief 1/`; plan (not built): `hero_A_1` to Browse, `hero_A_2` to Contribute, none on login/signup. Everything recorded in section 11, `GEMINI_BRIEFS.md` and a short next-chat opening message (section 9b). |
+| 2026-10-20 (P4a-3) | **Painted hero done.** Student ran Brief 1 (direction A) in Antigravity on the small reference folder only, got three versions, chose `hero_A_3.png` ("Gemini absolutely cooked"). Compressed to `public/hero-moon-2000.webp` (92 KB) and `-900.webp` (27 KB); new `components/HeroBanner.js`; `HeroMoon.js` and its CSS deleted; home hero is now the painting with the title over the mountains. AI screenshots at desktop and phone width. Changelog `CHANGES7.5_HeroPainting.md`. The image-making workflow (open only the small folder, 3 versions, AI processes) works and is documented in `GEMINI_BRIEFS.md`. Next: P4b. |
+| 2026-10-20 (P4a-2) | Student's verdict on P4a: "huge moon, feels cheap, background voided; the inspirations' blues are majestic." **Answer:** richer atmosphere in CSS (cobalt + teal glows, stars, a tall mid-blue base, deeper "glass" cards, lighter secondary text; moon shrunk to 92px) and a plan for ONE painted hero image from Gemini (`GEMINI_BRIEFS.md`, Brief 1). The student's own `mooncake.jpg` (Gemini, 1200x896, warm photo with a carved top) is planned for an arch frame in the "What is a mooncake?" panel. Changelog `CHANGES7.5_Atmosphere.md`. Next: Gemini hero decision, then P4b. |
 | 2026-10-20 (P4a) | P3 was checked by the student ("fonts amazingly clean, Khmer fine"). **P4a built (pending the student's visual check):** gradient night sky on every page, `HeroMoon` (CSS moon + breathing halo), `MoonPhases` divider, centred hero on the home page. The AI now takes **headless Edge screenshots** of a throwaway server (`msedge --headless --screenshot`) to see pages itself. Changelog `CHANGES7.5_HeroSky.md`. P4b to P4d planned (header/lattice/row of cards; cards/arch frames; forms). |
 | 2026-10-20 (P3) | **P3 done (pending the student's visual check):** Cormorant Garamond (headings), Jost (body/labels), Noto Serif/Sans Khmer via `next/font/google` (no new dependency). Courier New is gone (26 uses became `var(--font-label)`); headings use `var(--font-heading)` with larger sizes. Checked on a throwaway server (pages 200, 12 font files served). Changelog `CHANGES7.5_Fonts.md`. Next: P4. |
 | 2026-10-19 (P2) | **P2 done:** the 14 variable values in `app/globals.css` now hold Midnight & Gold (navy `#0A1630`, cards `#112347`, cream text, gold accent `#E8B84B`, cinnabar button `#B8301F`; contrast calculated; the button red was darkened from `#C8372D` because 4.42 < 4.5). Student: "looks better, but still plain; I would like a more refined blue" -> premium feel comes from P3-P5; the richer blue = a gradient sky in P4. Changelog `CHANGES7.5_Retheme.md`. |
@@ -246,3 +274,69 @@ state), THEN keep working on the overhaul on experiment until it is satisfactory
 | 2026-10-19 03:18 | The student gave the deadline: "tomorrow". Recorded the minimum-overhaul scope and a recommended order (deploy the finished Week 8 work first). Created `../Week8/UX_UI_Overhaul/inspiration/` for the moodboard. |
 | 2026-10-19 (later) | Settled: no UI libraries (Magic UI / React Bits / Motion break AGENTS.md); AI Studio key image test returned 429 (no free image quota), route dropped; added the moodboard step to P0; the professor's wording is no longer a question. PROJECT_NOTES.md got a pointer. Still no code. |
 | 2026-10-19 | Planning only. Image-generation options verified and written up; Antigravity image sub-agent confirmed to work; measured the colour/font spread; drafted palettes A/B/C and phases P0-P7 and mockup prompts; wrote this note. No code changed. |
+
+## 11. Where we stopped (2026-10-20, about 3 AM) and what is next
+
+**Done so far (all documented, one `CHANGES7.5_*.md` per step in this folder):** P1 tokens
+(`CssVariables`), P2 retheme (`Retheme`), P3 fonts (`Fonts`), P4a sky and moon hero (`HeroSky`), P4a-2 richer
+blue atmosphere (`Atmosphere`), P4a-3 painted hero banner from Gemini (`HeroPainting`).
+**Commit state at the time of writing:** P1 to P3 and the first P4a commit are committed. P4a-2 (atmosphere)
+and P4a-3 (painted hero: `HeroBanner.js`, two images in `public/`, `HeroMoon.js` deleted, `page.js` and
+`globals.css` edits, the three new docs) were **still uncommitted**; the student was about to commit them as
+one commit. Verify with `git status`.
+**Not shipped:** `main` (what Vercel deploys) still lacks all of Week 8. The merge, the deletion of the 8 test
+entries (by listing ids first; one of them has a photo that is a console screenshot showing an email and
+password, so remove its Storage file too), a live pass and the tag are still pending. Ask the student for the
+current submission status; do not assume. The Canvas reflection was written in chat only.
+
+**The student's latest feedback (2026-10-20, 3 AM):**
+- The painted hero is "absolutely amazing" (chosen: `hero_A_3`).
+- **The page background gets dimmer and darker as you scroll, and still feels plain, cheap and voided.** The
+  student wants to deal with it later with special effects and interactions or other additions. Ideas to
+  consider (none started): keep more blue and light lower down (a second glow or a faint mist band), a slow
+  drift of mist and a gentle twinkle of stars (plain CSS, reduced-motion safe), scroll fade-ins, hover lifts
+  and glows on cards and buttons, gold lattice or cloud-scroll dividers (Gemini Brief 4 tile), the mooncake
+  emblem in the footer (Brief 2). Keep every effect plain CSS (no Motion, Magic UI or React Bits).
+- **Use the extra Gemini images; none should go to waste.** They are in
+  `Week8/Gemini_images_from_antigravity/Brief 1/` (`hero_A_1.png`, `hero_A_2.png`, `hero_A_3.png`; A_3 is
+  already on the home page). Plan, **to be built later, not yet:**
+  - `hero_A_1.png` (moon with thin rings over a lake, calm) goes on the **Browse** page, as a slim banner above
+    the heading.
+  - `hero_A_2.png` (moon with winding gold ribbons) goes on the **Contribute** page ("the last one"), a slim,
+    quiet banner above the form because that page is text-heavy.
+  - **No image on login or signup** (the student: people have to type there). The painting for the home page
+    stays `hero_A_3`. The assignment of A_1 and A_2 to those two pages is the AI's reading of the student's
+    message; confirm it before building. The images are 2.4:1, so a slim banner means cropping (the AI does
+    that, then compresses to WebP like the hero: about 30 to 90 KB).
+  - The student will generate more images later from the other directions (B river of light, C moon gate) to
+    explore options. Prompts: `GEMINI_BRIEFS.md`.
+
+**Next, in order (small steps, the student commits each):**
+1. P4b structure: one-row header with a gold hairline (the header wraps to two rows on wide screens now), a wider
+   page (about 1080px; entry and form pages stay narrow for reading), the three info cards in a row, a gold
+   lattice strip drawn in SVG, `mooncake.jpg` in an arch frame inside "What is a mooncake?" (it is AI-made, so
+   an illustration, not an entry).
+2. P4c cards and entry page: responsive card grid, arch photo frames, gold hairline and hover lift, moon-phase
+   divider between English and Khmer text, a mooncake emblem for "IMAGE PENDING".
+3. P4d forms and auth: framed panels, gold focus glow, branded 404, and the Browse and Contribute banners
+   from the extra images above.
+4. The "background dims and goes plain as you scroll" fix and P5 motion (effects and interactions).
+5. P6 phone and contrast pass, P7 docs, then the postponed merge, test-data cleanup and live pass.
+
+**Facts worth remembering:**
+- **The AI can see the site itself** with headless Edge: start a throwaway server (`npx next dev -p 3100`,
+  never while the student's 3000 is running), then
+  `"/c/Program Files (x86)/Microsoft/Edge/Application/msedge.exe" --headless=new --disable-gpu
+  --hide-scrollbars --window-size=1280,1000 --virtual-time-budget=9000 --screenshot=<file> http://localhost:3100/`
+  and look at the PNG. The smallest width it renders is about 500px (a 390px shot is a cropped 500px layout).
+  Stop the server and delete `.next` afterwards.
+- `app/page.js` uses Windows (CRLF) line endings; `globals.css` and the new files use LF. When a script edits
+  `page.js`, normalise first and convert back, or the search text will not match.
+- A one-off script with the `sharp` in `node_modules` makes the web images (not a project dependency).
+- Gemini image workflow that worked: open only `Week8/Gemini_images_from_antigravity` in Antigravity, send
+  "use your image tool, save here, no git or terminal", paste the brief plus one direction line, ask for 3
+  versions, the student picks, the AI crops and compresses. Reject any Gemini request to run git or read
+  other folders.
+- Colour and font rules: never a raw hex or font name in a component; use the variables in `app/globals.css`
+  (`--bg`, `--surface`, `--text`, `--accent`, `--button`, `--font-heading`, `--font-body`, `--scrim`, ...).
+- Windows git warnings about LF/CRLF are harmless.

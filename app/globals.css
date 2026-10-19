@@ -12,20 +12,20 @@
   /* Palette "Midnight & Gold": a mid-autumn night sky (navy), the moon
      (cream and gold) and a cinnabar-red main button. Contrast was calculated:
      every text colour is at least 4.5:1 on both the page and the cards. */
-  --bg: #0a1630; /* page background: deep navy */
-  --surface: #112347; /* cards, inputs, panels */
-  --border: #2c4170; /* hairlines and outlines */
+  --bg: #07122b; /* page background: deep midnight blue */
+  --surface: #0a1b42; /* cards, inputs, panels: deeper than the sky, like dark glass */
+  --border: #2c4d92; /* hairlines and outlines */
   --text: #f5ecd7; /* main text: warm moon cream */
-  --text-soft: #ddd4bf; /* Khmer titles, labels */
-  --muted: #b4bbcf; /* secondary text */
-  --muted-dim: #939fbd; /* hints, counters */
-  --faint: #8693b3; /* footer, placeholders */
-  --accent: #e8b84b; /* kickers, links, focus ring: moon gold */
+  --text-soft: #e4dcc8; /* Khmer titles, labels */
+  --muted: #ccd2e4; /* secondary text */
+  --muted-dim: #b9c2d9; /* hints, counters */
+  --faint: #a8b3cd; /* footer, placeholders */
+  --accent: #f2c65f; /* kickers, links, focus ring: moon gold */
   --button: #b8301f; /* main button fill: cinnabar red */
   --on-button: #f5ecd7; /* text on the main button */
-  --danger: #ff8a7a; /* errors, delete */
+  --danger: #ffa595; /* errors, delete */
   --danger-soft: #ffb8aa; /* label of a required field */
-  --header-bg: rgba(10, 22, 48, 0.94); /* sticky header, slightly see-through */
+  --header-bg: rgba(7, 18, 43, 0.92); /* sticky header, slightly see-through */
 
   /* Fonts (loaded in app/layout.js). Each list is tried per character: English
      letters use the first font, Khmer letters fall through to the Khmer font,
@@ -36,26 +36,44 @@
     BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
   --font-label: var(--font-body); /* small capital labels, buttons, links */
 
-  /* The sky and the moon (hero on the home page). Decorative colours only:
-     no text is ever drawn on them. */
-  --sky: #17408a; /* richer blue glow at the top of every page */
-  --moon-light: #fff4d2;
-  --moon-mid: #f3dc9a;
-  --moon-edge: #e2b95e;
-  --moon-crater: rgba(190, 140, 50, 0.22);
-  --glow-strong: rgba(232, 184, 75, 0.5);
-  --glow-soft: rgba(232, 184, 75, 0.16);
-  --gold-line: rgba(232, 184, 75, 0.35); /* thin gold hairlines */
+  /* The sky and the hero picture. Decorative colours only: no text is ever drawn
+     on them (except over the --scrim in the hero banner). */
+  --sky: #1c4fb0; /* cobalt glow at the top of every page */
+  --sky-teal: rgba(32, 150, 172, 0.38); /* teal glow at the top right */
+  --sky-deep: #123575; /* the mid-blue the page fades down from */
+  --star: rgba(255, 244, 214, 0.9);
+  --scrim: rgba(7, 18, 43, 0.78); /* dark layer under the hero title */
+  --gold-line: rgba(242, 198, 95, 0.4); /* thin gold hairlines */
 }
 
-/* A richer blue "night sky" glow at the top of every page, fading into the
-   navy page colour. The page colour (--bg) stays underneath as the base. */
+/* The night sky behind every page: a cobalt glow at the top centre, a teal glow
+   at the top right, and a scatter of faint stars (the first layers, drawn in
+   the first 560px of the page). The page colour (--bg) stays underneath. */
 body {
-  background-image: radial-gradient(
-    ellipse 90% 640px at 50% 0%,
-    var(--sky) 0%,
-    transparent 100%
-  );
+  background-image:
+    radial-gradient(circle at 6% 9%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 14% 31%, var(--star) 0 1.4px, transparent 2.0999999999999996px),
+    radial-gradient(circle at 22% 14%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 29% 42%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 37% 8%, var(--star) 0 1.6px, transparent 2.3px),
+    radial-gradient(circle at 45% 26%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 53% 12%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 61% 37%, var(--star) 0 1.4px, transparent 2.0999999999999996px),
+    radial-gradient(circle at 68% 7%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 75% 22%, var(--star) 0 1.8px, transparent 2.5px),
+    radial-gradient(circle at 83% 40%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 90% 15%, var(--star) 0 1.4px, transparent 2.0999999999999996px),
+    radial-gradient(circle at 95% 33%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 11% 52%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 57% 50%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(circle at 80% 56%, var(--star) 0 1px, transparent 1.7px),
+    radial-gradient(ellipse 45% 560px at 92% 0%, var(--sky-teal) 0%, transparent 100%),
+    radial-gradient(ellipse 85% 760px at 50% 0%, var(--sky) 0%, transparent 100%),
+    linear-gradient(180deg, var(--sky-deep) 0%, var(--bg) 100%);
+  background-size: 100% 560px, 100% 560px, 100% 560px, 100% 560px,
+    100% 560px, 100% 560px, 100% 560px, 100% 560px, 100% 560px, 100% 560px,
+    100% 560px, 100% 560px, 100% 560px, 100% 560px, 100% 560px, 100% 560px,
+    auto, auto, 100% 1600px;
   background-repeat: no-repeat;
 }
 
@@ -174,26 +192,9 @@ button:focus-visible {
   animation: mooncake-spin 12s linear infinite;
 }
 
-/* The hero moon's halo breathes very slowly (components/HeroMoon.js). */
-@keyframes moon-breathe {
-  from {
-    opacity: 0.65;
-    transform: scale(1);
-  }
-  to {
-    opacity: 1;
-    transform: scale(1.1);
-  }
-}
-
-.moon-halo {
-  animation: moon-breathe 7s ease-in-out infinite alternate;
-}
-
 @media (prefers-reduced-motion: reduce) {
   .loader-icon,
-  .loader-rings,
-  .moon-halo {
+  .loader-rings {
     animation: none;
   }
 }
