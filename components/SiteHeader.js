@@ -30,7 +30,7 @@ const styles = {
     display: "flex",
     alignItems: "center",
     gap: 10,
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 15,
     fontWeight: 700,
     letterSpacing: 1,

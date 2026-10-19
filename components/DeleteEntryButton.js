@@ -12,7 +12,7 @@ import Loader from "./Loader.js";
 
 const base = {
   padding: "10px 14px",
-  fontFamily: "'Courier New', monospace",
+  fontFamily: "var(--font-label)",
   fontSize: 13,
   letterSpacing: 1,
   borderRadius: 8,

@@ -1,16 +1,19 @@
 import collection from "../collection.config.js";
 import EntryCard from "../components/EntryCard.js";
 import ContextAbout from "../components/ContextAbout.js";
+import HeroMoon from "../components/HeroMoon.js";
+import MoonPhases from "../components/MoonPhases.js";
 import { createClient } from "../utils/supabase/server.js";
 
 const styles = {
   wrap: {
     maxWidth: 720,
     margin: "0 auto",
-    padding: "48px 24px 80px",
+    padding: "40px 24px 80px",
   },
+  hero: { textAlign: "center" },
   kicker: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     color: "var(--accent)",
     fontSize: 16,
     fontWeight: 700,
@@ -18,16 +21,18 @@ const styles = {
     margin: 0,
   },
   title: {
-    fontSize: 48,
-    fontWeight: 700,
-    margin: "8px 0 12px",
-    lineHeight: 1.1,
+    fontFamily: "var(--font-heading)",
+    fontSize: 54,
+    fontWeight: 600,
+    margin: "10px 0 16px",
+    lineHeight: 1.08,
   },
   description: {
     fontSize: 18,
     color: "var(--muted)",
     lineHeight: 1.6,
-    margin: 0,
+    margin: "0 auto",
+    maxWidth: 560,
   },
   card: {
     marginTop: 48,
@@ -37,7 +42,7 @@ const styles = {
     borderRadius: 10,
   },
   cardLabel: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 12,
     color: "var(--muted)",
     margin: 0,
@@ -47,7 +52,7 @@ const styles = {
     margin: "6px 0 0",
   },
   count: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 14,
     color: "var(--accent)",
     marginTop: 48,
@@ -89,9 +94,13 @@ export default async function Home() {
 
   return (
     <main style={styles.wrap}>
-      <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
-      <h1 style={styles.title}>{collection.name}</h1>
-      <p style={styles.description}>{collection.description}</p>
+      <section style={styles.hero}>
+        <HeroMoon />
+        <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
+        <h1 style={styles.title}>{collection.name}</h1>
+        <p style={styles.description}>{collection.description}</p>
+      </section>
+      <MoonPhases />
 
       <div style={styles.card}>
         <p style={styles.cardLabel}>CURATED BY</p>

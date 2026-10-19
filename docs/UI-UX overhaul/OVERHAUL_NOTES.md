@@ -12,7 +12,7 @@
 > tokens or passwords in this file or anywhere in the repo (the repository is public).
 
 Status as of 2026-10-19 (later): **P1 (tokens) and P2 (retheme) are DONE and student-checked** (changelogs:
-`CHANGES7.5_CssVariables.md`, `CHANGES7.5_Retheme.md` in this folder). Next: P3 (fonts), then P4 (hero, gradient sky, ornament). The student chose to do the overhaul BEFORE shipping (the professor wants the new design in the shipped
+`CHANGES7.5_CssVariables.md`, `CHANGES7.5_Retheme.md` in this folder). P3 (fonts, `CHANGES7.5_Fonts.md`) is done and student-checked; P4a (sky, moon hero, phases, `CHANGES7.5_HeroSky.md`) is built and awaits the student's check. Next: P4b (header, lattice, info-card row, wider page). The student chose to do the overhaul BEFORE shipping (the professor wants the new design in the shipped
 version) and left the design to the AI ("you cook it"): palette A + cinnabar button, moodboard of 10 images reviewed
 (night-blue/gold-moon family and red/gold-pattern family). **Next: P2 (retheme: change only the values in the `:root`
 block of `app/globals.css`).** `docs/PROJECT_NOTES.md` carries a short pointer to this file.
@@ -238,6 +238,8 @@ state), THEN keep working on the overhaul on experiment until it is satisfactory
 
 | Date | What |
 |---|---|
+| 2026-10-20 (P4a) | P3 was checked by the student ("fonts amazingly clean, Khmer fine"). **P4a built (pending the student's visual check):** gradient night sky on every page, `HeroMoon` (CSS moon + breathing halo), `MoonPhases` divider, centred hero on the home page. The AI now takes **headless Edge screenshots** of a throwaway server (`msedge --headless --screenshot`) to see pages itself. Changelog `CHANGES7.5_HeroSky.md`. P4b to P4d planned (header/lattice/row of cards; cards/arch frames; forms). |
+| 2026-10-20 (P3) | **P3 done (pending the student's visual check):** Cormorant Garamond (headings), Jost (body/labels), Noto Serif/Sans Khmer via `next/font/google` (no new dependency). Courier New is gone (26 uses became `var(--font-label)`); headings use `var(--font-heading)` with larger sizes. Checked on a throwaway server (pages 200, 12 font files served). Changelog `CHANGES7.5_Fonts.md`. Next: P4. |
 | 2026-10-19 (P2) | **P2 done:** the 14 variable values in `app/globals.css` now hold Midnight & Gold (navy `#0A1630`, cards `#112347`, cream text, gold accent `#E8B84B`, cinnabar button `#B8301F`; contrast calculated; the button red was darkened from `#C8372D` because 4.42 < 4.5). Student: "looks better, but still plain; I would like a more refined blue" -> premium feel comes from P3-P5; the richer blue = a gradient sky in P4. Changelog `CHANGES7.5_Retheme.md`. |
 | 2026-10-19 (P1) | Moodboard (10 images in `../Week8/UX_UI_Overhaul/inspiration/`) reviewed; the student said to skip the mockups and let the AI design. **P1 done:** 120 colour uses in 24 files became CSS variables defined in `app/globals.css` (same values, no visual change); new `--button`, `--on-button`, `--header-bg`. Checked on a throwaway server (port 3100) and by the student's eyes. Rule from now on: no raw hex in components. Changelog `CHANGES7.5_CssVariables.md`. |
 | 2026-10-19 (deadline confirmed) | The student confirmed the deadline: Mon 2026-10-19, 11:59 PM; plan: submit the bare minimum, then keep working on the overhaul. Notes updated. |

@@ -26,7 +26,7 @@ const styles = {
     boxSizing: "border-box",
   },
   clear: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 14,
     color: "var(--accent)",
     backgroundColor: "transparent",
@@ -45,7 +45,7 @@ const styles = {
     marginTop: 4,
   },
   count: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 14,
     color: "var(--accent)",
     marginTop: 12,

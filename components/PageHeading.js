@@ -8,7 +8,7 @@ import BackLink from "./BackLink.js";
 
 const styles = {
   kicker: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 16,
     fontWeight: 700,
     letterSpacing: 2,
@@ -16,8 +16,9 @@ const styles = {
     margin: 0,
   },
   title: {
-    fontSize: 40,
-    fontWeight: 700,
+    fontFamily: "var(--font-heading)",
+    fontSize: 48,
+    fontWeight: 600,
     margin: "8px 0 12px",
     lineHeight: 1.1,
   },

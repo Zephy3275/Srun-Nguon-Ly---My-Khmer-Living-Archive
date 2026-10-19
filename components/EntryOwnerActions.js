@@ -17,7 +17,7 @@ const styles = {
   },
   edit: {
     padding: "10px 14px",
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 13,
     letterSpacing: 1,
     color: "var(--accent)",

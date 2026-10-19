@@ -7,7 +7,7 @@ const styles = {
   link: {
     display: "inline-block",
     marginBottom: 16,
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 15,
     fontWeight: 700,
     letterSpacing: 1,

@@ -28,7 +28,7 @@ const styles = {
     display: "block",
   },
   label: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontWeight: 700,
     letterSpacing: 1,
     color: "inherit",

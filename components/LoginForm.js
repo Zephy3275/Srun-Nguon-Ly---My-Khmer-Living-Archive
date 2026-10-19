@@ -14,7 +14,7 @@ const styles = {
     gap: 16,
   },
   label: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 13,
     fontWeight: 700,
     letterSpacing: 1,
@@ -50,7 +50,7 @@ const styles = {
     margin: "16px 0 0",
   },
   linkRow: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 14,
     color: "var(--accent)",
     marginTop: 16,

@@ -9,14 +9,14 @@ import { clipWords } from "../utils/validateEntry.js";
 const styles = {
   wrap: { display: "flex", flexDirection: "column", gap: 6 },
   label: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 12,
     color: "var(--muted)",
   },
   // Required fields: label text in a soft coral (lighter than the error red, so a
   // field that failed validation still stands out) and a red asterisk.
   labelRequired: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 12,
     color: "var(--danger-soft)",
   },

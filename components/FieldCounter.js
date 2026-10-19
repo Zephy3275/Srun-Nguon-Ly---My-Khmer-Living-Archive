@@ -6,13 +6,13 @@ import { size, words } from "../utils/validateEntry.js";
 
 const styles = {
   count: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 12,
     color: "var(--muted-dim)",
     whiteSpace: "nowrap",
   },
   over: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 12,
     color: "var(--danger)",
     whiteSpace: "nowrap",

@@ -7,13 +7,18 @@ const styles = {
     borderRadius: 10,
   },
   kicker: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     color: "var(--accent)",
     fontSize: 14,
     letterSpacing: 1,
     margin: 0,
   },
-  heading: { fontSize: 24, fontWeight: 700, margin: "12px 0 16px" },
+  heading: {
+    fontFamily: "var(--font-heading)",
+    fontSize: 32,
+    fontWeight: 600,
+    margin: "12px 0 16px",
+  },
   intro: {
     fontSize: 16,
     color: "var(--muted)",

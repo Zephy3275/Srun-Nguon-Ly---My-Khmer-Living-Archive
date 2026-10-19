@@ -18,7 +18,7 @@ const styles = {
     display: "block",
   },
   caption: {
-    fontFamily: "'Courier New', monospace",
+    fontFamily: "var(--font-label)",
     fontSize: 12,
     color: "var(--muted)",
     margin: 0,
