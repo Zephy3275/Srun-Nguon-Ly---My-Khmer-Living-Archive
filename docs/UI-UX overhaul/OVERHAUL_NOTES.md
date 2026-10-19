@@ -11,8 +11,8 @@
 > copied into the repo as `docs/UI-UX overhaul/MOCKUP_BRIEFS.md` so any chat can read them. Do not put keys,
 > tokens or passwords in this file or anywhere in the repo (the repository is public).
 
-Status as of 2026-10-19 (later): **P1 (tokens) is DONE and student-checked** (changelog: `CHANGES7.5_CssVariables.md` in this
-folder). The student chose to do the overhaul BEFORE shipping (the professor wants the new design in the shipped
+Status as of 2026-10-19 (later): **P1 (tokens) and P2 (retheme) are DONE and student-checked** (changelogs:
+`CHANGES7.5_CssVariables.md`, `CHANGES7.5_Retheme.md` in this folder). Next: P3 (fonts), then P4 (hero, gradient sky, ornament). The student chose to do the overhaul BEFORE shipping (the professor wants the new design in the shipped
 version) and left the design to the AI ("you cook it"): palette A + cinnabar button, moodboard of 10 images reviewed
 (night-blue/gold-moon family and red/gold-pattern family). **Next: P2 (retheme: change only the values in the `:root`
 block of `app/globals.css`).** `docs/PROJECT_NOTES.md` carries a short pointer to this file.
@@ -238,6 +238,7 @@ state), THEN keep working on the overhaul on experiment until it is satisfactory
 
 | Date | What |
 |---|---|
+| 2026-10-19 (P2) | **P2 done:** the 14 variable values in `app/globals.css` now hold Midnight & Gold (navy `#0A1630`, cards `#112347`, cream text, gold accent `#E8B84B`, cinnabar button `#B8301F`; contrast calculated; the button red was darkened from `#C8372D` because 4.42 < 4.5). Student: "looks better, but still plain; I would like a more refined blue" -> premium feel comes from P3-P5; the richer blue = a gradient sky in P4. Changelog `CHANGES7.5_Retheme.md`. |
 | 2026-10-19 (P1) | Moodboard (10 images in `../Week8/UX_UI_Overhaul/inspiration/`) reviewed; the student said to skip the mockups and let the AI design. **P1 done:** 120 colour uses in 24 files became CSS variables defined in `app/globals.css` (same values, no visual change); new `--button`, `--on-button`, `--header-bg`. Checked on a throwaway server (port 3100) and by the student's eyes. Rule from now on: no raw hex in components. Changelog `CHANGES7.5_CssVariables.md`. |
 | 2026-10-19 (deadline confirmed) | The student confirmed the deadline: Mon 2026-10-19, 11:59 PM; plan: submit the bare minimum, then keep working on the overhaul. Notes updated. |
 | 2026-10-19 03:18 | The student gave the deadline: "tomorrow". Recorded the minimum-overhaul scope and a recommended order (deploy the finished Week 8 work first). Created `../Week8/UX_UI_Overhaul/inspiration/` for the moodboard. |

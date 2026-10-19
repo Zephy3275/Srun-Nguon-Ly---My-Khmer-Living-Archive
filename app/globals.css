@@ -9,20 +9,23 @@
      dropdown lists, scrollbars, the file picker) draw dark too. */
   color-scheme: dark;
 
-  --bg: #14181f; /* page background */
-  --surface: #1c222c; /* cards, inputs, panels */
-  --border: #2e3644; /* hairlines and outlines */
-  --text: #e8edf2; /* main text */
-  --text-soft: #c7cfdb; /* Khmer titles, labels */
-  --muted: #97a1b3; /* secondary text */
-  --muted-dim: #7c8698; /* hints, counters */
-  --faint: #5a6373; /* footer, placeholders */
-  --accent: #2ee6a8; /* kickers, links, focus ring */
-  --button: #2ee6a8; /* main button fill */
-  --on-button: #14181f; /* text on the main button */
-  --danger: #e86a5a; /* errors, delete */
-  --danger-soft: #f0998d; /* error labels */
-  --header-bg: rgba(20, 24, 31, 0.94); /* sticky header, slightly see-through */
+  /* Palette "Midnight & Gold": a mid-autumn night sky (navy), the moon
+     (cream and gold) and a cinnabar-red main button. Contrast was calculated:
+     every text colour is at least 4.5:1 on both the page and the cards. */
+  --bg: #0a1630; /* page background: deep navy */
+  --surface: #112347; /* cards, inputs, panels */
+  --border: #2c4170; /* hairlines and outlines */
+  --text: #f5ecd7; /* main text: warm moon cream */
+  --text-soft: #ddd4bf; /* Khmer titles, labels */
+  --muted: #b4bbcf; /* secondary text */
+  --muted-dim: #939fbd; /* hints, counters */
+  --faint: #8693b3; /* footer, placeholders */
+  --accent: #e8b84b; /* kickers, links, focus ring: moon gold */
+  --button: #b8301f; /* main button fill: cinnabar red */
+  --on-button: #f5ecd7; /* text on the main button */
+  --danger: #ff8a7a; /* errors, delete */
+  --danger-soft: #ffb8aa; /* label of a required field */
+  --header-bg: rgba(10, 22, 48, 0.94); /* sticky header, slightly see-through */
 }
 
 /* When the browser auto-fills a saved email or password, it paints its own
