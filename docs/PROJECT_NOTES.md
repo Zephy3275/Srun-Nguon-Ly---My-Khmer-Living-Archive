@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 2 (phase 2)**, between week 7 and week 8. Lab 5 (Supabase + Auth), Lab 6 (Intro to database) and **Lab 7 ("The Doors Open") are complete, merged to `main`, deployed to Vercel and live-verified.** Any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's (attack-tested by a classmate). **Now: Week 8, "The Proof" - the last week of Sprint 2.** No lab guide. ALL fixes from the two outside testers, plus the professor-required contributor field, are DONE, tested and committed on branch `experiment` (see "Week 8" below). **Next: a whole-site UI/UX OVERHAUL** (the professor said to get off the default design; the student wants a Chinese-style mooncake theme). It is at the PLANNING stage: **no overhaul code has been written**. Its living note is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`: read it before touching any styling. Postponed until after the overhaul: merge `experiment` into `main` + deploy, a final live pass, and test-data cleanup. Lab 7's Canvas submission, discussion post and journal are separate coursework, drafted in chat, not stored in this repo.
+> Current phase: **SPRINT 2 (phase 2)**, between week 7 and week 8. Lab 5 (Supabase + Auth), Lab 6 (Intro to database) and **Lab 7 ("The Doors Open") are complete, merged to `main`, deployed to Vercel and live-verified.** Any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's (attack-tested by a classmate). **Now: Week 8, "The Proof" - the last week of Sprint 2.** No lab guide. ALL fixes from the two outside testers, plus the professor-required contributor field, are DONE, tested and committed on branch `experiment` (see "Week 8" below). **A whole-site UI/UX OVERHAUL is IN PROGRESS** (the professor said to get off the default design; the student wants a Chinese-style mooncake theme): the colours, fonts and a Gemini-painted home-page hero are built and committed (steps P1 to P4a). Its living note, which holds the CURRENT overhaul state, is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`: read it (top status, sections 9b and 11) before touching any styling. As of 2026-10-20 everything up to that point is merged into `main` and pushed (both branches at `97e1a73`; Vercel builds `main`); still unconfirmed: the test-data cleanup, a live pass on the Vercel URL and a tag. Lab 7's Canvas submission, discussion post and journal are separate coursework, drafted in chat, not stored in this repo.
 
 ---
 
@@ -12,7 +12,7 @@
 Copy everything in the block below into the new chat:
 
 ```
-Current: Sprint 2, Week 8 ("The Proof"). ALL tester fixes and the contributor field are DONE, tested and committed (branch `experiment`; `main` is not updated yet, the merge is postponed). NOW: the UI/UX OVERHAUL, still at the planning stage with no code written: the professor said to get off the default design (the dark gray + mint-green look); the student wants the WHOLE site redesigned with a Chinese-style mooncake theme. Read docs/UI-UX overhaul/OVERHAUL_NOTES.md (facts, decisions, phases, rules), then propose a short plan and wait for approval before changing anything.
+Current: Sprint 2, Week 8 ("The Proof"). ALL tester fixes and the contributor field are DONE, tested and committed (branch `experiment`, merged into `main` on 2026-10-20). NOW: the UI/UX OVERHAUL, in progress (colours, fonts and a painted hero are done; the rest of the site is next): the professor said to get off the default design (the dark gray + mint-green look); the student wants the WHOLE site redesigned with a Chinese-style mooncake theme. Read docs/UI-UX overhaul/OVERHAUL_NOTES.md (top status, sections 9b and 11), then propose a short plan and wait for approval before changing anything.
 
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
@@ -420,34 +420,30 @@ quick pass on the LIVE URL at the end; full list in `Week7_Lab7/ValidationCheckl
 Any fix that adds a field or changes how data is saved must also be checked against these
 (validator, `entryColumns`, the database constraints, edit mode, search, cards).
 
-**Where the code stands (updated 2026-10-19):** branch `experiment` (the student works there) holds
-every Week 8 commit (group A, group B, group C, contributor field; commit messages
-`Sprint 2, week8: ... (AI-assisted)`). `main` is what Vercel deploys and has NOT been updated with
-Week 8 yet: the merge is postponed until after the overhaul (check with `git log main..experiment`).
-The contributor SQL was already run on the shared database; the old live code simply never reads or
-writes that column, so nothing breaks. Merging is the student's job (merge `experiment` into `main`,
-push, Vercel deploys).
+**Where the code stands (updated 2026-10-20):** the student works on branch `experiment` and holds
+every Week 8 commit (group A, group B, group C, contributor field, then the overhaul steps P1 to P4a;
+commit messages `Sprint 2, week8/...: ... (AI-assisted)`). **`experiment` was merged into `main` and pushed
+on 2026-10-20 (both at `97e1a73`, nothing unmerged)**; `main` is what Vercel deploys. The contributor SQL
+was run on the shared database before the merge. Merging stays the student's job. Check the real state with
+`git log main..experiment` and `git status` before asserting anything.
 
 **Known leftovers that testers may also hit (from Week 7):** photos of deleted/replaced
 entries stay in Storage; EXIF/GPS is not stripped from photos; test data still around
-(throwaway entries on `archive.test.two`, cross-project test accounts); the live site still shows 8 test entries (the 9 real entries are the Sprint 1 ones and now carry the contributor credit).
+(throwaway entries on `archive.test.two`, cross-project test accounts); as of 2026-10-19 the live site still showed 8 test entries (cleanup status unconfirmed since; one of them has a photo that is a console screenshot showing an email and password, so remove its Storage file too) (the 9 real entries are the Sprint 1 ones and now carry the contributor credit).
 
 **Week 8 progress:**
-- **NEXT: the UI/UX overhaul.** Planning only; everything is in `docs/UI-UX overhaul/OVERHAUL_NOTES.md`
+- **The UI/UX overhaul is IN PROGRESS (P1 to P4a done, 2026-10-20).** Current state, next steps and decisions are in `docs/UI-UX overhaul/OVERHAUL_NOTES.md`; the old planning detail follows. Everything is in `docs/UI-UX overhaul/OVERHAUL_NOTES.md`
   (decisions are open: palette A Midnight & Gold recommended / B / C, typography, ornament level).
   Rules already settled for it: the UI libraries the student looked at (Magic UI, React Bits, Motion)
   are NOT used because they break AGENTS.md (they need Tailwind/shadcn or a new dependency, and "no CSS
   frameworks, no component libraries"); every effect is done in plain CSS. A real image-generation route
   exists via Antigravity's built-in sub-agent; a Google AI Studio key has no free image quota (HTTP 429
   tested). Khmer/English text never goes inside generated images.
-- **POSTPONED (student's choice, to do after the overhaul):** merge `experiment` -> `main` and deploy;
-  a final live pass on the Vercel URL; test-data cleanup (delete the 8 test entries by listing their ids
-  first, not with a broad WHERE; deleting a row does not remove its Storage photo).
-- **DEADLINE (confirmed by the student): Monday 2026-10-19, 11:59 PM.** Plan: submit the bare minimum first,
-  then keep working on the overhaul until it is satisfactory. So the postponed items above come FIRST, before the
-  deadline: commit the docs, merge/deploy (the live `main` has none of Week 8 yet: 6 commits only on
-  `experiment`), clean the 8 test entries, a quick live pass, and tag the submitted state. Then continue the
-  overhaul on `experiment`. Details in `docs/UI-UX overhaul/OVERHAUL_NOTES.md`.
+- **Merge: DONE 2026-10-20** (`experiment` -> `main`, pushed). **Still to confirm with the student:** a final live pass on the Vercel URL; test-data cleanup (delete the 8 test entries by listing their ids
+  first, not with a broad WHERE; deleting a row does not remove its Storage photo); a tag for the submitted state.
+- **Deadline was Monday 2026-10-19, 11:59 PM** (the student's plan was to submit the minimum, then keep
+  working on the overhaul; the Canvas reflection was written in chat). The overhaul continues on `experiment`.
+  Details in `docs/UI-UX overhaul/OVERHAUL_NOTES.md`.
 - **Group A (bugs/behavior): DONE and browser-tested by the student (2026-10-17); all in
   `docs/sprint 2/CHANGES7_FunctionalFixes.md`; one commit by the student.** Not browser-tested:
   long paste into the description, a levels line with a real value (final pass).
@@ -601,4 +597,12 @@ live-check plus a Canvas submission, discussion post and journal kept outside th
 - docs/UI-UX overhaul/MOCKUP_BRIEFS.md          (the three palette mockup prompts for Antigravity)
 - docs/UI-UX overhaul/OVERHAUL_NOTES.md        (the overhaul's living note: facts, decisions, phases, rules; not a changelog)
 
-Next: the UI/UX overhaul. Its changelog files go in `docs/UI-UX overhaul/` (ask the student which prefix; suggestion `CHANGES8_<Name>.md`; Week 8's tester fixes used `CHANGES7_*` in `docs/sprint 2/`).
+- docs/UI-UX overhaul/CHANGES7.5_CssVariables.md   (overhaul P1: colours moved into CSS variables)
+- docs/UI-UX overhaul/CHANGES7.5_Retheme.md        (P2: the "Midnight & Gold" palette)
+- docs/UI-UX overhaul/CHANGES7.5_Fonts.md          (P3: Cormorant Garamond, Jost, Noto Khmer)
+- docs/UI-UX overhaul/CHANGES7.5_HeroSky.md        (P4a: night-sky background, first moon hero)
+- docs/UI-UX overhaul/CHANGES7.5_Atmosphere.md     (P4a-2: richer blue sky, glass cards)
+- docs/UI-UX overhaul/CHANGES7.5_HeroPainting.md   (P4a-3: Gemini-painted hero banner)
+- docs/UI-UX overhaul/GEMINI_BRIEFS.md             (image prompts, how to run them, results so far)
+
+The overhaul's changelogs are numbered `CHANGES7.5_*` (still the Week 8 workflow) and live in `docs/UI-UX overhaul/`. The overhaul's living note (state, decisions, next steps) is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`; this file is deliberately not mirrored for it.

@@ -27,6 +27,7 @@ block of `app/globals.css`).** `docs/PROJECT_NOTES.md` carries a short pointer t
   mooncake `Loader`), and the professor-required **contributor field** (SQL already run on the
   shared database). Changelogs: `docs/sprint 2/CHANGES7_*.md`. Dropped on purpose: making
   sweetness/saltiness required. Skipped on purpose: the English/Khmer language toggle.
+- **(Update 2026-10-20: item 1 below, the merge, is DONE; items 2 and 3 are still to confirm. See section 11.)**
 - **Postponed (the student chose the overhaul first):**
   1. Merge `experiment` into `main`, push, let Vercel deploy (the student does it).
   2. A final live pass on the Vercel URL with the regression list in `PROJECT_NOTES.md`.
@@ -58,6 +59,7 @@ block of `app/globals.css`).** `docs/PROJECT_NOTES.md` carries a short pointer t
 - **The professor's instruction is simply: get off the default design.** The student's reading is
   final and needs no exact wording or rubric text (student's decision, 2026-10-19): **do not ask for it
   again.** The student wants the whole site to look like THEIR archive: Chinese-style mooncake.
+- **(Update 2026-10-20: the deadline has passed and the student merged and shipped; the bare-minimum list below is history.)**
 - **Deadline (confirmed by the student): Monday 2026-10-19, 11:59 PM.** Plan, in the student's words: submit
   the **bare minimum first** to meet the deadline, then **keep working on the overhaul** until the UX/UI is done
   or satisfactory. So the overhaul does not have to be finished by the deadline; what must be safe by then is
@@ -280,14 +282,18 @@ state), THEN keep working on the overhaul on experiment until it is satisfactory
 **Done so far (all documented, one `CHANGES7.5_*.md` per step in this folder):** P1 tokens
 (`CssVariables`), P2 retheme (`Retheme`), P3 fonts (`Fonts`), P4a sky and moon hero (`HeroSky`), P4a-2 richer
 blue atmosphere (`Atmosphere`), P4a-3 painted hero banner from Gemini (`HeroPainting`).
-**Commit state at the time of writing:** P1 to P3 and the first P4a commit are committed. P4a-2 (atmosphere)
-and P4a-3 (painted hero: `HeroBanner.js`, two images in `public/`, `HeroMoon.js` deleted, `page.js` and
-`globals.css` edits, the three new docs) were **still uncommitted**; the student was about to commit them as
-one commit. Verify with `git status`.
-**Not shipped:** `main` (what Vercel deploys) still lacks all of Week 8. The merge, the deletion of the 8 test
-entries (by listing ids first; one of them has a photo that is a console screenshot showing an email and
-password, so remove its Storage file too), a live pass and the tag are still pending. Ask the student for the
-current submission status; do not assume. The Canvas reflection was written in chat only.
+**Commit and ship state (verified 2026-10-20 after the student's merge):** everything is committed and pushed.
+Commits on `experiment`: `64097ad` P1, `2cbac14` P2, `7bdac6e` P3 + first P4a, `97e1a73` P4a-2 + painted hero
+(+ all the docs up to `GEMINI_BRIEFS.md`). **`experiment` was merged into `main` and pushed: both are at
+`97e1a73`, nothing unmerged, working tree clean, no `.env` tracked, no tag yet.** `main` is what Vercel builds.
+**Student's update (2026-10-20, later): (a) the live check of the new site was "flawless"; (b) the 8 test entries are
+NOT cleaned up yet, deliberately deferred ("maybe some other time"); (c) no tag, the student decided it is not
+needed.** The old wording follows for reference. **Still to confirm with the student (do not assume):** (a) a live pass on the Vercel URL (the new look, Khmer,
+login, add/edit/delete, the regression list in `PROJECT_NOTES.md`); (b) the deletion of the 8 test entries (list
+ids first, delete by those exact ids; one has a photo that is a console screenshot showing an email and
+password, so remove its Storage file too); (c) a tag such as `week8-submission` (`97e1a73` is the shipped state
+with the overhaul's first half). The Canvas reflection was written in chat only. Anything built after `97e1a73`
+is NOT on `main` until the student merges again.
 
 **The student's latest feedback (2026-10-20, 3 AM):**
 - The painted hero is "absolutely amazing" (chosen: `hero_A_3`).
@@ -321,7 +327,7 @@ current submission status; do not assume. The Canvas reflection was written in c
 3. P4d forms and auth: framed panels, gold focus glow, branded 404, and the Browse and Contribute banners
    from the extra images above.
 4. The "background dims and goes plain as you scroll" fix and P5 motion (effects and interactions).
-5. P6 phone and contrast pass, P7 docs, then the postponed merge, test-data cleanup and live pass.
+5. P6 phone and contrast pass, P7 docs, then another merge to `main` when the student is happy (the first merge, up to `97e1a73`, is done), plus the test-data cleanup and live pass if not yet confirmed.
 
 **Facts worth remembering:**
 - **The AI can see the site itself** with headless Edge: start a throwaway server (`npx next dev -p 3100`,
