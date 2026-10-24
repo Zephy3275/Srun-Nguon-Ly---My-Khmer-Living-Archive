@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 2 (phase 2)**, between week 7 and week 8. Lab 5 (Supabase + Auth), Lab 6 (Intro to database) and **Lab 7 ("The Doors Open") are complete, merged to `main`, deployed to Vercel and live-verified.** Any account holder can add an entry with a photo and edit/delete their own entries; nobody can touch anyone else's (attack-tested by a classmate). **Now: Week 8, "The Proof" - the last week of Sprint 2.** No lab guide. ALL fixes from the two outside testers, plus the professor-required contributor field, are DONE, tested and committed on branch `experiment` (see "Week 8" below). **A whole-site UI/UX OVERHAUL is IN PROGRESS** (the professor said to get off the default design; the student wants a Chinese-style mooncake theme): the colours, fonts and a Gemini-painted home-page hero are built and committed (steps P1 to P4a). Its living note, which holds the CURRENT overhaul state, is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`: read it (top status, sections 9b and 11) before touching any styling. As of 2026-10-20 everything up to that point is merged into `main` and pushed (both branches at `97e1a73`; Vercel builds `main`); still unconfirmed: the test-data cleanup, a live pass on the Vercel URL and a tag. Lab 7's Canvas submission, discussion post and journal are separate coursework, drafted in chat, not stored in this repo.
+> Current phase: **SPRINT 3 (phase 3, "submit, review, publish"), Week 10, Lab 10 "The Gate"** (Friday 2026-10-23; due Sunday 2026-10-25, 11:59 PM). **Sprint 2 is COMPLETE and shipped:** Labs 5-7 and Week 8 (tester fixes, contributor field, and the first steps of the UI/UX overhaul) are merged into `main` (`97e1a73`), deployed to Vercel and live-verified (the live check of the new site was flawless). **This week's scope (Lab 10): every new entry waits for review, the public sees only published entries, and nobody can publish their own entry from the console.** See "Sprint 3, Lab 10" below; the full lab text is `../Week10/Lab10_Guide.md` (in the parent folder, OUTSIDE the repo): read it when working on the lab. **No Lab 10 SQL or code has been run or written yet** (as of 2026-10-23). The **UI/UX overhaul is IN PROGRESS but PAUSED** (the student's choice, 2026-10-23: Lab 10 takes priority). It was the student's own idea at the end of Sprint 2, not part of the Sprint 2 scope; steps P1 to P4a (colours, fonts, a Gemini-painted home-page hero) are done and shipped; its living note is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`. Do not touch styling unless the student asks to resume it. Canvas submissions, discussion posts, journals and reflections are separate coursework, drafted in chat, not stored in this repo. Open leftovers (none blocking): 8 test entries still on the live database (the student deferred the cleanup, see the Lab 10 heads-ups), orphaned photos in Storage after delete/replace, EXIF/GPS not stripped.
 
 ---
 
@@ -12,95 +12,73 @@
 Copy everything in the block below into the new chat:
 
 ```
-Current: Sprint 2, Week 8 ("The Proof"). ALL tester fixes and the contributor field are DONE, tested and committed (branch `experiment`, merged into `main` on 2026-10-20). NOW: the UI/UX OVERHAUL, in progress (colours, fonts and a painted hero are done; the rest of the site is next): the professor said to get off the default design (the dark gray + mint-green look); the student wants the WHOLE site redesigned with a Chinese-style mooncake theme. Read docs/UI-UX overhaul/OVERHAUL_NOTES.md (top status, sections 9b and 11), then propose a short plan and wait for approval before changing anything.
+Current: Sprint 3 (submit, review, publish), Week 10, Lab 10 "The Gate" (Fri 2026-10-23; due Sun 2026-10-25,
+11:59 PM). Sprint 2 is complete and shipped (main = 97e1a73). THIS WEEK: every new entry waits for review
+(status "pending"), the public sees only published entries, and nobody can publish their own entry from the
+console. The full lab text is Week10/Lab10_Guide.md (in the PARENT folder of the repo, outside it): read it
+when working on the lab. The UI/UX overhaul (docs/UI-UX overhaul/OVERHAUL_NOTES.md) is IN PROGRESS but PAUSED:
+do not touch styling unless I ask.
 
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
 JavaScript only, plain React, no TypeScript.
 
-PHASE: SPRINT 2 (phase 2) - Supabase + Auth + contributor write-access. Week 5
-(Lab 5, auth), Week 6 (Lab 6, database) and Week 7 (Lab 7, "The Doors Open":
-contribution form + photo upload, edit/delete own entries, validation, attack
-test) are all done: merged to main, pushed, deployed to Vercel, live-verified.
-Any account holder can add an entry with a photo and edit/delete their own
-entries; nobody can touch anyone else's. WEEK 8: the testers' fix list is received and
-triaged in Week8/Tester_Feedback_Triage.md (outside the repo): read it first.
-This sprint is VOLATILE per the professor and can go sideways quickly. Build in
-small committed steps, keep a revertible base, and if a fix breaks a second thing
-follow "stop, revert to the last good commit, re-prompt smaller".
-
 STEP 1 - Orient yourself (don't skip):
-  - Read AGENTS.md (rules - hard requirements + the Sprint 2 dependency amendment).
-  - Read this living context file: docs/PROJECT_NOTES.md
-  - Read docs/UI-UX overhaul/OVERHAUL_NOTES.md (the overhaul's own living note; not mirrored here on purpose)
-  - Skim docs/CHANGES*.md and docs/sprint 2/CHANGES5_*.md, then data/entries.js
-    (kept but no longer read by the app - see below), collection.config.js, and
-    the components/ and app/ folders to confirm current state.
+  - Read AGENTS.md (hard rules + the Sprint 2 dependency amendment).
+  - Read this file: docs/PROJECT_NOTES.md, especially "Sprint 3, Lab 10" (scope, plan, heads-ups).
+  - Read ../Week10/Lab10_Guide.md (the lab, exact words) when we start the lab itself.
+  - Run `git status` and `git log --oneline -5`; skim app/, components/ and utils/ to confirm the state.
+  - Do NOT read ../Week8/Gemini_models_from_API_keys.md (it contains an API key).
 
-CURRENT STATE (Sprint 2, after Lab 7):
-  - Next.js 15 App Router app; homepage (/), browse (/browse with search and a
-    back-to-archive link), a per-entry route (/entries/[id]), /login + /signup
-    (Supabase email/password auth), /contribute (add an entry + photo, login-gated)
-    and /entries/[id]/edit (owner-only edit). The entry page shows EDIT and DELETE
-    only to the entry's owner.
-  - Home, browse and the entry-detail page READ FROM SUPABASE (table
-    `entries`, 15 columns, RLS enabled with 4 policies, 9 length check constraints,
-    Storage bucket `photos`), not from the data file. All handle a query error
-    and a zero-rows case, and app/loading.js covers the loading state.
-  - Form rules live in utils/validateEntry.js; the two Khmer fields are OPTIONAL
-    and accept any language; empty optional fields are saved as null.
-  - data/entries.js is KEPT ON PURPOSE (student's own decision) as a staging
-    file for drafting new entries before they go into Supabase. Nothing imports
-    it any more; it is inert. New entries only appear on the site once inserted
-    into Supabase.
-  - collection.config.js = archive identity (unaffected by the database work).
-  - Week 8 additions (after Lab 7): a sticky SiteHeader on every page, shared PageHeading/BackLink,
-    a mooncake Loader, a required CONTRIBUTOR field (shown on the entry page, searchable), hard-stop
-    input limits, photo preview, a favicon; see the Week 8 section and docs/sprint 2/CHANGES7_*.md.
-  - Supabase INTEGRATED (plumbing / doors / signal from Lab 5; table / RLS /
-    seed / cutover / security checklist from Lab 6). Code reads env vars:
-    NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (gitignored .env.local + Vercel).
+CURRENT STATE (after Sprint 2, 2026-10-23):
+  - Next.js 15 App Router app. Pages: / (home: painted HeroBanner, info cards, About the mooncake, all
+    entries), /browse (search), /entries/[id] (detail, EN + Khmer, EDIT/DELETE for the owner only),
+    /entries/[id]/edit (owner-only edit), /contribute (add an entry + photo, login-gated), /login, /signup.
+    A sticky SiteHeader on every page. No /my-entries page and no review page yet (Lab 10 adds /my-entries;
+    the review page is next Friday, Week 11).
+  - Home, browse and the detail page READ FROM SUPABASE (table `entries`, 16 columns, RLS ON with 4
+    policies, 12 check constraints; Storage bucket `photos`). There is NO `status` column yet: today every
+    entry is public the moment it is added.
+  - Form rules: utils/validateEntry.js; the two Khmer fields are optional; CONTRIBUTOR is required.
+    `owner` always comes from the login session, never the form; inserts/updates name their columns.
+  - Look: Midnight & Gold theme via CSS variables in app/globals.css, Cormorant Garamond + Jost + Noto Khmer
+    fonts (next/font), a Gemini-painted hero (public/hero-moon-*.webp). Components use var(--...), never raw
+    colours or font names.
+  - data/entries.js is kept on purpose as an inert drafting file (nothing imports it).
+  - Env vars: NEXT_PUBLIC_SUPABASE_URL, NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY (gitignored .env.local + Vercel).
 
-SPRINT 2 FOCUS (Supabase + Auth):
-  - Backend via Supabase; add login/signup; possibly security (e.g. RLS).
-  - Dependency change: exactly TWO packages are now APPROVED for Sprint 2 only:
-      @supabase/supabase-js   @supabase/ssr
-    Do NOT add any other dependency without stopping and asking.
-  - All other AGENTS.md hard rules still stand, especially rule 3: never put
-    keys/tokens/passwords in any committed file.
-  - Auth config lives in .env.local (local) + Vercel env vars (deploy).
-
-NON-NEGOTIABLE RULES (from AGENTS.md, incl. Sprint 2 amendment):
-  - Dependencies: next, react, react-dom + (Sprint 2 only) @supabase/supabase-js
-    and @supabase/ssr. Nothing else.
-  - Do NOT touch package.json / package-lock.json / next.config.mjs / .gitignore
-    unless the current task explicitly names them.
-  - NEVER write an API key/token/password into any file; .env.local stays
-    gitignored. This repository is public.
+NON-NEGOTIABLE RULES (AGENTS.md):
+  - Dependencies: next, react, react-dom, @supabase/supabase-js, @supabase/ssr (the Sprint 2 amendment).
+    AGENTS.md has NOT been amended for Sprint 3: no other dependency without the instructor naming it.
+  - Do NOT touch package.json / package-lock.json / next.config.mjs / .gitignore unless the task names them.
+  - NEVER write an API key, token, password or the project's keys into any file; this repository is public.
+    (The Lab 10 attack kit uses the project URL, the publishable key and account passwords: keep them out of
+    every repo file, like docs/sprint 2/CHANGES6_AttackLog.md did.)
   - Keep diffs scoped; say which file + why before editing beyond the ask.
-  - One component per file, plain function components, ~80 lines or less.
-  - Khmer text is first-class - never strip/transliterate/"fix" it; real student
-    content, never invented.
-  - Styling: inline style objects or plain CSS. No CSS/component libs.
-  - JavaScript only. Plan first for anything beyond a one-file change.
-  - Student reviews & approves every diff; code must be explainable line-by-line.
+  - One component per file, plain function components, about 80 lines or less.
+  - Khmer text is first-class: never strip, transliterate, "fix" or invent it. Any Khmer wording (for example
+    the status words on /my-entries) comes from the student.
+  - Styling: inline style objects or plain CSS with the existing variables. No CSS/component libraries.
+  - Database changes are SQL the STUDENT runs by hand in the Supabase SQL Editor (begin/commit blocks);
+    code that depends on the SQL is written after it has run. JavaScript only.
+  - The student reviews and approves every diff and commits it; code must be explainable line by line.
 
-Working agreement: propose a short plan before writing, make small scoped steps,
-commit early and often, keep each feature as its own commit, and surface what you
-assume.
+Working agreement: propose a short plan before writing, small scoped steps, one feature per commit, surface
+what you assume, never run `next build` while the student's `npm run dev` is running.
 ```
+
 ---
 
-## Current repo state (accurate, Sprint 2 - after Lab 7)
+## Current repo state (accurate as of 2026-10-23: Sprint 2 complete, Lab 10 not started)
 
 ```
 Srun-Nguon-Ly---My-Khmer-Living-Archive\
 +-- app
-|   +-- layout.js      (root layout, dark theme)
+|   +-- layout.js      (root layout: loads the fonts with next/font, renders SiteHeader; body uses the CSS variables)
 |   +-- loading.js     (Lab 6, redone in Week 8: turning mooncake Loader + "LOADING THE ARCHIVE...")
 |   +-- icon.png       (Week 8: favicon, 128x128; Next.js picks it up by name)
-|   +-- globals.css    (Week 8: plain CSS for what inline styles can't do: dark autofill, disabled look; imported in layout.js)
-|   +-- page.js        (homepage: identity + ContextAbout + all entries; READS SUPABASE;
+|   +-- globals.css    (CSS tokens in :root (colours, fonts, scrim), the night-sky background, autofill/disabled rules, shared button/link classes, loader keyframes; imported in layout.js)
+|   +-- page.js        (homepage: HeroBanner + MoonPhases + info cards + ContextAbout + all entries; READS SUPABASE;
 |   |                   the nav now lives in the sitewide SiteHeader, see components/)
 |   +-- browse
 |   |   +-- page.js    (browse page -> SearchFilter; READS SUPABASE; BACK TO ARCHIVE link)
@@ -138,14 +116,18 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   +-- FieldCounter.js     (Lab 7: live "used / max" counter under a field)
 |   +-- EntryOwnerActions.js(Lab 7: EDIT link + DeleteEntryButton, owner only)
 |   +-- DeleteEntryButton.js(Lab 7: "use client" inline two-step delete confirm, zero-row check)
+|   +-- HeroBanner.js       (overhaul P4a: the home page's painted hero: full-width picture, title over the mountains)
+|   +-- MoonPhases.js       (overhaul P4a: a row of moon phases between two gold lines, decoration)
 +-- data
 |   +-- entries.js          (9 REAL entries; KEPT ON PURPOSE as a drafting file - nothing
 |                            imports it any more since Lab 6's cutover; not synced with Supabase)
 +-- public
 |   +-- images              (9 photos)
 |   +-- loader-rings.png, loader-center.png   (Week 8: the two layers of the big page-load loader)
+|   +-- hero-moon-2000.webp, hero-moon-900.webp   (overhaul: the Gemini-painted hero, desktop and phone sizes)
 +-- docs
-|   +-- sprint 2           (Lab 5, 6 and 7 changelogs)
+|   +-- sprint 2           (Lab 5, 6, 7 and Week 8 changelogs)
+|   +-- UI-UX overhaul     (OVERHAUL_NOTES.md living note (PAUSED), CHANGES7.5_*.md, GEMINI_BRIEFS.md, MOCKUP_BRIEFS.md)
 |   +-- CHANGES*.md, PROJECT_NOTES.md (living handoff)
 +-- collection.config.js    (archive identity)
 +-- AGENTS.md               (rules + Sprint 2 dependency amendment)
@@ -167,6 +149,7 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 ```
 
 Database (Supabase, created in Labs 6-7 - dashboard only, not repo files):
+- **Lab 10 PLANNED, NOT YET RUN (2026-10-23):** adds `entries.status` (pending / published / returned, default pending), a `reviewers` table (RLS on, no policies), the functions `is_reviewer()` and `review_entry()`, and replaces the select, insert and update policies. Until the student runs that SQL by hand, the list below is the real current schema (16 columns, no `status`). Plan and details: "Sprint 3, Lab 10" below.
 - **Week 8 update:** `entries` now has **16 columns**: `contributor` (text, nullable in the database, REQUIRED in the form), plus check `entries_contributor_length` (`null`, or `char_length(trim(contributor))` 1-120), so 12 check rows in total (ten length + the two Lab 6 sweetness/saltiness checks). The 9 seed entries were credited with the student's name by an `UPDATE`. Current rules file: `Week7_Lab7/TableRule_Refined3.md`. Details and the SQL: `docs/sprint 2/CHANGES7_ContributorField.md`.
 - Table `entries`, 15 columns (as of Lab 7): `id, created_at, owner` (given) + `title, description,
   source, filling, shape, color` (not null) + `title_khmer, description_khmer`
@@ -209,6 +192,108 @@ Key facts / Sprint 2 security posture:
   clean of the publishable key; the seed owner's uuid appears once, in a changelog,
   which the lab itself calls harmless. Phone-on-mobile-data test deferred - site
   isn't deployed yet, so there's nothing live to test from a phone.
+
+---
+
+## Sprint 3, Lab 10 "The Gate" (Week 10, Friday 2026-10-23) - SCOPE AND PLAN, NOT STARTED
+
+**Source:** `../Week10/Lab10_Guide.md` (the professor's exact words, outside the repo, 197 lines; read it when
+working the lab). Sprint 3 = submit, review, publish (weeks 9-11). The brief for Sprint 2 said a review
+workflow was NOT part of Sprint 2; this is where it starts. **Status: nothing built, no SQL run yet.**
+
+**Goal of this lab:** every new entry waits for review, the public sees published entries only, and nobody
+can publish their own entry from the console. The review page itself is NEXT Friday (Week 11; a `Week11`
+folder exists, empty); this week builds the gate it will open.
+
+**Due:** Sunday 2026-10-25, 11:59 PM: the Lab 10 live URL and the Part 4 attack table (what each attack actually
+returned), the week 10 discussion post, the week 10 process log. The Sprint 2 late window also closes Sunday.
+
+### The parts (as the guide gives them)
+
+- **Part 0 (before Friday):** Supabase project not paused (click Restore if offered); Sprint 2 pushed, `git status`
+  clean, `npm run dev` runs; copy your own user id (dashboard, Authentication, Users); make a SECOND account on
+  the live site (the stranger you attack with). If the Sprint 2 ownership test had failed, fix that first.
+- **Part 1 (on paper, the student's own answers; never answered by the AI):** (1) what should a contributor see
+  while their entry waits? (2) when an entry is returned, what should the contributor see, and should it carry a
+  note? (3) should an edit to a published entry go live straight away? (The SQL answers #3: an edit goes back to
+  review unless the editor is a reviewer.) These feed Sprint 3's first reflection question.
+- **Part 2 (the database; SQL the student runs by hand in one `begin ... commit` block):**
+  first run `select policyname, cmd from pg_policies where tablename = 'entries';` and make the policy names match
+  the block (ours should be the Lab 6 names: "anyone can read entries", "owners add their own entries",
+  "owners edit their own entries", "owners delete their own entries"). The block then: adds `entries.status`
+  (`text not null default 'pending'`, check in 'pending' / 'published' / 'returned'); publishes everything that
+  exists; creates table `reviewers (user_id uuid primary key references auth.users)` with RLS on and NO policies
+  (only the SQL Editor can change it), seeded with the student's uuid; creates `is_reviewer()` and
+  `review_entry(entry_id, decision)` (both `security definer`, `search_path = ''`; `review_entry` refuses
+  non-reviewers, refuses any decision except published/returned, only moves entries that are pending, and is
+  executable only by authenticated users); replaces the select policy (published, or your own, or reviewer),
+  the insert policy (own, and `status = 'pending'`), and the update policy (own, and the new status must be
+  pending unless the editor is a reviewer). The delete policy is untouched. Afterwards the live site, logged out,
+  should look exactly the same.
+- **Part 3 (code, a new task for the AI; do not change SQL or policies):**
+  1. home page and search show only published entries (`.eq('status', 'published')`; this is politeness, because
+     RLS already hides pending ones from strangers, but the owner is logged in while testing and would otherwise
+     see their own pending entries on the public pages);
+  2. after the contribution form is submitted, show a message (the student's answer to Part 1 question 1)
+     instead of going to the entry; the form must NOT send `status` (the default sets pending, and sending
+     'published' would be refused);
+  3. a new page `/my-entries` (logged-in users only) listing the user's own entries (filter `owner` = session user)
+     with the status in plain words (the student's words, Khmer and English: pending, published, returned);
+  4. when an owner saves an edit, send `status: 'pending'` in the update unless `supabase.rpc('is_reviewer')`
+     returns true; keep the existing zero-row check;
+  5. a header link to `/my-entries` for logged-in users; no package, no `dangerouslySetInnerHTML`.
+  Then read the diff for the three things the guide names (the public filters, no `status` sent by the form,
+  `status: 'pending'` in non-reviewer edits), test as the second account, and commit (the guide suggests
+  `sprint 3: entries wait for review (AI-assisted)`; the student's own style so far is
+  `Sprint 2, week8/PartN: ... (AI-assisted)`).
+- **Part 4 (attack your own gate, from the browser console as the second account):** five attacks, expected
+  results: (1) insert with `status: 'published'` -> row-level security error; (2) update your own entry to
+  published -> RLS error; (3) call `review_entry` -> `data: false`; (4) insert into `reviewers` -> RLS error;
+  (5) logged out, ask for unpublished entries -> `data: []`. Leave the "waiting politely" entry pending for next
+  Friday's queue. Until the review page exists, the student publishes from the console as themselves with
+  `sb.rpc('review_entry', { entry_id, decision: 'published' })`.
+- **Part 5:** push; logged out the archive looks the same as this morning; Canvas: live URL + the Part 4 table
+  with the real results; journal entry: the Part 3 prompt, what came back, one thing checked in the diff.
+- **Optional stretch (if finished early):** a nullable `review_note text` column, `/my-entries` shows the note on
+  returned entries, and `review_entry` is changed to accept and save a note (re-run attack 3 afterwards).
+
+### Repo touchpoints for Part 3 (from reading the code, not from the guide)
+
+| File | Expected change |
+|---|---|
+| `app/page.js`, `app/browse/page.js` | add `.eq('status', 'published')` to the entries query (browse feeds search and the suggestions) |
+| `app/entries/[id]/page.js` | probably none: RLS already returns nothing to a stranger for a pending entry, so it shows "Entry not found"; the owner and reviewers still see it. Decide whether the owner should see a status note here. |
+| `utils/submitEntry.js`, `components/ContributeForm.js` | do not send `status`; after success show the waiting message instead of `router.push` to the entry |
+| `utils/entryWrite.js` (`entryColumns`) | must NOT gain `status` (it names columns on purpose) |
+| `utils/updateEntry.js` | add `status: 'pending'` to the update unless `is_reviewer` is true; keep the zero-row check |
+| `app/entries/[id]/edit/page.js` | its hand-written `select` may need `status` if the edit page should show it |
+| `app/my-entries/page.js` (new) and `components/SiteHeader.js` / `components/AuthHeader.js` | the new page and the link for logged-in users |
+
+### Heads-ups for the student to decide (analysis, not decisions)
+
+1. **The "publish everything that exists" line also publishes the 8 junk test entries** (the `<script>` title, the
+   "Attack this entry" row, the console-screenshot photo that shows an email and a password, and others). They are
+   public today as well, so nothing new leaks, but this is the moment to choose: (a) clean them first (list ids,
+   delete by those exact ids; remove the screenshot's file from Storage too); or (b) change the UPDATE so it
+   publishes only the 9 real entries (their `photo_url` starts with `/images/`) and the test entries stay
+   pending: hidden from the public, still visible to their owners and to reviewers. Do not use a broad rule that
+   could match a future real entry with an uploaded photo.
+2. **Which account is the reviewer?** The 9 real entries are owned by `archive.test.one` (uid starts de54d832);
+   `archive.test.two` is the existing test account. The guide wants the student's own uuid on the reviewers list
+   and a different account as the stranger. Pick the pair before Part 2.
+3. **The attack inserts need this archive's required columns:** `title, description, source, filling, shape, color`
+   plus `owner` (the Khmer fields, `contributor`, `texture`, ratings and `photo_url` are nullable), and they must
+   satisfy the check constraints. A "not-null" or check error there is the student's own rules working; add the
+   column and retry.
+4. **Never commit the attack kit's values:** the project URL, publishable key and account passwords stay out of
+   every repo file and every changelog.
+5. **Khmer wording** for the status words (and the waiting message) is the student's; the AI never invents it.
+6. The guide mentions Cline; the AI assistant here is Claude Code. The Part 3 prompt can be given as written.
+
+### Changelog convention
+
+Files so far follow "week N -> CHANGES(N-1)" (Lab 5 -> CHANGES4, Lab 6 -> CHANGES5, Lab 7 -> CHANGES6, Week 8 ->
+CHANGES7, overhaul -> CHANGES7.5). Suggestion for Lab 10: `docs/sprint 3/CHANGES9_<Name>.md`; ask the student.
 
 ---
 
@@ -321,7 +406,7 @@ Open items / leftovers (none blocking):
 
 ---
 
-## Week 8, "The Proof" (last week of Sprint 2) - TESTER FIXES DONE; OVERHAUL NEXT
+## Week 8, "The Proof" (last week of Sprint 2) - COMPLETE (tester fixes and overhaul P1-P4a shipped; the overhaul is now paused)
 
 **What it is (from the student, 2026-10-09):** there is NO lab guide this week. Officially it
 is a re-test to "prove" everything works, but the student stressed that is NOT the important
@@ -402,8 +487,7 @@ file (public repo); one component per file in `components/`, ~80 lines or less (
 tends to bloat components: split them); plain React, no CSS frameworks or component libs
 (inline style objects or a plain CSS file); JavaScript only; Khmer text is first-class and
 must never be stripped, transliterated or "fixed" (check that any new font/CSS still renders
-Khmer correctly). Current look: dark `#14181F` background, green accent `#2EE6A8`, Courier
-kickers; a redesign may change this, so ask before replacing the palette.
+Khmer correctly). Current look (since the overhaul, 2026-10-20): the "Midnight & Gold" theme: midnight-blue page, cream text, gold accent, cinnabar-red main button, set by CSS variables in `app/globals.css` (never a raw colour or font name in a component); Cormorant Garamond headings, Jost body, Noto Khmer fonts. The old dark gray + mint green + Courier look is gone. New UI work in Sprint 3 uses the existing variables and classes; the overhaul itself is paused.
 
 **Light regression guard (secondary, not the focus: glance at these after changes and do a
 quick pass on the LIVE URL at the end; full list in `Week7_Lab7/ValidationChecklist.md`):**
@@ -551,7 +635,7 @@ Carry:
 - Own every line; student must be able to defend it in a code review.
 - One feature = one commit; separate commits matter.
 - Keep the changelog habit; each round documented in docs/.
-- Styling consistency: dark #14181F, green accent #2EE6A8, Courier kickers.
+- Styling consistency: use the CSS variables in app/globals.css (Midnight & Gold theme), no raw colours or font names in components.
 - Security hygiene: .env.local stays gitignored; never print secrets.
 
 Optional:
@@ -606,3 +690,5 @@ live-check plus a Canvas submission, discussion post and journal kept outside th
 - docs/UI-UX overhaul/GEMINI_BRIEFS.md             (image prompts, how to run them, results so far)
 
 The overhaul's changelogs are numbered `CHANGES7.5_*` (still the Week 8 workflow) and live in `docs/UI-UX overhaul/`. The overhaul's living note (state, decisions, next steps) is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`; this file is deliberately not mirrored for it.
+
+Sprint 3 (Lab 10 onward): no changelog exists yet. Suggested location and prefix: `docs/sprint 3/CHANGES9_<Name>.md` (week N -> CHANGES(N-1)); ask the student. The Lab 10 guide is `../Week10/Lab10_Guide.md` (outside the repo).

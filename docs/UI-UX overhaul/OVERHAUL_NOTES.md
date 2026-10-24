@@ -1,9 +1,10 @@
 # UI/UX OVERHAUL - Living notes and handoff
 
 > **How to use this file.** It is the living note for the UI/UX overhaul only. `docs/PROJECT_NOTES.md`
-> is deliberately **not** updated for the overhaul (the student's decision); it is accurate up to the
-> end of the Week 8 tester fixes. In a new chat read, in this order: `AGENTS.md`, `docs/PROJECT_NOTES.md`,
-> then this file. **Update this file in place as the overhaul progresses.**
+> is deliberately **not** mirrored for the overhaul's details (the student's decision); since 2026-10-23 it is
+> current for Sprint 3 and only says that the overhaul is in progress but paused. In a new chat read, in this
+> order: `AGENTS.md`, `docs/PROJECT_NOTES.md`, then this file. **Update this file in place as the overhaul
+> progresses.**
 >
 > The longer reasoning, palette tables and mockup prompts live outside the repo, on disk, in
 > `../Week8/UX_UI_Overhaul/` (relative to the repo folder): `01_Image_Generation_Options.md` and
@@ -11,11 +12,18 @@
 > copied into the repo as `docs/UI-UX overhaul/MOCKUP_BRIEFS.md` so any chat can read them. Do not put keys,
 > tokens or passwords in this file or anywhere in the repo (the repository is public).
 
-Status as of 2026-10-19 (later): **P1 (tokens) and P2 (retheme) are DONE and student-checked** (changelogs:
-`CHANGES7.5_CssVariables.md`, `CHANGES7.5_Retheme.md` in this folder). P3 (fonts, `CHANGES7.5_Fonts.md`) is done and student-checked; P4a (sky, moon hero, phases, `CHANGES7.5_HeroSky.md`), P4a-2 (richer blue, `CHANGES7.5_Atmosphere.md`) and P4a-3 (painted hero from Gemini, `CHANGES7.5_HeroPainting.md`) are built; the student liked the sky and chose the painting. Next: P4b (header, lattice, info-card row, wider page, mooncake photo in an arch frame). The student chose to do the overhaul BEFORE shipping (the professor wants the new design in the shipped
-version) and left the design to the AI ("you cook it"): palette A + cinnabar button, moodboard of 10 images reviewed
-(night-blue/gold-moon family and red/gold-pattern family). **Next: P2 (retheme: change only the values in the `:root`
-block of `app/globals.css`).** `docs/PROJECT_NOTES.md` carries a short pointer to this file.
+> **STATUS: IN PROGRESS, ON PAUSE (since 2026-10-23, the student's choice).** Sprint 3 starts with Lab 10
+> "The Gate" (every new entry waits for review), which takes priority. The overhaul was the student's own idea at
+> the end of Sprint 2, outside the Sprint 2 scope, and it is still important; it resumes when the student says so.
+> **Do not touch styling, colours, fonts or images while it is paused** unless the student asks.
+
+Status as of 2026-10-23: **P1 (tokens), P2 (retheme), P3 (fonts) and P4a (night sky, moon phases, the Gemini-painted
+home hero) are DONE, student-checked, committed and shipped** (merged into `main` at `97e1a73`; the live check of the
+new site was "flawless"). Changelogs: `CHANGES7.5_CssVariables.md`, `CHANGES7.5_Retheme.md`, `CHANGES7.5_Fonts.md`,
+`CHANGES7.5_HeroSky.md`, `CHANGES7.5_Atmosphere.md`, `CHANGES7.5_HeroPainting.md` (all in this folder). Palette and
+fonts were decided by the AI ("you cook it") and are now in use everywhere through the CSS variables in
+`app/globals.css`. **When it resumes, the next step is P4b** (see section 11). `docs/PROJECT_NOTES.md` carries a short
+pointer to this file.
 
 ---
 
@@ -214,7 +222,8 @@ The student looked at Magic UI, React Bits and Motion. **None of them is used.**
 ## 9b. SHORT opening message for the next chat (use this one; section 9 below is the original, now outdated)
 
 ```
-Continuing the UI/UX overhaul of my Khmer Living Archive (Sprint 2, Week 8, branch `experiment`).
+NOTE: this overhaul is PAUSED (since 2026-10-23) while I do Sprint 3 / Lab 10. Only continue it when I say so.
+Continuing the UI/UX overhaul of my Khmer Living Archive (started in Sprint 2, Week 8, branch `experiment`).
 Read, in this order: AGENTS.md, then docs/UI-UX overhaul/OVERHAUL_NOTES.md (start with the status line at
 the top and section 11 "Where we stopped"). You do not need to re-read the whole of docs/PROJECT_NOTES.md.
 Check `git status` and `git log -5` first: I may or may not have committed the last steps.
@@ -265,6 +274,7 @@ state), THEN keep working on the overhaul on experiment until it is satisfactory
 
 | Date | What |
 |---|---|
+| 2026-10-23 (PAUSED) | Student paused the overhaul: Sprint 3 starts with Lab 10 "The Gate" (entries wait for review), which takes priority. Overhaul status: in progress, on pause; P1 to P4a shipped on `main` (`97e1a73`), live check flawless; nothing after P4a built. `docs/PROJECT_NOTES.md` was updated for Sprint 3 and says the same. Still open for when it resumes: P4b to P4d, the "background dims and goes plain as you scroll" fix, the extra Gemini images on Browse (`hero_A_1`) and Contribute (`hero_A_2`), P5 motion, P6 phone/contrast pass. Note: the Lab 10 code changes touch `/contribute`, the home and browse queries and the header; if the overhaul resumes later, re-check those pages. |
 | 2026-10-20 (3 AM wrap-up) | Student: hero "absolutely amazing". Open issue: the page background gets dimmer/darker and plain as you scroll (to fix later with effects and interactions). Extra Gemini images organised in `Week8/Gemini_images_from_antigravity/Brief 1/`; plan (not built): `hero_A_1` to Browse, `hero_A_2` to Contribute, none on login/signup. Everything recorded in section 11, `GEMINI_BRIEFS.md` and a short next-chat opening message (section 9b). |
 | 2026-10-20 (P4a-3) | **Painted hero done.** Student ran Brief 1 (direction A) in Antigravity on the small reference folder only, got three versions, chose `hero_A_3.png` ("Gemini absolutely cooked"). Compressed to `public/hero-moon-2000.webp` (92 KB) and `-900.webp` (27 KB); new `components/HeroBanner.js`; `HeroMoon.js` and its CSS deleted; home hero is now the painting with the title over the mountains. AI screenshots at desktop and phone width. Changelog `CHANGES7.5_HeroPainting.md`. The image-making workflow (open only the small folder, 3 versions, AI processes) works and is documented in `GEMINI_BRIEFS.md`. Next: P4b. |
 | 2026-10-20 (P4a-2) | Student's verdict on P4a: "huge moon, feels cheap, background voided; the inspirations' blues are majestic." **Answer:** richer atmosphere in CSS (cobalt + teal glows, stars, a tall mid-blue base, deeper "glass" cards, lighter secondary text; moon shrunk to 92px) and a plan for ONE painted hero image from Gemini (`GEMINI_BRIEFS.md`, Brief 1). The student's own `mooncake.jpg` (Gemini, 1200x896, warm photo with a carved top) is planned for an arch frame in the "What is a mooncake?" panel. Changelog `CHANGES7.5_Atmosphere.md`. Next: Gemini hero decision, then P4b. |
