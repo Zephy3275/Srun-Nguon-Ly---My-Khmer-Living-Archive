@@ -9,6 +9,7 @@ import { checkPhoto } from "../utils/photoCheck.js";
 import { submitEntry } from "../utils/submitEntry.js";
 import { updateEntry } from "../utils/updateEntry.js";
 import EntryFormFields from "./EntryFormFields.js";
+import EntrySentNotice from "./EntrySentNotice.js";
 import Loader from "./Loader.js";
 
 // Used twice: /contribute (no `entry` prop = add a new entry) and the edit page
@@ -51,6 +52,8 @@ export default function ContributeForm({ entry }) {
   const [loading, setLoading] = useState(false);
   // Which step the save is on, shown next to the loader ("UPLOADING PHOTO…").
   const [stage, setStage] = useState("");
+  // null while the form is showing; "added" or "edited" once the entry waits for review.
+  const [sent, setSent] = useState(null);
 
   // Editing a field clears that field's message.
   function handleChange(name, value) {
@@ -90,14 +93,23 @@ export default function ContributeForm({ entry }) {
         setLoading(false);
         return;
       }
-      router.push(`/entries/${result.id}`);
-      router.refresh();
+      // No status is sent when adding: the database default makes it pending.
+      // A reviewer's own edit stays published, so only that case opens the entry.
+      if (editing && !result.backToReview) {
+        router.push(`/entries/${result.id}`);
+        router.refresh();
+        return;
+      }
+      setSent(editing ? "edited" : "added");
+      setLoading(false);
     } catch (err) {
       console.error("Contribute form failed unexpectedly:", err);
       setFormError("Something went wrong. Please try again.");
       setLoading(false);
     }
   }
+
+  if (sent) return <EntrySentNotice kind={sent} />;
 
   return (
     <form onSubmit={handleSubmit} style={styles.form} noValidate>

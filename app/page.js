@@ -88,6 +88,9 @@ export default async function Home() {
     .select(
       "id, title, titleKhmer:title_khmer, source, description, descriptionKhmer:description_khmer, image:photo_url"
     )
+    // Politeness, not security: the database already hides pending entries from
+    // strangers, but you see your own while logged in, so the public page filters too.
+    .eq("status", "published")
     .order("created_at", { ascending: false });
   const entries = data ?? [];
 

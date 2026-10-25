@@ -28,6 +28,8 @@ export default async function Browse() {
     .select(
       "id, title, titleKhmer:title_khmer, source, contributor, description, descriptionKhmer:description_khmer, image:photo_url"
     )
+    // Same politeness filter as the home page: only published entries are searchable.
+    .eq("status", "published")
     .order("created_at", { ascending: false });
   const entries = data ?? [];
 

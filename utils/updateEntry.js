@@ -7,6 +7,10 @@
 // rows and reports success. So we ask for the changed rows with .select() and
 // treat "no row came back" as a failure. The database is the real gatekeeper
 // (the owner-only policies from Lab 6); this check is how the app finds out.
+//
+// Lab 10: an edit goes back to review. Unless the editor is a reviewer, the
+// update carries status: 'pending' (the update policy refuses anything else).
+// Returns { id, backToReview } so the form knows which message to show.
 
 import {
   entryColumns,
@@ -23,8 +27,15 @@ export async function updateEntry(supabase, id, values, photoType, onStage) {
   const user = await getSessionUser(supabase);
   if (!user) return { error: "Your session has ended. Please log in again." };
 
+  // Ask the database whether this user is a reviewer. If the question itself
+  // fails, treat them as a non-reviewer: the safe answer sends the entry to review.
+  const { data: isReviewer, error: reviewerError } = await supabase.rpc("is_reviewer");
+  if (reviewerError) console.error("is_reviewer check failed:", reviewerError);
+  const backToReview = isReviewer !== true;
+
   // owner and id are never sent. photo_url is sent only if a new photo was picked.
   const columns = entryColumns(values);
+  if (backToReview) columns.status = "pending";
   let newPhotoPath = null;
   if (photoType) {
     onStage?.("UPLOADING PHOTO…");
@@ -50,5 +61,5 @@ export async function updateEntry(supabase, id, values, photoType, onStage) {
     return { error: NOT_SAVED };
   }
 
-  return { id: data[0].id };
+  return { id: data[0].id, backToReview };
 }

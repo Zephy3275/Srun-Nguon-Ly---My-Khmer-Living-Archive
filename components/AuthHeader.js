@@ -32,6 +32,9 @@ export default async function AuthHeader() {
     <div style={styles.row}>
       {user ? (
         <>
+          <Link href="/my-entries" className="nav-link">
+            MY ENTRIES
+          </Link>
           <span style={styles.email} title={user.email}>
             {user.email}
           </span>
