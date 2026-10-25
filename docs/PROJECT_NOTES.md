@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 3 (phase 3, "submit, review, publish"), Week 10, Lab 10 "The Gate"** (Friday 2026-10-23; due Sunday 2026-10-25, 11:59 PM). **Sprint 2 is COMPLETE and shipped:** Labs 5-7 and Week 8 (tester fixes, contributor field, and the first steps of the UI/UX overhaul) are merged into `main` (`97e1a73`), deployed to Vercel and live-verified (the live check of the new site was flawless). **This week's scope (Lab 10): every new entry waits for review, the public sees only published entries, and nobody can publish their own entry from the console.** See "Sprint 3, Lab 10" below; the full lab text is `../Week10/Lab10_Guide.md` (in the parent folder, OUTSIDE the repo): read it when working on the lab. **Lab 10 progress (2026-10-25): Part 2 SQL RUN by the student (checked: 9 published, 8 pending, 1 reviewer = archive.test.two, 4 policies); Part 3 code WRITTEN and student-tested on localhost (add, pending status with Khmer, hidden when logged out and as the reviewer, edit shows the sent-back message; staged for the student's commit; see `docs/sprint 3/CHANGES9_TheGate.md`); Part 4 attack kit written (`../Week10/Lab10_Part4_AttackKit.md`, stranger = archive.test.three), attacks not run yet; Part 5 push/ship still to do.** Part 1 answers: `../Week10/Lab10_Part1_Answers.md`. The **UI/UX overhaul is IN PROGRESS but PAUSED** (the student's choice, 2026-10-23: Lab 10 takes priority). It was the student's own idea at the end of Sprint 2, not part of the Sprint 2 scope; steps P1 to P4a (colours, fonts, a Gemini-painted home-page hero) are done and shipped; its living note is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`. Do not touch styling unless the student asks to resume it. Canvas submissions, discussion posts, journals and reflections are separate coursework, drafted in chat, not stored in this repo. Open leftovers (none blocking): 8 test entries still on the live database (the student deferred the cleanup, see the Lab 10 heads-ups), orphaned photos in Storage after delete/replace, EXIF/GPS not stripped.
+> Current phase: **SPRINT 3 (phase 3, "submit, review, publish"), Week 10, Lab 10 "The Gate"** (Friday 2026-10-23; due Sunday 2026-10-25, 11:59 PM). **Sprint 2 is COMPLETE and shipped:** Labs 5-7 and Week 8 (tester fixes, contributor field, and the first steps of the UI/UX overhaul) are merged into `main` (`97e1a73`), deployed to Vercel and live-verified (the live check of the new site was flawless). **This week's scope (Lab 10): every new entry waits for review, the public sees only published entries, and nobody can publish their own entry from the console.** See "Sprint 3, Lab 10" below; the full lab text is `../Week10/Lab10_Guide.md` (in the parent folder, OUTSIDE the repo): read it when working on the lab. **Lab 10 progress (2026-10-25): Part 2 SQL RUN by the student (checked: 9 published, 8 pending, 1 reviewer = archive.test.two, 4 policies); Part 3 code WRITTEN and student-tested on localhost (add, pending status with Khmer, hidden when logged out and as the reviewer, edit shows the sent-back message; also confirmed in the browser: MY ENTRIES appears in the header, and "waiting politely" plus the other pending entry show as pending on /my-entries; committed as `619a7a6` on `experiment`; see `docs/sprint 3/CHANGES9_TheGate.md`); Part 4 attacks RUN by the student as archive.test.three, ALL FIVE PASSED (exact messages in `docs/sprint 3/CHANGES9_AttackOwnGate.md` and `../Week10/Lab10_Part4_AttackKit.md`; "waiting politely" left pending); Part 5 (merge to main, push, live check, Canvas) still to do.** Part 1 answers: `../Week10/Lab10_Part1_Answers.md`. The **UI/UX overhaul is IN PROGRESS but PAUSED** (the student's choice, 2026-10-23: Lab 10 takes priority). It was the student's own idea at the end of Sprint 2, not part of the Sprint 2 scope; steps P1 to P4a (colours, fonts, a Gemini-painted home-page hero) are done and shipped; its living note is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`. Do not touch styling unless the student asks to resume it. Canvas submissions, discussion posts, journals and reflections are separate coursework, drafted in chat, not stored in this repo. Open leftovers (none blocking): 8 test entries still on the live database (the student deferred the cleanup, see the Lab 10 heads-ups), orphaned photos in Storage after delete/replace, EXIF/GPS not stripped.
 
 ---
 
@@ -13,7 +13,7 @@ Copy everything in the block below into the new chat:
 
 ```
 Current: Sprint 3 (submit, review, publish), Week 10, Lab 10 "The Gate" (Fri 2026-10-23; due Sun 2026-10-25,
-11:59 PM). Sprint 2 is complete and shipped (main = 97e1a73). THIS WEEK: every new entry waits for review
+11:59 PM). Sprint 2 is complete and shipped (main = 97e1a73). LAB 10 STATUS (2026-10-25): Parts 1-4 done (SQL run, code committed as 619a7a6 on `experiment`, all five attacks refused); what is left is Part 5 (merge to main, push, live check, Canvas); the progress line at the top of this file has the detail. THIS WEEK: every new entry waits for review
 (status "pending"), the public sees only published entries, and nobody can publish their own entry from the
 console. The full lab text is Week10/Lab10_Guide.md (in the PARENT folder of the repo, outside it): read it
 when working on the lab. The UI/UX overhaul (docs/UI-UX overhaul/OVERHAUL_NOTES.md) is IN PROGRESS but PAUSED:
@@ -30,15 +30,15 @@ STEP 1 - Orient yourself (don't skip):
   - Run `git status` and `git log --oneline -5`; skim app/, components/ and utils/ to confirm the state.
   - Do NOT read ../Week8/Gemini_models_from_API_keys.md (it contains an API key).
 
-CURRENT STATE (after Sprint 2, 2026-10-23):
+CURRENT STATE (Sprint 2 base from 2026-10-23, updated for Lab 10 on 2026-10-25):
   - Next.js 15 App Router app. Pages: / (home: painted HeroBanner, info cards, About the mooncake, all
     entries), /browse (search), /entries/[id] (detail, EN + Khmer, EDIT/DELETE for the owner only),
     /entries/[id]/edit (owner-only edit), /contribute (add an entry + photo, login-gated), /login, /signup.
-    A sticky SiteHeader on every page. No /my-entries page and no review page yet (Lab 10 adds /my-entries;
+    A sticky SiteHeader on every page. /my-entries now exists (Lab 10: your own entries with their status; MY ENTRIES link in the header for logged-in users). No review page yet (
     the review page is next Friday, Week 11).
-  - Home, browse and the detail page READ FROM SUPABASE (table `entries`, 16 columns, RLS ON with 4
-    policies, 12 check constraints; Storage bucket `photos`). There is NO `status` column yet: today every
-    entry is public the moment it is added.
+  - Home, browse and the detail page READ FROM SUPABASE (table `entries`, 17 columns since Lab 10 (`status` added), RLS ON with 4
+    policies, 12 check constraints plus the status check; Storage bucket `photos`). Since Lab 10 every
+    new entry is pending until a reviewer publishes it, and the public pages show published entries only (the review page itself is Week 11; until then the student publishes from the console with `review_entry`).
   - Form rules: utils/validateEntry.js; the two Khmer fields are optional; CONTRIBUTOR is required.
     `owner` always comes from the login session, never the form; inserts/updates name their columns.
   - Look: Midnight & Gold theme via CSS variables in app/globals.css, Cormorant Garamond + Jost + Noto Khmer
@@ -69,7 +69,7 @@ what you assume, never run `next build` while the student's `npm run dev` is run
 
 ---
 
-## Current repo state (accurate as of 2026-10-23: Sprint 2 complete, Lab 10 not started)
+## Current repo state (tree updated 2026-10-25 with the Lab 10 files)
 
 ```
 Srun-Nguon-Ly---My-Khmer-Living-Archive\
@@ -88,6 +88,8 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   |   +-- page.js      (/login -> LoginForm)
 |   +-- signup
 |   |   +-- page.js      (/signup -> SignupForm)
+|   +-- my-entries
+|   |   +-- page.js      (Lab 10: /my-entries, logged-in only: the user's own entries (owner filter) with their status; MyEntryRow per entry)
 |   +-- entries
 |       +-- [id]
 |           +-- page.js  (per-entry detail page, EN + Khmer; READS SUPABASE by uuid; EDIT/DELETE
@@ -118,6 +120,9 @@ Srun-Nguon-Ly---My-Khmer-Living-Archive\
 |   +-- DeleteEntryButton.js(Lab 7: "use client" inline two-step delete confirm, zero-row check)
 |   +-- HeroBanner.js       (overhaul P4a: the home page's painted hero: full-width picture, title over the mountains)
 |   +-- MoonPhases.js       (overhaul P4a: a row of moon phases between two gold lines, decoration)
+|   +-- EntrySentNotice.js  (Lab 10: the "waiting for review" / "sent back for review" message ContributeForm shows after a save)
+|   +-- MyEntryRow.js       (Lab 10: one row of /my-entries: title, status badge, hint, EDIT on returned entries)
+|   +-- StatusBadge.js      (Lab 10: pending / published / returned in English + Khmer (the student's words))
 +-- data
 |   +-- entries.js          (9 REAL entries; KEPT ON PURPOSE as a drafting file - nothing
 |                            imports it any more since Lab 6's cutover; not synced with Supabase)
@@ -199,7 +204,7 @@ Key facts / Sprint 2 security posture:
 
 **Source:** `../Week10/Lab10_Guide.md` (the professor's exact words, outside the repo, 197 lines; read it when
 working the lab). Sprint 3 = submit, review, publish (weeks 9-11). The brief for Sprint 2 said a review
-workflow was NOT part of Sprint 2; this is where it starts. **Status: nothing built, no SQL run yet.**
+workflow was NOT part of Sprint 2; this is where it starts. **Status (2026-10-25): Parts 1-4 DONE (SQL run, code committed, all five attacks refused); Part 5 (merge, push, live check, Canvas) left.**
 
 **Goal of this lab:** every new entry waits for review, the public sees published entries only, and nobody
 can publish their own entry from the console. The review page itself is NEXT Friday (Week 11; a `Week11`
@@ -293,7 +298,7 @@ returned), the week 10 discussion post, the week 10 process log. The Sprint 2 la
 ### Changelog convention
 
 Files so far follow "week N -> CHANGES(N-1)" (Lab 5 -> CHANGES4, Lab 6 -> CHANGES5, Lab 7 -> CHANGES6, Week 8 ->
-CHANGES7, overhaul -> CHANGES7.5). Suggestion for Lab 10: `docs/sprint 3/CHANGES9_<Name>.md`; ask the student.
+CHANGES7, overhaul -> CHANGES7.5). Lab 10: `docs/sprint 3/CHANGES9_TheGate.md` and `CHANGES9_AttackOwnGate.md` (confirmed by the student).
 
 ---
 
@@ -692,5 +697,6 @@ live-check plus a Canvas submission, discussion post and journal kept outside th
 The overhaul's changelogs are numbered `CHANGES7.5_*` (still the Week 8 workflow) and live in `docs/UI-UX overhaul/`. The overhaul's living note (state, decisions, next steps) is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`; this file is deliberately not mirrored for it.
 
 - docs/sprint 3/CHANGES9_TheGate.md             (Lab 10 - the gate: status column + policies SQL, public filters, waiting message, /my-entries, edits go back to review)
+- docs/sprint 3/CHANGES9_AttackOwnGate.md       (Lab 10 Part 4 - the five console attacks as archive.test.three, all refused; results table with the exact messages)
 
 Sprint 3 changelogs live in `docs/sprint 3/` with the prefix `CHANGES9_` (week 10 -> CHANGES9; confirmed by the student 2026-10-25). The Lab 10 guide is `../Week10/Lab10_Guide.md` and the Part 1 answers are `../Week10/Lab10_Part1_Answers.md` (both outside the repo).

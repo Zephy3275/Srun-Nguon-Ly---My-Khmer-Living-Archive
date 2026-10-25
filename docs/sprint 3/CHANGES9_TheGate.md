@@ -66,11 +66,18 @@ The guide's five Part 3 changes name no new components. Three were added so that
 - [x] Logged out, the new entry is not on the home page.
 - [x] Logged in as `archive.test.two` (the reviewer), the new entry is still not on the home page (the published filter works, even though the database would show it to a reviewer).
 - [x] Edit a pending entry as a non-reviewer and save: the "sent back for review" message shows.
+- [x] After the Part 4 attacks (localhost, `npm run dev`): MY ENTRIES appears in the header when logged in, and archive.test.three's "waiting politely" and its other entry both show as pending on `/my-entries`.
 
-**Not covered yet:**
-- A non-reviewer editing an already **published** entry (the case policy 7 exists for): the edited entry was already pending, so pending to pending passes with or without `status: "pending"` in the update. To cover it later: publish one of `archive.test.three`'s entries as the reviewer, edit it as `archive.test.three`, and it should go back to pending.
-- A reviewer's own edit staying published.
-- Part 4: the five attacks (kit: `Week10/Lab10_Part4_AttackKit.md`, outside the repo; the results go in the Canvas table, not in this repo).
+**Skipped on purpose (the student's decision; the lab does not require them):**
+- A non-reviewer editing an already **published** entry (the case policy 7 exists for): the edited entry was already pending, so pending to pending passes with or without `status: "pending"` in the update. The code for it is in `utils/updateEntry.js` and was read in the diff review, but not run. To cover it later: publish one of `archive.test.three`'s entries as the reviewer, edit it as `archive.test.three`, and it should go back to pending.
+- A reviewer's own edit staying published (needs an entry added by `archive.test.two` and published first).
+
+## Part 4: attack your own gate (run by the student in the live site's browser console)
+
+Run by the student as `archive.test.three`; **all five attacks were refused as expected.** Setup, the results table with the exact messages, and what each result shows are in `docs/sprint 3/CHANGES9_AttackOwnGate.md`. The entry "waiting politely" was left `pending` for next Friday's review queue.
+
+**Still to do:**
+- Merge `experiment` into `main`, push, check the live site logged out (Part 5), and submit on Canvas.
 
 ## Changelog index (append to `docs/PROJECT_NOTES.md`)
 
