@@ -42,6 +42,8 @@ Claude has not built or run the app (the student's dev server is theirs). Studen
 
 First attempt at call 2 used the literal placeholder text as the id: the database answered 400 (not a valid uuid) before `review_entry` ran, so it proved nothing; the rerun with a real id is the valid result. `select * from reviewers;` was not needed (call 2 was false). The student also confirmed (later the same day) that the edited entry came back with its ORIGINAL SUBMITTED date, so the queue sorts by first submission as the guide says.
 
+**Live (after the merge to `main`, 2026-10-30):** as archive.test.two the REVIEW link is in the header, /review shows the counter (9 pending) and the Khmer, and "waiting politely" and the Part 4 test entry show on the home page. No buttons were pressed on the live site. The optional junk-entry cleanup and the `review_note` stretch are on hold (student short of time).
+
 ## Changelog index (append to `docs/PROJECT_NOTES.md`)
 
 - docs/sprint 3/CHANGES10_ReviewQueue.md   (Lab 11 - the review queue: /review, Publish/Return via rpc, REVIEW header link)
