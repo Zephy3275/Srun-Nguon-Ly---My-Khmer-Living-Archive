@@ -68,6 +68,8 @@ The guide's five Part 3 changes name no new components. Three were added so that
 - [x] Edit a pending entry as a non-reviewer and save: the "sent back for review" message shows.
 - [x] After the Part 4 attacks (localhost, `npm run dev`): MY ENTRIES appears in the header when logged in, and archive.test.three's "waiting politely" and its other entry both show as pending on `/my-entries`.
 
+**Checked by the student on the live site after the merge (Part 5, 2026-10-25):** logged out, the 9 real entries show and nothing else; logged in, MY ENTRIES appears in the header; `archive.test.three`'s two pending entries are still listed as pending.
+
 **Skipped on purpose (the student's decision; the lab does not require them):**
 - A non-reviewer editing an already **published** entry (the case policy 7 exists for): the edited entry was already pending, so pending to pending passes with or without `status: "pending"` in the update. The code for it is in `utils/updateEntry.js` and was read in the diff review, but not run. To cover it later: publish one of `archive.test.three`'s entries as the reviewer, edit it as `archive.test.three`, and it should go back to pending.
 - A reviewer's own edit staying published (needs an entry added by `archive.test.two` and published first).
@@ -77,7 +79,7 @@ The guide's five Part 3 changes name no new components. Three were added so that
 Run by the student as `archive.test.three`; **all five attacks were refused as expected.** Setup, the results table with the exact messages, and what each result shows are in `docs/sprint 3/CHANGES9_AttackOwnGate.md`. The entry "waiting politely" was left `pending` for next Friday's review queue.
 
 **Still to do:**
-- Merge `experiment` into `main`, push, check the live site logged out (Part 5), and submit on Canvas.
+- Submit on Canvas (the merge, push and live check are done; see above).
 
 ## Changelog index (append to `docs/PROJECT_NOTES.md`)
 
