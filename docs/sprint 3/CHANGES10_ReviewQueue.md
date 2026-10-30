@@ -24,7 +24,23 @@ The page a reviewer opens the Lab 10 gate from: `/review` lists the pending entr
 
 ## Verification
 
-Claude has not built or run the app (the student's dev server is theirs). Student tested locally as archive.test.two (2026-10-30): the REVIEW link shows in the header; /review lists the pending entries (the old tests first); both buttons show in Khmer and English; "waiting politely" is in the queue. Still to do: the Part 3 diff read, the Part 4 round trip (publish, return, edit, two tabs) and the stranger checks.
+Claude has not built or run the app (the student's dev server is theirs). Student tested locally as archive.test.two (2026-10-30): the REVIEW link shows in the header; /review lists the pending entries (the old tests first); both buttons show in Khmer and English; "waiting politely" is in the queue. 
+
+**Part 3 (diff read, Claude searched the new files, student read them; 2026-10-30), all four checks clean:** (1) `rpc("is_reviewer")` runs in `app/review/page.js` before the only `.from("entries")` call, and a non-reviewer returns early; (2) no `.update(` anywhere in the new files, the only write is `rpc("review_entry")`; (3) success is `data === true` (`error || data !== true` is failure); (4) `ascending: true`, and every message, both button labels and the counter carry the student's Khmer. No `dangerouslySetInnerHTML`, no new package. Not clean by design: the heading sentence and the REVIEW header link are English only.
+
+**Part 4 (student, local, 2026-10-30), all passed:**
+
+| Step | Result |
+|---|---|
+| 1. Publish "waiting politely" | Left the queue, counter dropped by 1, visible on the home page logged out |
+| 2. New entry as archive.test.three, Return | Appeared in the queue; after Return it showed as returned with an EDIT button |
+| 3. Edit and save as archive.test.three | Pending again and back in the reviewer's queue |
+| 4. Two tabs: Publish in one, Return in the other | The second tab showed the failure message and kept the entry until a refresh |
+| 5. /review as archive.test.three | Only the "reviewers only" message, nothing else |
+| Console call 1 (stranger's pending list) | 1 pending entry (their own) although many more are pending in the database: row-level security hides the rest |
+| Console call 2 with a real id | `data: false`, `error: null`, status 200: `review_entry` refused the stranger |
+
+First attempt at call 2 used the literal placeholder text as the id: the database answered 400 (not a valid uuid) before `review_entry` ran, so it proved nothing; the rerun with a real id is the valid result. `select * from reviewers;` was not needed (call 2 was false). The student also confirmed (later the same day) that the edited entry came back with its ORIGINAL SUBMITTED date, so the queue sorts by first submission as the guide says.
 
 ## Changelog index (append to `docs/PROJECT_NOTES.md`)
 
