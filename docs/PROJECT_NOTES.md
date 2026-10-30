@@ -3,7 +3,7 @@
 > **How to use this file**
 > Living handoff note for the project. Read `AGENTS.md` first (auto-loaded), then this file.
 > **Update this file in place as progress happens** so the handoff never goes stale.
-> Current phase: **SPRINT 3 (phase 3, "submit, review, publish"), Week 10, Lab 10 "The Gate"** (Friday 2026-10-23; due Sunday 2026-10-25, 11:59 PM). **Sprint 2 is COMPLETE and shipped:** Labs 5-7 and Week 8 (tester fixes, contributor field, and the first steps of the UI/UX overhaul) are merged into `main` (`97e1a73`), deployed to Vercel and live-verified (the live check of the new site was flawless). **This week's scope (Lab 10): every new entry waits for review, the public sees only published entries, and nobody can publish their own entry from the console.** See "Sprint 3, Lab 10" below; the full lab text is `../Week10/Lab10_Guide.md` (in the parent folder, OUTSIDE the repo): read it when working on the lab. **Lab 10 progress (2026-10-25): Part 2 SQL RUN by the student (checked: 9 published, 8 pending, 1 reviewer = archive.test.two, 4 policies); Part 3 code WRITTEN and student-tested on localhost (add, pending status with Khmer, hidden when logged out and as the reviewer, edit shows the sent-back message; also confirmed in the browser: MY ENTRIES appears in the header, and "waiting politely" plus the other pending entry show as pending on /my-entries; committed as `619a7a6` on `experiment`; see `docs/sprint 3/CHANGES9_TheGate.md`); Part 4 attacks RUN by the student as archive.test.three, ALL FIVE PASSED (exact messages in `docs/sprint 3/CHANGES9_AttackOwnGate.md` and `../Week10/Lab10_Part4_AttackKit.md`; "waiting politely" left pending); Part 5 DONE 2026-10-25: `experiment` merged into `main` and pushed (main = origin/main = `5be7951`), deployed to Vercel, live-checked by the student (9 real entries logged out, MY ENTRIES in the header when logged in, archive.test.three's 2 pending entries still listed). **LAB 10 IS COMPLETE (Canvas submitted 2026-10-25 before the deadline; the writing is in `../Week10/Week10_Submissions.md`).** Open for Sprint 3 (nothing blocking): (1) the review page, Week 11 (the pending entries to review are "waiting politely" and archive.test.three's other entry; until then publish with `sb.rpc('review_entry', ...)`); (2) the audit finding the student chose to fix: add a CONTRIBUTED BY line to the entry cards (EntryCard.js; the home page query does not select `contributor` yet, Browse does); (3) the "thank you" and "sent back" messages are English only (an UNVERIFIED Khmer draft is in `../Week10/Lab10_Part1_Answers.md`, not used in code; Khmer wording is the student's); (4) optional stretch not done: `review_note`; (5) not covered by any test: a non-reviewer editing a PUBLISHED entry, and a reviewer's own edit staying published; (6) the 8 old test entries stay pending on the live DB (one photo shows an email and password: remove its Storage file when cleaned).** Part 1 answers: `../Week10/Lab10_Part1_Answers.md`. The **UI/UX overhaul is IN PROGRESS but PAUSED** (the student's choice, 2026-10-23: Lab 10 takes priority). It was the student's own idea at the end of Sprint 2, not part of the Sprint 2 scope; steps P1 to P4a (colours, fonts, a Gemini-painted home-page hero) are done and shipped; its living note is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`. Do not touch styling unless the student asks to resume it. Canvas submissions, discussion posts, journals and reflections are separate coursework, drafted in chat, not stored in this repo. Open leftovers (none blocking): 8 test entries still on the live database (the student deferred the cleanup, see the Lab 10 heads-ups), orphaned photos in Storage after delete/replace, EXIF/GPS not stripped.
+> Current phase: **SPRINT 3 (phase 3, "submit, review, publish"), Week 11, Lab 11 "The Queue"** (Friday 2026-10-30). **Sprint 2 and Lab 10 are COMPLETE and shipped:** Lab 10 "The Gate" (every new entry waits for review, the public sees published entries only, nobody can publish their own entry from the console) is merged into `main` (`5be7951`), live on Vercel and verified, and its Canvas writing was submitted on time on 2026-10-25. `experiment` is one docs-only commit ahead of `main` (`ee2d8ef`, already pushed). **This week's scope (Lab 11): build the review queue: a /review page for reviewers only, listing the pending entries oldest first, each with a Publish and a Return button that call `rpc('review_entry')`, plus a /review link in the header that only reviewers see.** See "Sprint 3, Lab 11" below; the full lab text is `../Week11/Lab11_Guide.md` (in the parent folder, OUTSIDE the repo): read it when working on the lab. **No Lab 11 SQL or code has been written yet (as of 2026-10-30).** There is nothing to submit on Canvas for Lab 11: the queue is graded as part of Sprint 3 (due Sunday 2026-11-08); the week 11 process log is due Sunday 2026-11-01, 11:59 PM; Tuesday 2026-11-03 is review day (the student's partner will go straight for /review). The **UI/UX overhaul is IN PROGRESS but PAUSED** (the student's choice): do not touch styling unless asked; its living note is `docs/UI-UX overhaul/OVERHAUL_NOTES.md`. Canvas submissions, discussion posts, journals and process logs are separate coursework, drafted in chat or in the Week folders, not stored in this repo. Open leftovers (none blocking): the CONTRIBUTED BY line on the entry cards (the student's chosen audit fix for Sprint 3), the English-only waiting messages, the old test entries still pending on the live database, orphaned photos in Storage after delete/replace, EXIF/GPS not stripped.
 
 ---
 
@@ -12,12 +12,14 @@
 Copy everything in the block below into the new chat:
 
 ```
-Current: Sprint 3 (submit, review, publish), Week 10, Lab 10 "The Gate" (Fri 2026-10-23; due Sun 2026-10-25,
-11:59 PM). Sprint 2 is complete and shipped (main = 97e1a73). LAB 10 STATUS (2026-10-25): Parts 1-4 done (SQL run, code committed as 619a7a6 on `experiment`, all five attacks refused); Part 5 is done too (merged to main as 5be7951, live on Vercel, live-checked); only the Canvas writing is left. The progress line at the top of this file has the detail. THIS WEEK: every new entry waits for review
-(status "pending"), the public sees only published entries, and nobody can publish their own entry from the
-console. The full lab text is Week10/Lab10_Guide.md (in the PARENT folder of the repo, outside it): read it
-when working on the lab. The UI/UX overhaul (docs/UI-UX overhaul/OVERHAUL_NOTES.md) is IN PROGRESS but PAUSED:
-do not touch styling unless I ask.
+Current: Sprint 3 (submit, review, publish), Week 11, Lab 11 "The Queue" (Fri 2026-10-30). Lab 10 "The Gate" is
+complete and shipped (main = 5be7951; `experiment` is one docs-only commit ahead, ee2d8ef). THIS WEEK: build the
+review page /review: reviewers only, the pending entries oldest first, a Publish and a Return button on each
+(both call rpc('review_entry')), and a header link to /review shown only to reviewers. The full lab text is
+Week11/Lab11_Guide.md (in the PARENT folder of the repo, outside it): read it when working on the lab. Nothing is
+due on Canvas for Lab 11 (it is graded inside Sprint 3, due Sun 2026-11-08); the week 11 process log is due Sun
+2026-11-01, 11:59 PM; review day is Tue 2026-11-03. The UI/UX overhaul (docs/UI-UX overhaul/OVERHAUL_NOTES.md) is
+IN PROGRESS but PAUSED: do not touch styling unless I ask.
 
 Project: "Khmer Living Archive" - a student's archive of Khmer/Chinese heritage
 (mooncakes + proverbs), built in ICT 340 at AUPP. Next.js 15, App Router, React 19,
@@ -25,20 +27,29 @@ JavaScript only, plain React, no TypeScript.
 
 STEP 1 - Orient yourself (don't skip):
   - Read AGENTS.md (hard rules + the Sprint 2 dependency amendment).
-  - Read this file: docs/PROJECT_NOTES.md, especially "Sprint 3, Lab 10" (scope, plan, heads-ups).
-  - Read ../Week10/Lab10_Guide.md (the lab, exact words) when we start the lab itself.
+  - Read this file: docs/PROJECT_NOTES.md, especially "Sprint 3, Lab 11" (scope, plan, heads-ups).
+  - Read ../Week11/Lab11_Guide.md (the lab, exact words) when we start the lab itself, and skim
+    docs/sprint 3/CHANGES9_TheGate.md (the gate this page opens).
   - Run `git status` and `git log --oneline -5`; skim app/, components/ and utils/ to confirm the state.
   - Do NOT read ../Week8/Gemini_models_from_API_keys.md (it contains an API key).
 
-CURRENT STATE (Sprint 2 base from 2026-10-23, updated for Lab 10 on 2026-10-25):
-  - Next.js 15 App Router app. Pages: / (home: painted HeroBanner, info cards, About the mooncake, all
-    entries), /browse (search), /entries/[id] (detail, EN + Khmer, EDIT/DELETE for the owner only),
-    /entries/[id]/edit (owner-only edit), /contribute (add an entry + photo, login-gated), /login, /signup.
-    A sticky SiteHeader on every page. /my-entries now exists (Lab 10: your own entries with their status; MY ENTRIES link in the header for logged-in users). No review page yet (
-    the review page is next Friday, Week 11).
-  - Home, browse and the detail page READ FROM SUPABASE (table `entries`, 17 columns since Lab 10 (`status` added), RLS ON with 4
-    policies, 12 check constraints plus the status check; Storage bucket `photos`). Since Lab 10 every
-    new entry is pending until a reviewer publishes it, and the public pages show published entries only (the review page itself is Week 11; until then the student publishes from the console with `review_entry`).
+CURRENT STATE (after Lab 10, 2026-10-30; no Lab 11 code yet):
+  - Next.js 15 App Router app. Pages: / and /browse (published entries only), /entries/[id] (detail, EN +
+    Khmer, EDIT/DELETE for the owner only), /entries/[id]/edit (owner-only; an edit sends status 'pending'
+    unless the editor is a reviewer), /contribute (login-gated; after saving it shows a waiting message instead
+    of the entry), /my-entries (logged in: your own entries with their status in English + Khmer), /login,
+    /signup. A sticky SiteHeader on every page (MY ENTRIES for logged-in users). NO /review page yet: that is
+    this lab.
+  - Database (Supabase): table `entries`, 17 columns incl. `status` (pending / published / returned, default
+    pending); table `reviewers` (RLS on, NO policies: only the SQL Editor changes it; one row: archive.test.two);
+    functions `is_reviewer()` and `review_entry(entry_id, decision)` (security definer; they refuse non-reviewers,
+    any decision but published/returned, and entries that are not pending; they return true/false and NO error
+    when they refuse). RLS on entries: select = published, or your own, or reviewer; insert = own and pending;
+    update = own and (pending, or reviewer); delete = own. Storage bucket `photos`.
+  - Accounts: archive.test.two = the REVIEWER (the guide's "yourself"; uid starts 02937456); archive.test.three =
+    the second account / the stranger (uid starts d0492a09); archive.test.one owns the 9 real entries.
+  - Pending right now: "waiting politely" and one more entry (both archive.test.three) plus the 8 old test
+    entries (about 10 in total; check the Table Editor).
   - Form rules: utils/validateEntry.js; the two Khmer fields are optional; CONTRIBUTOR is required.
     `owner` always comes from the login session, never the form; inserts/updates name their columns.
   - Look: Midnight & Gold theme via CSS variables in app/globals.css, Cormorant Garamond + Jost + Noto Khmer
@@ -52,19 +63,20 @@ NON-NEGOTIABLE RULES (AGENTS.md):
     AGENTS.md has NOT been amended for Sprint 3: no other dependency without the instructor naming it.
   - Do NOT touch package.json / package-lock.json / next.config.mjs / .gitignore unless the task names them.
   - NEVER write an API key, token, password or the project's keys into any file; this repository is public.
-    (The Lab 10 attack kit uses the project URL, the publishable key and account passwords: keep them out of
-    every repo file, like docs/sprint 2/CHANGES6_AttackLog.md did.)
+    (The attack kits use the project URL, the publishable key and account passwords: keep them out of
+    every repo file, like docs/sprint 2/CHANGES6_AttackLog.md and docs/sprint 3/CHANGES9_AttackOwnGate.md did.)
   - Keep diffs scoped; say which file + why before editing beyond the ask.
   - One component per file, plain function components, about 80 lines or less.
   - Khmer text is first-class: never strip, transliterate, "fix" or invent it. Any Khmer wording (for example
-    the status words on /my-entries) comes from the student.
+    the status words on /my-entries, the Publish/Return labels on /review) comes from the student.
   - Styling: inline style objects or plain CSS with the existing variables. No CSS/component libraries.
   - Database changes are SQL the STUDENT runs by hand in the Supabase SQL Editor (begin/commit blocks);
     code that depends on the SQL is written after it has run. JavaScript only.
   - The student reviews and approves every diff and commits it; code must be explainable line by line.
 
 Working agreement: propose a short plan before writing, small scoped steps, one feature per commit, surface
-what you assume, never run `next build` while the student's `npm run dev` is running.
+what you assume, never run `next build` while the student's `npm run dev` is running. Update
+docs/PROJECT_NOTES.md and the changelog yourself when something changes: do not ask the student first.
 ```
 
 ---
@@ -200,11 +212,64 @@ Key facts / Sprint 2 security posture:
 
 ---
 
-## Sprint 3, Lab 10 "The Gate" (Week 10, Friday 2026-10-23) - SCOPE AND PLAN (Part 2 SQL run, Part 3 code written 2026-10-25; the "not started" wording below is the original plan)
+## Sprint 3, Lab 11 "The Queue" (Week 11, Friday 2026-10-30) - SCOPE AND PLAN, NOT STARTED
+
+**Source:** `../Week11/Lab11_Guide.md` (the professor's exact words, outside the repo, about 130 lines; read it when working on the lab). Sprint 3 = submit, review, publish (weeks 9-11). Lab 10 built the gate (the `status` column, the reviewers list, `is_reviewer()`, `review_entry()`); this lab builds the page a reviewer opens it from. **Status (2026-10-30): nothing built or written yet. No SQL is needed: the guide says "Do not change any SQL, policies or functions".**
+
+**Goal of this lab:** by the end of class "waiting politely" is published, an entry has been returned to the second account and has come back fixed, and the queue has been attacked as a stranger.
+
+**Due:** nothing to submit on Canvas for Lab 11; the queue is graded inside Sprint 3 (due Sunday 2026-11-08). The week 11 process log is due Sunday 2026-11-01, 11:59 PM. Tuesday 2026-11-03 is review day: the student's partner "will go straight for this page".
+
+### The parts (as the guide gives them)
+
+- **Part 0 (before class):** Supabase project not paused (click Restore if offered); `git status` clean and `npm run dev` runs; "waiting politely" still pending (it is: see heads-up 1); know the second account's email and password (they never go into a repo file).
+- **Part 1 (on paper; the student's own answers; in Lab 10 the student asked Claude to propose them and approved, and they were saved outside the repo in `Week10/Lab10_Part1_Answers.md`; do the same in `Week11/Lab11_Part1_Answers.md`):** five answers that get pasted into the Part 2 prompt. (1) What a reviewer needs to see about each pending entry to decide. (2) What the two buttons say, in Khmer and English. (3) What the page says when a button press fails. (4) What it says when the queue is empty. (5) What someone who is not a reviewer sees at /review. One thing to leave out: who submitted it, by name (see heads-up 3).
+- **Part 2 (code; a new task for the AI; do not change SQL, policies or functions):**
+  1. A page at `/review`. On the SERVER call `supabase.rpc('is_reviewer')`; if it does not return true, show only the answer to question 5 and no entries.
+  2. For reviewers: entries where `status` is 'pending', ordered by `created_at` ASCENDING (oldest first), showing the answer to question 1.
+  3. Two buttons per entry (the question 2 labels). Each calls `supabase.rpc('review_entry', { entry_id: entry.id, decision })` with 'published' or 'returned'. Never `.from('entries').update(...)`.
+  4. If the call returns true, remove the entry from the list. If it returns false or an error, leave the entry where it is and show the answer to question 3.
+  5. When there are no pending entries, show the answer to question 4.
+  6. A link to /review in the header only when `is_reviewer` returns true. No package, no `dangerouslySetInnerHTML`.
+  Then run it locally as the reviewer: "waiting politely" should be in the queue.
+- **Part 3 (read the diff, four checks):** (1) the reviewer check runs on the server before any entries load (politeness: if missing, a stranger would see a short queue of their own pending entries and every button would fail; the database is the gate); (2) the buttons call `rpc('review_entry'`, NOT `.from('entries').update({ status })` (a reviewer updating someone else's entry directly gets zero rows and no error: the button looks like it worked and nothing changed); (3) success means `data === true`, because `review_entry` returns false WITHOUT an error when it refuses, so code that only checks for an error would remove the entry from the screen anyway; (4) the order is oldest first, and the labels and messages are in Khmer where the rest of the archive is. The guide quotes Osmani p. 145 ("It's easy for an AI to omit a check because it doesn't truly 'understand' the context unless told"). Commit suggestion: `sprint 3: review queue (AI-assisted)` (the student's own style is `Sprint 3, week N/labN: ... (AI-assisted)`).
+- **Part 4 (the round trip, then the stranger; two browsers, or a normal and a private window):** (1) as the reviewer publish "waiting politely"; logged out it is on the home page. (2) As the second account add a new entry with real content; as the reviewer refresh /review: it is there; press Return. (3) As the second account /my-entries shows it as returned; edit and save: pending again (Lab 10's edit rule) and back in the queue in its ORIGINAL place, because the queue sorts by when it was first submitted. (4) As the reviewer open /review in two tabs; publish the entry in one, press Return in the other: the failure message shows and the entry stays put until a refresh (`review_entry` refuses an entry that is no longer pending). (5) As the second account open /review: only the question 5 message. Then the browser console (the same setup as Lab 10 Part 4): (a) `select('id, title, status').eq('status', 'pending')` returns only the stranger's own pending entries; (b) `rpc('review_entry', { entry_id: 'ANY-PENDING-ENTRY-ID', decision: 'published' })` returns `data: false`. If (b) returns true, stop and run `select * from reviewers;` in the SQL Editor: only the reviewer's uuid (archive.test.two) should be there.
+- **Part 5:** push; check /review on the live URL as the reviewer; journal entry: the Part 2 prompt, what came back, and what the Part 3 checks found, including any check that came up clean and how the student knows. Nothing goes on Canvas for Lab 11.
+- **If you finish early (optional stretch, the same one Lab 10 offered):** a nullable `review_note` column and a new `review_entry(entry_id, decision, note default null)`. The SQL is in the guide; the student runs it by hand; it DROPS the old two-argument function and creates a three-argument one (read it all first; `begin`/`commit` keep it all-or-nothing); the Publish button keeps working because the note defaults to null. Then a note box next to Return that passes `note` in the same rpc call, and `/my-entries` shows `review_note` on returned entries (`components/MyEntryRow.js` and the select in `app/my-entries/page.js`). Re-run Part 4 step 5(b) afterwards: it must still return false.
+
+### Repo touchpoints (from reading the code, not from the guide)
+
+| File | Expected change |
+|---|---|
+| `app/review/page.js` (new) | server component: `getUser`, `rpc('is_reviewer')`; not true -> only the question 5 message and NO query; true -> select the pending entries oldest first and render the queue |
+| `components/ReviewQueue.js` (new, `"use client"`) | holds the list in state; removes an entry only when `data === true`; shows the question 3 message otherwise; shows the question 4 message when empty |
+| `components/ReviewEntryCard.js`, `components/ReviewButtons.js` (new) | one entry's details (question 1) and its two rpc buttons; split so every component stays about 80 lines or less |
+| `components/AuthHeader.js` | for a logged-in user also ask `rpc('is_reviewer')`; true -> a link to /review |
+| `components/MyEntryRow.js`, `app/my-entries/page.js` | only for the optional `review_note` stretch |
+| everything else | no change: no SQL, no `utils/entryWrite.js`, no styling work (reuse `.btn-filled`, `.btn-outline`, `.nav-link` and the CSS variables) |
+
+### Heads-ups for the student to decide (analysis, not decisions)
+
+1. **The queue will not hold one entry.** Oldest first puts the 8 OLD TEST ENTRIES (from Labs 6-8) BEFORE "waiting politely", and archive.test.three's other pending entry after it: about 10 pending in total (check the Table Editor). One old entry has a photo that is a console screenshot showing an email and a password, and the reviewer page will display that photo. The guide's "waiting politely should be at the top" assumes a small queue. Options: (a) Return the junk entries from the new queue as part of testing (they leave the queue and show as returned to their owners); (b) clean them first by exact id (delete the rows and remove the screenshot's file from Storage); (c) leave them. Never a broad WHERE. Decide before Part 4.
+2. **Accounts.** The reviewer ("yourself" in the guide) is archive.test.two (uid starts 02937456); the second account is archive.test.three (uid starts d0492a09). Some old test entries are owned by archive.test.two itself: `review_entry` checks the role, not ownership, so a reviewer can review their own entries.
+3. **"Who submitted it".** The guide says to leave it out because the table only holds the contributor's id. This archive also has a `contributor` text column (the credited display name, required in the form since Week 8). Decide whether the reviewer card shows it (it is the public credit label, not an identity); the owner uuid stays out either way.
+4. **Khmer wording** (the two button labels and the three messages) is the student's: the AI never invents it. The existing Khmer status words are in `Week10/Lab10_Part1_Answers.md`; the unverified Khmer draft there is not approved for code.
+5. **Structure.** The server page does the checks and the fetch; the buttons need a client component (rpc plus state). On a failure use `console.error` and a short fixed message, never `error.message` on screen (the pattern used everywhere in this repo). The reviewer sees every pending entry through RLS, so `.eq('status', 'pending')` is the real filter on this page (unlike the Lab 10 public pages, where it was politeness), and a non-reviewer must trigger NO entries query at all.
+6. **The guide mentions Cline;** the AI assistant here is Claude Code. The Part 2 prompt can be given as written once the five answers are filled in.
+7. **Lab 10 carry-overs, NOT part of this lab (do not build ahead):** a CONTRIBUTED BY line on the entry cards (the student's chosen audit fix; the home page query does not select `contributor` yet); the English-only waiting messages; two untested edit cases (a non-reviewer editing a published entry; a reviewer's own edit staying published); cleaning the old test entries (overlaps heads-up 1).
+8. **Git.** `experiment` is one docs-only commit (`ee2d8ef`) ahead of `main` (`5be7951`) and both are pushed; Vercel deploys `main`, so the live check in Part 5 needs the code merged into `main` and pushed first. Merging and committing stay the student's job.
+
+### Changelog convention
+
+Week N -> CHANGES(N-1), as in Lab 10 (`CHANGES9_TheGate.md`, `CHANGES9_AttackOwnGate.md`). For Lab 11: `docs/sprint 3/CHANGES10_ReviewQueue.md`, ending with the "Changelog index (append to `docs/PROJECT_NOTES.md`)" section like the older ones; add a Verification section with what Claude checked and what the student tested, and a separate file only if Part 4's attack deserves one. Update this file and the changelog when something changes, without asking.
+
+---
+
+## Sprint 3, Lab 10 "The Gate" (Week 10, Friday 2026-10-23) - COMPLETE (history: the scope and plan as first written)
 
 **Source:** `../Week10/Lab10_Guide.md` (the professor's exact words, outside the repo, 197 lines; read it when
 working the lab). Sprint 3 = submit, review, publish (weeks 9-11). The brief for Sprint 2 said a review
-workflow was NOT part of Sprint 2; this is where it starts. **Status (2026-10-25): Parts 1-4 DONE (SQL run, code committed, all five attacks refused); Part 5 done (merged, pushed, live-checked); only the Canvas writing is left.**
+workflow was NOT part of Sprint 2; this is where it starts. **Status: COMPLETE (Parts 1-5 done and the Canvas writing submitted on 2026-10-25; the results are in `docs/sprint 3/CHANGES9_TheGate.md` and `CHANGES9_AttackOwnGate.md`). The rest of this section is the original scope and plan, kept as history.**
 
 **Goal of this lab:** every new entry waits for review, the public sees published entries only, and nobody
 can publish their own entry from the console. The review page itself is NEXT Friday (Week 11; a `Week11`
@@ -700,3 +765,5 @@ The overhaul's changelogs are numbered `CHANGES7.5_*` (still the Week 8 workflow
 - docs/sprint 3/CHANGES9_AttackOwnGate.md       (Lab 10 Part 4 - the five console attacks as archive.test.three, all refused; results table with the exact messages)
 
 Sprint 3 changelogs live in `docs/sprint 3/` with the prefix `CHANGES9_` (week 10 -> CHANGES9; confirmed by the student 2026-10-25). The Lab 10 guide is `../Week10/Lab10_Guide.md` and the Part 1 answers are `../Week10/Lab10_Part1_Answers.md` (both outside the repo).
+
+Sprint 3, Lab 11 (week 11): no changelog exists yet. Planned: `docs/sprint 3/CHANGES10_ReviewQueue.md` (week 11 -> CHANGES10). The Lab 11 guide is `../Week11/Lab11_Guide.md` (outside the repo).
