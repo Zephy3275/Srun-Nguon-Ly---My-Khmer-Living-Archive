@@ -101,6 +101,8 @@ export default async function EntryPage({ params }) {
   return (
     <main style={styles.wrap}>
       <BackLink href="/browse">← BACK TO BROWSE</BackLink>
+      {/* Politeness only: the owner-only database policies are the real refusal. */}
+      {user && user.id === entry.owner && <EntryOwnerActions id={entry.id} />}
       <h1 style={styles.title}>{entry.title}</h1>
       {entry.titleKhmer && (
         <h2 style={styles.titleKhmer}>{entry.titleKhmer}</h2>
@@ -119,8 +121,6 @@ export default async function EntryPage({ params }) {
       {entry.descriptionKhmer && (
         <p style={styles.descriptionKhmer}>{entry.descriptionKhmer}</p>
       )}
-      {/* Politeness only: the owner-only database policies are the real refusal. */}
-      {user && user.id === entry.owner && <EntryOwnerActions id={entry.id} />}
     </main>
   );
 }

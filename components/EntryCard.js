@@ -85,6 +85,7 @@ export default function EntryCard({
   title,
   titleKhmer,
   source,
+  contributor,
   description,
   descriptionKhmer,
   image,
@@ -99,6 +100,9 @@ export default function EntryCard({
         )}
         <div style={styles.body}>
           <p style={styles.label}>SOURCE: {source}</p>
+          {contributor && (
+            <p style={{ ...styles.label, marginTop: 2 }}>CONTRIBUTED BY: {contributor}</p>
+          )}
           <p style={styles.title}>{title}</p>
           {titleKhmer && <p style={styles.titleKhmer}>{titleKhmer}</p>}
           {description && <p style={styles.description}>{description}</p>}

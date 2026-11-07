@@ -11,6 +11,8 @@ const HINTS = {
 
 const styles = {
   row: {
+    // The title link's cover (below) stretches to this box, so the whole row opens the entry.
+    position: "relative",
     padding: 20,
     backgroundColor: "var(--surface)",
     border: "1px solid var(--border)",
@@ -25,6 +27,9 @@ const styles = {
     color: "inherit",
     textDecoration: "none",
   },
+  // An empty span inside the title link, stretched over the whole row. It keeps
+  // one link (not two) and lets EDIT stay its own link instead of nesting in one.
+  cover: { position: "absolute", top: 0, right: 0, bottom: 0, left: 0 },
   titleKhmer: {
     fontFamily: "var(--font-heading)",
     fontSize: 16,
@@ -53,6 +58,9 @@ const styles = {
     whiteSpace: "pre-wrap",
   },
   edit: {
+    // Above the cover, so a click on EDIT goes to the edit page, not the entry.
+    position: "relative",
+    zIndex: 1,
     padding: "6px 12px",
     fontFamily: "var(--font-label)",
     fontSize: 13,
@@ -70,6 +78,7 @@ export default function MyEntryRow({ entry }) {
     <li style={styles.row}>
       <Link href={`/entries/${entry.id}`} style={styles.title}>
         {entry.title}
+        <span style={styles.cover} />
       </Link>
       {entry.title_khmer && <p style={styles.titleKhmer}>{entry.title_khmer}</p>}
       <div style={styles.statusRow}>

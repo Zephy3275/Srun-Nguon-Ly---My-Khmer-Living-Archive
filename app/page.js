@@ -86,7 +86,7 @@ export default async function Home() {
   const { data, error } = await supabase
     .from("entries")
     .select(
-      "id, title, titleKhmer:title_khmer, source, description, descriptionKhmer:description_khmer, image:photo_url"
+      "id, title, titleKhmer:title_khmer, source, contributor, description, descriptionKhmer:description_khmer, image:photo_url"
     )
     // Politeness, not security: the database already hides pending entries from
     // strangers, but you see your own while logged in, so the public page filters too.

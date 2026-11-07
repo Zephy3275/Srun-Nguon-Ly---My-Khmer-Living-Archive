@@ -11,9 +11,8 @@ const styles = {
     alignItems: "flex-start",
     gap: 12,
     flexWrap: "wrap",
-    marginTop: 40,
-    paddingTop: 24,
-    borderTop: "1px solid var(--border)",
+    // Sits at the top of the entry page, just under the back link.
+    marginTop: 20,
   },
   edit: {
     padding: "10px 14px",
