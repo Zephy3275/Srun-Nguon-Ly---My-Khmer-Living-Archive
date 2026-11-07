@@ -33,6 +33,25 @@ const styles = {
   },
   statusRow: { display: "flex", flexWrap: "wrap", alignItems: "center", gap: 12, marginTop: 12 },
   hint: { fontSize: 14, color: "var(--muted)", lineHeight: 1.5, margin: 0 },
+  // The reviewer's reason for a returned entry. Plain text (React escapes it);
+  // pre-wrap keeps the reviewer's line breaks.
+  note: {
+    marginTop: 12,
+    padding: "10px 14px",
+    borderLeft: "3px solid var(--danger)",
+    backgroundColor: "var(--bg)",
+    borderRadius: 4,
+  },
+  noteLabel: { margin: 0, fontFamily: "var(--font-label)", fontSize: 12, color: "var(--muted)" },
+  noteEn: { letterSpacing: 1 },
+  noteKm: { marginLeft: 8 },
+  noteText: {
+    margin: "6px 0 0",
+    fontSize: 15,
+    color: "var(--text-soft)",
+    lineHeight: 1.6,
+    whiteSpace: "pre-wrap",
+  },
   edit: {
     padding: "6px 12px",
     fontFamily: "var(--font-label)",
@@ -62,6 +81,17 @@ export default function MyEntryRow({ entry }) {
         )}
       </div>
       {hint && <p style={{ ...styles.hint, marginTop: 10 }}>{hint}</p>}
+      {entry.status === "returned" && entry.review_note && (
+        <div style={styles.note}>
+          <p style={styles.noteLabel}>
+            <span style={styles.noteEn}>REVIEWER'S NOTE</span>
+            <span style={styles.noteKm} lang="km">
+              កំណត់សម្គាល់របស់អ្នកវាយតម្លៃ
+            </span>
+          </p>
+          <p style={styles.noteText}>{entry.review_note}</p>
+        </div>
+      )}
     </li>
   );
 }

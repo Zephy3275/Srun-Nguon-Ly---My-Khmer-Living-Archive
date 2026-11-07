@@ -45,7 +45,7 @@ export default async function MyEntriesPage() {
   if (user) {
     const { data, error } = await supabase
       .from("entries")
-      .select("id, title, title_khmer, status")
+      .select("id, title, title_khmer, status, review_note")
       .eq("owner", user.id)
       .order("created_at", { ascending: false });
     if (error) {

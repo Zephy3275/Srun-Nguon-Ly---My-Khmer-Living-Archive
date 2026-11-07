@@ -42,14 +42,15 @@ export default function ReviewQueue({ initialEntries }) {
   const [busyId, setBusyId] = useState(null);
   const [failedId, setFailedId] = useState(null);
 
-  async function decide(entry, decision) {
+  async function decide(entry, decision, note) {
     setBusyId(entry.id);
     setFailedId(null);
     const supabase = createClient();
-    const { data, error } = await supabase.rpc("review_entry", {
-      entry_id: entry.id,
-      decision,
-    });
+    // The note travels only with a return, and only when there is one: without
+    // `note` the function's default (null) applies, so PUBLISH is unchanged.
+    const args = { entry_id: entry.id, decision };
+    if (decision === "returned" && note) args.note = note;
+    const { data, error } = await supabase.rpc("review_entry", args);
     setBusyId(null);
 
     if (error || data !== true) {
@@ -77,7 +78,7 @@ export default function ReviewQueue({ initialEntries }) {
             entry={entry}
             disabled={busyId !== null}
             failed={failedId === entry.id}
-            onDecide={(decision) => decide(entry, decision)}
+            onDecide={(decision, note) => decide(entry, decision, note)}
           />
         ))}
       </ul>
