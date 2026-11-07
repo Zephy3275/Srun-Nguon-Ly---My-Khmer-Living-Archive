@@ -80,7 +80,7 @@ export default function MyEntryRow({ entry }) {
         {entry.title}
         <span style={styles.cover} />
       </Link>
-      {entry.title_khmer && <p style={styles.titleKhmer}>{entry.title_khmer}</p>}
+      {entry.title_khmer && <p lang="km" style={styles.titleKhmer}>{entry.title_khmer}</p>}
       <div style={styles.statusRow}>
         <StatusBadge status={entry.status} />
         {entry.status === "returned" && (

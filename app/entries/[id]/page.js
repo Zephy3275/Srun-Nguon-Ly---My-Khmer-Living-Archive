@@ -105,7 +105,7 @@ export default async function EntryPage({ params }) {
       {user && user.id === entry.owner && <EntryOwnerActions id={entry.id} />}
       <h1 style={styles.title}>{entry.title}</h1>
       {entry.titleKhmer && (
-        <h2 style={styles.titleKhmer}>{entry.titleKhmer}</h2>
+        <h2 lang="km" style={styles.titleKhmer}>{entry.titleKhmer}</h2>
       )}
       <p style={styles.label}>SOURCE: {entry.source}</p>
       {entry.contributor && (
@@ -119,7 +119,7 @@ export default async function EntryPage({ params }) {
         <p style={styles.description}>{entry.description}</p>
       )}
       {entry.descriptionKhmer && (
-        <p style={styles.descriptionKhmer}>{entry.descriptionKhmer}</p>
+        <p lang="km" style={styles.descriptionKhmer}>{entry.descriptionKhmer}</p>
       )}
     </main>
   );

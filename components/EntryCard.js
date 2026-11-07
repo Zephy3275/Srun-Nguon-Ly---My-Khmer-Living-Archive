@@ -104,10 +104,10 @@ export default function EntryCard({
             <p style={{ ...styles.label, marginTop: 2 }}>CONTRIBUTED BY: {contributor}</p>
           )}
           <p style={styles.title}>{title}</p>
-          {titleKhmer && <p style={styles.titleKhmer}>{titleKhmer}</p>}
+          {titleKhmer && <p lang="km" style={styles.titleKhmer}>{titleKhmer}</p>}
           {description && <p style={styles.description}>{description}</p>}
           {descriptionKhmer && (
-            <p style={styles.descriptionKhmer}>{descriptionKhmer}</p>
+            <p lang="km" style={styles.descriptionKhmer}>{descriptionKhmer}</p>
           )}
         </div>
       </div>

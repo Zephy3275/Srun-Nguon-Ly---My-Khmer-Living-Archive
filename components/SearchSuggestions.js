@@ -44,7 +44,7 @@ export default function SearchSuggestions({ suggestions }) {
             onMouseDown={(e) => e.preventDefault()}
           >
             <span style={styles.title}>{s.title}</span>
-            {s.titleKhmer && <span style={styles.khmer}>{s.titleKhmer}</span>}
+            {s.titleKhmer && <span lang="km" style={styles.khmer}>{s.titleKhmer}</span>}
           </Link>
         </li>
       ))}
