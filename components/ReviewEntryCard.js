@@ -11,6 +11,11 @@ const FAILED_EN =
 const FAILED_KM =
   "ប្រតិបត្តិការនេះមិនបានជោគជ័យទេ។ ធាតុនេះអាចត្រូវបានពិនិត្យរួចហើយ ឬអ្នកប្រហែលជាមិនត្រូវបានអនុញ្ញាតឱ្យធ្វើការពិនិត្យនោះទេ។ សូមផ្ទុកទំព័រឡើងវិញ រួចសាកល្បងម្តងទៀត។";
 
+// The database stores UTC; show the date as it is in Phnom Penh (UTC+7), so an
+// entry sent at 6 AM there is not dated the day before. "en-CA" prints YYYY-MM-DD.
+const DAY = new Intl.DateTimeFormat("en-CA", { timeZone: "Asia/Phnom_Penh" });
+const day = (timestamp) => DAY.format(new Date(timestamp));
+
 const styles = {
   card: {
     backgroundColor: "var(--surface)",
@@ -55,14 +60,16 @@ export default function ReviewEntryCard({ entry, disabled, failed, onDecide }) {
         <div style={styles.noImage}>IMAGE PENDING</div>
       )}
       <div style={styles.body}>
-        <p style={styles.label}>SUBMITTED: {entry.created_at.slice(0, 10)}</p>
+        <p style={styles.label}>SUBMITTED: {day(entry.created_at)}</p>
+        {/* Null until the owner changes the entry's content (a trigger sets it). */}
+        {entry.updated_at && <p style={styles.label}>UPDATED: {day(entry.updated_at)}</p>}
         <p style={styles.label}>SOURCE: {entry.source}</p>
         {entry.contributor && <p style={styles.label}>CONTRIBUTED BY: {entry.contributor}</p>}
         <h2 style={styles.title}>{entry.title}</h2>
-        {entry.title_khmer && <p style={styles.titleKhmer}>{entry.title_khmer}</p>}
+        {entry.title_khmer && <p lang="km" style={styles.titleKhmer}>{entry.title_khmer}</p>}
         {facts.length > 0 && <p style={styles.text}>{facts.join(" · ")}</p>}
         <p style={styles.text}>{entry.description}</p>
-        {entry.description_khmer && <p style={styles.textKhmer}>{entry.description_khmer}</p>}
+        {entry.description_khmer && <p lang="km" style={styles.textKhmer}>{entry.description_khmer}</p>}
         <ReviewButtons disabled={disabled} onDecide={onDecide} />
         {failed && (
           <div style={styles.failed}>
