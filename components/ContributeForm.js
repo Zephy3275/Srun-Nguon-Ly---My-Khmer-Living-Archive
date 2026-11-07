@@ -86,7 +86,7 @@ export default function ContributeForm({ entry }) {
 
       const supabase = createClient();
       const result = editing
-        ? await updateEntry(supabase, entry.id, clean, photoType, setStage)
+        ? await updateEntry(supabase, entry.id, clean, photoType, setStage, entry.status)
         : await submitEntry(supabase, clean, photoType, setStage);
       if (result.error) {
         setFormError(result.error);
@@ -94,10 +94,12 @@ export default function ContributeForm({ entry }) {
         return;
       }
       // No status is sent when adding: the database default makes it pending.
-      // A reviewer's own edit stays published, so only that case opens the entry.
+      // A reviewer's own edit of a published or pending entry stays as it is, so
+      // only that case opens the entry.
       if (editing && !result.backToReview) {
         router.push(`/entries/${result.id}`);
         router.refresh();
+        setLoading(false); // unlock the form if the user comes back to it
         return;
       }
       setSent(editing ? "edited" : "added");

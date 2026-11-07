@@ -11,6 +11,9 @@
 // Lab 10: an edit goes back to review. Unless the editor is a reviewer, the
 // update carries status: 'pending' (the update policy refuses anything else).
 // Returns { id, backToReview } so the form knows which message to show.
+//
+// A returned entry always goes back to review, reviewer or not: a reviewer's
+// own edit would otherwise leave it 'returned' and it could never be resent.
 
 import {
   entryColumns,
@@ -23,7 +26,8 @@ const NOT_SAVED = "That change wasn't saved.";
 
 // onStage is optional: a function the form passes in to be told which step is
 // running, so it can show it. It changes nothing about what is saved.
-export async function updateEntry(supabase, id, values, photoType, onStage) {
+// currentStatus is the entry's status as the edit page loaded it.
+export async function updateEntry(supabase, id, values, photoType, onStage, currentStatus) {
   const user = await getSessionUser(supabase);
   if (!user) return { error: "Your session has ended. Please log in again." };
 
@@ -31,7 +35,7 @@ export async function updateEntry(supabase, id, values, photoType, onStage) {
   // fails, treat them as a non-reviewer: the safe answer sends the entry to review.
   const { data: isReviewer, error: reviewerError } = await supabase.rpc("is_reviewer");
   if (reviewerError) console.error("is_reviewer check failed:", reviewerError);
-  const backToReview = isReviewer !== true;
+  const backToReview = isReviewer !== true || currentStatus === "returned";
 
   // owner and id are never sent. photo_url is sent only if a new photo was picked.
   const columns = entryColumns(values);
