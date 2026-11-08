@@ -61,9 +61,13 @@ Work list: `../Week12/Week12FixList.md` (outside the repo). Part A is the partne
 
 **Fix (`components/MyEntryRow.js`, one English line):** the pending hint now reads "Waiting for review. Only you and the reviewers can see it for now." Still English only; no Khmer was added.
 
+## Khmer for the two waiting messages (Lyching's audit bias finding)
+
+**Fix (`components/EntrySentNotice.js` only):** each message now has a `textKm` field, shown as a Khmer paragraph (`lang="km"`) under the English text. Both Khmer texts are the student's own wording, pasted in unchanged. The headings are still English only, by decision. The two texts name the MY ENTRIES page with different Khmer words; the student judged they mean the same and left them. **PASSED (2026-11-08):** as archive.test.three, a throwaway entry added showed the "Thank you" message with its Khmer; editing it and saving showed the "Sent back for review" message with its Khmer.
+
 ## Left open on purpose (material for reflection question 3)
 
-- **Khmer for the waiting messages (Lyching's audit bias finding):** the student is supplying the Khmer for the two long notice texts in `EntrySentNotice.js` ("Your entry has been received…" and "Your changes were saved and sent back…"). Still English only, by decision: the two notice headings ("Thank you", "Sent back for review"), the two hints on /my-entries, and the CONTRIBUTED BY label on the cards.
+- **Khmer for the waiting messages:** done for the two long texts (above). Still English only, by decision: the two notice headings ("Thank you", "Sent back for review"), the two hints on /my-entries, and the CONTRIBUTED BY label on the cards.
 - **B2** (the credentials screenshot), **B4** (`photo_url` constraint), the five-attack re-run: see the sections below.
 - **The rest of the audit's "not doing" list:** the form fits only mooncakes (B1 of the audit), the word counter assumes spaces (B2 of the audit), English required and Khmer optional, a required contributor name, different Khmer words for "publish" and "reviewer", search without Unicode normalization, email confirmation off with no submission limit, one person can submit and review their own entries, free-text credit, small logging gaps, EXIF/GPS, orphan photos in Storage.
 
