@@ -1,4 +1,5 @@
 import Link from "next/link";
+import BilingualNotice from "../../../../components/BilingualNotice.js";
 import ContributeForm from "../../../../components/ContributeForm.js";
 import PageHeading from "../../../../components/PageHeading.js";
 import { createClient } from "../../../../utils/supabase/server.js";
@@ -13,7 +14,13 @@ const styles = {
     color: "var(--accent)",
     textDecoration: "none",
   },
+  warning: { marginTop: 24 },
 };
+
+const BACK_TO_REVIEW_EN =
+  "This entry is published. If you save changes, it goes back to review and is hidden from the public archive until a reviewer approves it again.";
+const BACK_TO_REVIEW_KM =
+  "ធាតុនេះត្រូវបានផ្សព្វផ្សាយរួចហើយ។ ប្រសិនបើអ្នករក្សាទុកការផ្លាស់ប្តូរ ធាតុនេះនឹងត្រឡប់ទៅស្ថានភាពរង់ចាំការពិនិត្យឡើងវិញ ហើយនឹងត្រូវបានលាក់ពីបណ្ណសារសាធារណៈ រហូតទាល់តែអ្នកពិនិត្យអនុម័តវាជាថ្មីម្តងទៀត។";
 
 // Page frame + one heading and message, used by every state except the form.
 function Notice({ id, heading, children }) {
@@ -82,6 +89,13 @@ export default async function EditEntryPage({ params }) {
     );
   }
 
+  // A non-reviewer's edit sends a published entry back to review (updateEntry.js),
+  // so say so before they save. A reviewer's own edit stays published: no warning.
+  // If the question fails, treat them as a non-reviewer, as updateEntry does.
+  const { data: isReviewer, error: reviewerError } = await supabase.rpc("is_reviewer");
+  if (reviewerError) console.error("is_reviewer check failed:", reviewerError);
+  const warnsBackToReview = entry.status === "published" && isReviewer !== true;
+
   return (
     <main style={styles.wrap}>
       <PageHeading
@@ -92,6 +106,11 @@ export default async function EditEntryPage({ params }) {
         Change anything you like, then save. Your current photo stays unless you
         choose a new one.
       </PageHeading>
+      {warnsBackToReview && (
+        <div style={styles.warning}>
+          <BilingualNotice en={BACK_TO_REVIEW_EN} km={BACK_TO_REVIEW_KM} />
+        </div>
+      )}
       <ContributeForm entry={entry} />
     </main>
   );

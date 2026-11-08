@@ -5,7 +5,7 @@ import StatusBadge from "./StatusBadge.js";
 // the status means for the contributor.
 
 const HINTS = {
-  pending: "Waiting for review. Only you can see it for now.",
+  pending: "Waiting for review. Only you and the reviewers can see it for now.",
   returned: "This entry was returned. Edit it and save to send it for review again.",
 };
 

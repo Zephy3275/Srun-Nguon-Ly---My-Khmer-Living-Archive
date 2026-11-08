@@ -49,6 +49,24 @@ Work list: `../Week12/Week12FixList.md` (outside the repo). Part A is the partne
 
 **Fix (eight one-attribute edits, nothing else changed):** `lang="km"` on the Khmer title and description in `components/EntryCard.js` (2), `app/entries/[id]/page.js` (2), `components/ReviewEntryCard.js` (2), the Khmer title in `components/SearchSuggestions.js` and `components/MyEntryRow.js`. The status words, review-note label and buttons already had `lang="km"`. Caveat: the Khmer fields accept any language (Week 7 decision), so an entry whose "Khmer" field holds English would be tagged `km`; that is a small mislabel, not a display problem.
 
+## B5. Warn before saving an edit to a published entry (the audit's Q2)
+
+**Why:** a non-reviewer's edit of a published entry sends it back to `pending` and takes it off the public archive until a reviewer approves it again (Lab 10 rule). The "sent back for review" notice only came after the save.
+
+**Fix (`app/entries/[id]/edit/page.js` only; `status` was already in its select from B1):** the page asks `rpc('is_reviewer')` (a failed check counts as non-reviewer, like `updateEntry.js`) and, when the entry is `published` and the editor is not a reviewer, shows a notice above the form: "This entry is published. If you save changes, it goes back to review and is hidden from the public archive until a reviewer approves it again." A reviewer's own edit of a published entry stays published, so they see no notice. The notice is shown with the existing `BilingualNotice` (English, then the Khmer under it); the Khmer wording is the student's own, pasted in unchanged. No SQL; behaviour of the save is unchanged.
+
+## Q3 (audit): the pending hint said "Only you can see it for now"
+
+**Why:** reviewers can read every pending entry too (they do, on /review). The other half of Q3, the UTC submit date, was fixed with A6.
+
+**Fix (`components/MyEntryRow.js`, one English line):** the pending hint now reads "Waiting for review. Only you and the reviewers can see it for now." Still English only; no Khmer was added.
+
+## Left open on purpose (material for reflection question 3)
+
+- **Khmer for the waiting messages (Lyching's audit bias finding):** the student is supplying the Khmer for the two long notice texts in `EntrySentNotice.js` ("Your entry has been received…" and "Your changes were saved and sent back…"). Still English only, by decision: the two notice headings ("Thank you", "Sent back for review"), the two hints on /my-entries, and the CONTRIBUTED BY label on the cards.
+- **B2** (the credentials screenshot), **B4** (`photo_url` constraint), the five-attack re-run: see the sections below.
+- **The rest of the audit's "not doing" list:** the form fits only mooncakes (B1 of the audit), the word counter assumes spaces (B2 of the audit), English required and Khmer optional, a required contributor name, different Khmer words for "publish" and "reviewer", search without Unicode normalization, email confirmation off with no submission limit, one person can submit and review their own entries, free-text credit, small logging gaps, EXIF/GPS, orphan photos in Storage.
+
 ## B2 and the five Lab 10 attacks: SKIPPED by the student's decision
 
 - **B2 (credentials screenshot):** not done; the student chose to skip it. It remains the one item that exposes a real credential (a console screenshot with an email and a password, publicly reachable in Storage). The fix is to remove that Storage file and delete its entry by exact id.
@@ -63,6 +81,8 @@ Proved the gap as archive.test.three on 2026-11-08: an insert with `photo_url: '
 - **A6 PASSED (2026-11-08):** an owner's edit shows `UPDATED` on /review; entries nobody edited show only SUBMITTED; both dates show the Phnom Penh date. A return followed by an edit with no change left the date as it was (inconclusive by itself; the trigger code is what guarantees it).
 - **B1 PASSED (2026-11-08):** as archive.test.two, a new entry was edited and returned; on /my-entries it showed RETURNED; editing and saving showed the "sent back for review" notice; it then showed PENDING, appeared on /review again and was published; editing the published entry as the reviewer kept it published.
 - **B3 PASSED (2026-11-08):** the Khmer text looks the same on the pages checked, and `lang="km"` shows on the elements when inspected.
+- **B5 PASSED (2026-11-08):** as archive.test.three, editing a published entry shows the English and Khmer warning box above the form; editing a pending entry shows no box; as archive.test.two (reviewer), editing a published entry shows no box. Nothing was saved in these checks.
+- **Q3 PASSED (2026-11-08):** /my-entries shows the new pending hint.
 - **A4 and A5:** no reply drafted; the student decided none was needed (A5 was already live-checked in Lab 11; A4 is an expected behaviour, not a bug).
 
 Student browser test, 2026-11-08, local `npm run dev`:
