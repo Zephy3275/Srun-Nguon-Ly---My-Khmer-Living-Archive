@@ -41,3 +41,13 @@ Everything else in the hard rules stands, especially rule 3:
 no keys, tokens, or passwords in any committed file, ever.
 Auth configuration lives in .env.local and in Vercel
 environment variables.
+
+## Final sprint amendment (added 2026-11-19, week 13)
+
+The instructor relaxed some rules for the final sprint (polish, cleanup, UX/UI, README). Where this section conflicts with the sections above, this section is the current rule. Everything it does not mention still stands.
+
+- **Dependencies:** external libraries are allowed now, kept minimal and under the student's control. Propose one at a time (its name, what it is for, why plain React or CSS is not enough), get the student's OK, and add only what is needed. Never add a batch of many at once. Editing `package.json` and `package-lock.json` is allowed for an approved dependency.
+- **Component size:** the roughly 80-line limit is lifted. One component per file still applies.
+- **Stack and style:** JavaScript only and plain React stay the default. The "no CSS frameworks, component libraries or state libraries" rule is relaxed for the UX/UI work, but only for a library the student has approved, never by default.
+- **Khmer:** the instructor allows Gemini to draft Khmer translations. The student reads and corrects every translated string before it ships, and the README's AI-use section says Gemini helped. Khmer the student wrote stays exactly as written; never strip, transliterate or "fix" it.
+- **Still unchanged:** rule 3 (never write a key, token or password into any file; this repository is public; a Gemini or other API key lives in `.env.local` or outside the repo), rule 4 (keep diffs scoped; say which file and why), rule 6's real sample data, and the working style: a short plan first, the student reviews and approves every diff, database changes are SQL the student runs by hand, and no `next build` while the student's dev server runs.

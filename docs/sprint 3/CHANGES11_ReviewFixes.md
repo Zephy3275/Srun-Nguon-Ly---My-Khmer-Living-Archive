@@ -88,6 +88,7 @@ Proved the gap as archive.test.three on 2026-11-08: an insert with `photo_url: '
 - **B5 PASSED (2026-11-08):** as archive.test.three, editing a published entry shows the English and Khmer warning box above the form; editing a pending entry shows no box; as archive.test.two (reviewer), editing a published entry shows no box. Nothing was saved in these checks.
 - **Q3 PASSED (2026-11-08):** /my-entries shows the new pending hint.
 - **A4 and A5:** no reply drafted; the student decided none was needed (A5 was already live-checked in Lab 11; A4 is an expected behaviour, not a bug).
+- **Live check on the deployed site PASSED (2026-11-08, after `experiment` was merged into `main` and Vercel deployed):** as a logged-out visitor, as archive.test.three and as the reviewer archive.test.two, every step behaved as expected (the student reported it as a whole, without a step-by-step list). The optional console ownership attack (update another user's entry) was **not** run on the live site; it last ran in Sprint 2, before Lab 10 rewrote the update policy.
 
 Student browser test, 2026-11-08, local `npm run dev`:
 
