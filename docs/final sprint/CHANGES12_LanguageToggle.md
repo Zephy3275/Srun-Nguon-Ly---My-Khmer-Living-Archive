@@ -120,3 +120,41 @@ Login, sign-up, add an entry and edit an entry, with every field label, hint, li
   - Editing a pending test entry: the edit page and the current-photo caption are Khmer. Saving with no change shows the notice in Khmer, text and buttons.
 - **EN + ខ្មែរ:** the form and the notice look as before, English and Khmer text, English buttons.
 - **Skipped (the student's call):** adding a new entry to see the "Thank you" notice. It is the same component as the edit notice, which passed, and it would have left one more test entry.
+
+## Step 4: my entries and the review queue (2026-11-22)
+
+The last screens with interface text:
+- **/my-entries:** the heading, the empty and error states, each row's title, status badge, hint, EDIT link and the reviewer's note label.
+- **/review:** the heading, the non-reviewer and load-failed messages, the pending counter, each card's labels, facts and texts, the note box label, the PUBLISH and RETURN buttons, and the failure message.
+
+**How the student's bilingual pieces behave now** (status badges, the review buttons and note label, the counter, REVIEWER'S NOTE, the four review messages):
+- **EN + ខ្មែរ:** English and Khmer together, as before.
+- **EN:** the English only.
+- **ខ្មែរ:** the Khmer only.
+- Their words now come from `utils/strings.js` (K1 to K12), with the student's two changes: PUBLISHED = បានផ្សព្វផ្សាយ, RETURN = បញ្ជូនត្រឡប់ទៅវិញ. These show in EN + ខ្មែរ as well.
+  - The RETURN button was first changed to បញ្ជូនត្រឡប់មកវិញ. After testing, the student changed មក to ទៅ (2026-11-22).
+  - The RETURNED status (បានបញ្ជូនត្រឡប់មកវិញ) and the returned hint (M8) still say មក.
+- **Titles and descriptions** on the review cards and the /my-entries rows follow the same rule as the entry pages.
+- **A reviewer's note** is the reviewer's own words and is shown as written in every mode.
+
+**Files changed:**
+- `app/my-entries/page.js`, `app/review/page.js`.
+- `components/MyEntryRow.js`, `StatusBadge.js`, `ReviewQueue.js`, `ReviewEntryCard.js`, `ReviewButtons.js`.
+
+**Checked by the AI:**
+- A scan of `app/`, `components/` and `utils/` found no interface text left outside `utils/strings.js`. The only Khmer elsewhere is a code comment in `validateEntry.js`.
+- All 167 string IDs are used by the code, and none is missing.
+- Throwaway dev server on port 3005, stopped afterwards, no errors in its log: /my-entries and /review, logged out, came back right in all three modes.
+- Not checkable without logging in: the rows, the queue and the buttons.
+
+**Tested by the student (localhost, 2026-11-22): PASSED.**
+- **ខ្មែរ, archive.test.three on /my-entries:**
+  - The heading is Khmer.
+  - Every row is Khmer: pending, published and returned badges, the hints, and the returned entry's REVIEWER'S NOTE label.
+- **ខ្មែរ, archive.test.two (reviewer) on /review:**
+  - The heading, the counter, each card's labels, the note box label and both buttons are Khmer.
+  - No button was pressed.
+- **EN:** English only, with no Khmer on the buttons or the counter.
+- **EN + ខ្មែរ:** as before, both languages.
+- **Logged out on ខ្មែរ:** /review shows only the Khmer "reviewers only" message.
+- **Changed after the test:** the RETURN button's Khmer (see above). It is a word change only.

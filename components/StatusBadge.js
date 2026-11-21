@@ -1,11 +1,15 @@
+import { STRINGS, showsEn, showsKm } from "../utils/strings.js";
+
 // The status of an entry in plain words, English and Khmer (the Khmer wording
-// is the student's own). Used on /my-entries. An unknown status is shown as it
-// is, so a new status can never silently disappear from the screen.
+// is the student's own, K1 to K3 in utils/strings.js). Used on /my-entries. An
+// unknown status is shown as it is, so a new status can never silently
+// disappear from the screen. `lang`: "both" shows both words, "en" the English,
+// "km" the Khmer.
 
 const WORDS = {
-  pending: { en: "PENDING", km: "កំពុងរង់ចាំ", color: "var(--accent)" },
-  published: { en: "PUBLISHED", km: "បានបោះពុម្ពផ្សាយ", color: "var(--text-soft)" },
-  returned: { en: "RETURNED", km: "បានបញ្ជូនត្រឡប់មកវិញ", color: "var(--danger)" },
+  pending: { ...STRINGS.K1, color: "var(--accent)" },
+  published: { ...STRINGS.K2, color: "var(--text-soft)" },
+  returned: { ...STRINGS.K3, color: "var(--danger)" },
 };
 
 const styles = {
@@ -24,13 +28,13 @@ const styles = {
   en: { fontFamily: "var(--font-label)", fontWeight: 700, letterSpacing: 1 },
 };
 
-export default function StatusBadge({ status }) {
+export default function StatusBadge({ status, lang }) {
   const words = WORDS[status];
   if (!words) return <span style={styles.badge}>{status}</span>;
   return (
     <span style={{ ...styles.badge, color: words.color }}>
-      <span style={styles.en}>{words.en}</span>
-      <span lang="km">{words.km}</span>
+      {showsEn(lang) && <span style={styles.en}>{words.en}</span>}
+      {showsKm(lang) && <span lang="km">{words.km}</span>}
     </span>
   );
 }

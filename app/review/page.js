@@ -2,6 +2,8 @@ import BilingualNotice from "../../components/BilingualNotice.js";
 import PageHeading from "../../components/PageHeading.js";
 import ReviewQueue from "../../components/ReviewQueue.js";
 import { createClient } from "../../utils/supabase/server.js";
+import { getLang } from "../../utils/lang.js";
+import { STRINGS, t } from "../../utils/strings.js";
 
 // Lab 11: the review queue. The reviewer check runs here on the server BEFORE
 // any entries are asked for. That check is politeness (a stranger would only
@@ -9,10 +11,9 @@ import { createClient } from "../../utils/supabase/server.js";
 // database is the real gate. For a reviewer, .eq("status", "pending") is the
 // real filter, because a reviewer can read every entry.
 
-const NOT_REVIEWER_EN = "This page is for reviewers only.";
-const NOT_REVIEWER_KM = "ទំព័រនេះសម្រាប់តែអ្នកពិនិត្យមើលប៉ុណ្ណោះ។";
-const LOAD_FAILED_EN = "The queue could not be loaded.";
-const LOAD_FAILED_KM = "មិនអាចផ្ទុកបញ្ជីរង់ចាំបានទេ";
+// The two messages are the student's English and Khmer (utils/strings.js).
+const NOT_REVIEWER = STRINGS.K9; // This page is for reviewers only.
+const LOAD_FAILED = STRINGS.K10; // The queue could not be loaded.
 
 const styles = {
   wrap: {
@@ -26,12 +27,13 @@ export default async function ReviewPage() {
   const supabase = await createClient();
   const { data: isReviewer, error: roleError } = await supabase.rpc("is_reviewer");
   if (roleError) console.error("Reviewer check failed:", roleError);
+  const lang = await getLang();
 
   // Anything but exactly true (false, null, an error) is "not a reviewer".
   if (isReviewer !== true) {
     return (
       <main style={styles.wrap}>
-        <BilingualNotice en={NOT_REVIEWER_EN} km={NOT_REVIEWER_KM} />
+        <BilingualNotice en={NOT_REVIEWER.en} km={NOT_REVIEWER.km} lang={lang} />
       </main>
     );
   }
@@ -48,16 +50,16 @@ export default async function ReviewPage() {
   return (
     <main style={styles.wrap}>
       <PageHeading
-        back={{ href: "/", label: "← BACK TO HOMEPAGE" }}
-        kicker="FOR REVIEWERS"
-        title="Review queue"
+        back={{ href: "/", label: t(lang, "P1") }}
+        kicker={t(lang, "R1")}
+        title={t(lang, "R2")}
       >
-        Pending entries, oldest first.
+        {t(lang, "R3")}
       </PageHeading>
       {error ? (
-        <BilingualNotice en={LOAD_FAILED_EN} km={LOAD_FAILED_KM} />
+        <BilingualNotice en={LOAD_FAILED.en} km={LOAD_FAILED.km} lang={lang} />
       ) : (
-        <ReviewQueue initialEntries={data ?? []} />
+        <ReviewQueue initialEntries={data ?? []} lang={lang} />
       )}
     </main>
   );

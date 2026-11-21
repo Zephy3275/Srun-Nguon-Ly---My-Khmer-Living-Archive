@@ -77,7 +77,7 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
 - **Decisions (student, 2026-11-22):**
   - New strings use Gemini's words: ធាតុ (entry), ធាតុរបស់ខ្ញុំ (MY ENTRIES), ផ្សព្វផ្សាយ (publish), អ្នកពិនិត្យ (reviewer), បញ្ជូនត្រឡប់មកវិញ (return).
   - The student's 16 existing Khmer strings stay as written, except:
-    - The RETURN button becomes បញ្ជូនត្រឡប់មកវិញ.
+    - The RETURN button becomes បញ្ជូនត្រឡប់ទៅវិញ. It was first បញ្ជូនត្រឡប់មកវិញ; after the step 4 test the student changed មក to ទៅ. The RETURNED status and the returned hint (M8) still say មក.
     - The PUBLISHED status becomes បានផ្សព្វផ្សាយ (to match the PUBLISH button).
     - The MY ENTRIES name inside the two save notices becomes «ធាតុរបស់ខ្ញុំ», so it matches the menu.
   - **Flagged for later:** the notices still say ការដាក់ស្នើ and ខ្លឹមសារ for "entry" (interchangeable, the student will decide). REVIEWER'S NOTE (អ្នកវាយតម្លៃ) and the reason label (ការប្រគល់ត្រឡប់) keep the student's words.
@@ -104,7 +104,9 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
   - The form helpers in `utils/` now return string IDs instead of English. No rule or saving behaviour changed.
   - New helper `sentenceCase`. `BilingualNotice` takes an optional `lang`.
   - Details in the changelog.
-- **Next steps:** 4 my entries, review queue, the existing bilingual parts; 5 the phone and console checks in all three modes. If time runs out, hide the switch and go to the README.
+- **Step 3 committed:** `b6879db`.
+- **Step 4 DONE (2026-11-22; AI-checked logged out; student-tested on localhost, PASSED in all three modes; afterwards the RETURN button's Khmer became បញ្ជូនត្រឡប់ទៅវិញ):** /my-entries and /review, the status badges, review buttons, counter and messages. A scan found no interface text left outside `utils/strings.js`. All 167 IDs are used.
+- **Next step:** 5 the phone and console checks in all three modes. If time runs out, hide the switch and go to the README.
 
 **Order of work from here (agreed 2026-11-21; one chat per job; the toggle is graded, the instructor wants it):**
 1. **Lab 13: DONE.**

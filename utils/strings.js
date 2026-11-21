@@ -231,7 +231,7 @@ export const STRINGS = {
   K2: { en: "PUBLISHED", km: "បានផ្សព្វផ្សាយ" },
   K3: { en: "RETURNED", km: "បានបញ្ជូនត្រឡប់មកវិញ" },
   K4: { en: "PUBLISH", km: "ផ្សព្វផ្សាយ" },
-  K5: { en: "RETURN", km: "បញ្ជូនត្រឡប់មកវិញ" },
+  K5: { en: "RETURN", km: "បញ្ជូនត្រឡប់ទៅវិញ" },
   K6: { en: "REASON FOR RETURNING (OPTIONAL)", km: "មូលហេតុនៃការប្រគល់ត្រឡប់" },
   K7: { en: "PENDING", km: "កំពុងរង់ចាំ" },
   K8: { en: "REVIEWER'S NOTE", km: "កំណត់សម្គាល់របស់អ្នកវាយតម្លៃ" },

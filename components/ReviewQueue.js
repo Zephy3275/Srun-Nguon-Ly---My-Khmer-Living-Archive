@@ -4,6 +4,7 @@ import { useState } from "react";
 import { createClient } from "../utils/supabase/client.js";
 import BilingualNotice from "./BilingualNotice.js";
 import ReviewEntryCard from "./ReviewEntryCard.js";
+import { STRINGS, showsEn, showsKm } from "../utils/strings.js";
 
 // The list of pending entries, held in state so a reviewed entry can leave it.
 // The buttons call rpc('review_entry'), never an update on the table. That
@@ -11,8 +12,9 @@ import ReviewEntryCard from "./ReviewEntryCard.js";
 // the entry is no longer pending), so success is exactly `data === true`:
 // anything else leaves the entry in place and shows the failure message.
 
-const EMPTY_EN = "The queue is empty. Every entry has been reviewed.";
-const EMPTY_KM = "បញ្ជីរង់ចាំគឺទទេ។ រាល់ធាតុទាំងអស់ត្រូវបានពិនិត្យរួចរាល់ហើយ។";
+// The student's English and Khmer, in utils/strings.js.
+const EMPTY = STRINGS.K11; // The queue is empty. Every entry has been reviewed.
+const PENDING = STRINGS.K7; // the counter's word
 
 const styles = {
   // How many entries are waiting; goes down as entries are reviewed. The Khmer
@@ -37,7 +39,7 @@ const styles = {
   },
 };
 
-export default function ReviewQueue({ initialEntries }) {
+export default function ReviewQueue({ initialEntries, lang }) {
   const [entries, setEntries] = useState(initialEntries);
   const [busyId, setBusyId] = useState(null);
   const [failedId, setFailedId] = useState(null);
@@ -62,14 +64,18 @@ export default function ReviewQueue({ initialEntries }) {
   }
 
   if (entries.length === 0) {
-    return <BilingualNotice en={EMPTY_EN} km={EMPTY_KM} />;
+    return <BilingualNotice en={EMPTY.en} km={EMPTY.km} lang={lang} />;
   }
 
+  // "both": "3 PENDING" and the Khmer word; "en": "3 PENDING"; "km": "3" and the Khmer word.
   return (
     <>
       <p style={styles.count}>
-        <span style={styles.countEn}>{entries.length} PENDING</span>
-        <span lang="km">កំពុងរង់ចាំ</span>
+        <span style={styles.countEn}>
+          {entries.length}
+          {showsEn(lang) && ` ${PENDING.en}`}
+        </span>
+        {showsKm(lang) && <span lang="km">{PENDING.km}</span>}
       </p>
       <ul style={styles.list}>
         {entries.map((entry) => (
@@ -79,6 +85,7 @@ export default function ReviewQueue({ initialEntries }) {
             disabled={busyId !== null}
             failed={failedId === entry.id}
             onDecide={(decision, note) => decide(entry, decision, note)}
+            lang={lang}
           />
         ))}
       </ul>

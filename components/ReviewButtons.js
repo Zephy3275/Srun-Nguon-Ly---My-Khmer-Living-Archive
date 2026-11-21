@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { STRINGS, showsEn, showsKm } from "../utils/strings.js";
 
 // The note box and the two buttons under a pending entry. They only report
 // which button was pressed (and the note, for RETURN); ReviewQueue makes the
@@ -47,16 +48,26 @@ const styles = {
   en: { fontWeight: 700, letterSpacing: 1 },
 };
 
-export default function ReviewButtons({ disabled, onDecide }) {
+// The student's English and Khmer for the note label and the two buttons
+// (utils/strings.js). `lang`: "both" shows both, "en" the English, "km" the Khmer.
+const NOTE_LABEL = STRINGS.K6;
+const PUBLISH = STRINGS.K4;
+const RETURN = STRINGS.K5;
+
+export default function ReviewButtons({ disabled, onDecide, lang }) {
   const [note, setNote] = useState("");
+  const en = showsEn(lang);
+  const km = showsKm(lang);
 
   return (
     <div>
       <label style={styles.noteLabel}>
-        <span style={styles.noteEn}>REASON FOR RETURNING (OPTIONAL)</span>
-        <span style={styles.noteKm} lang="km">
-          មូលហេតុនៃការប្រគល់ត្រឡប់
-        </span>
+        {en && <span style={styles.noteEn}>{NOTE_LABEL.en}</span>}
+        {km && (
+          <span style={lang === "both" ? styles.noteKm : undefined} lang="km">
+            {NOTE_LABEL.km}
+          </span>
+        )}
         <textarea
           style={styles.note}
           rows={2}
@@ -74,8 +85,8 @@ export default function ReviewButtons({ disabled, onDecide }) {
           disabled={disabled}
           onClick={() => onDecide("published")}
         >
-          <span style={styles.en}>PUBLISH</span>
-          <span lang="km">ផ្សព្វផ្សាយ</span>
+          {en && <span style={styles.en}>{PUBLISH.en}</span>}
+          {km && <span lang="km">{PUBLISH.km}</span>}
         </button>
         <button
           type="button"
@@ -84,8 +95,8 @@ export default function ReviewButtons({ disabled, onDecide }) {
           disabled={disabled}
           onClick={() => onDecide("returned", note.trim())}
         >
-          <span style={styles.en}>RETURN</span>
-          <span lang="km">ត្រឡប់មកវិញ</span>
+          {en && <span style={styles.en}>{RETURN.en}</span>}
+          {km && <span lang="km">{RETURN.km}</span>}
         </button>
       </div>
     </div>

@@ -1,12 +1,15 @@
 import Link from "next/link";
 import StatusBadge from "./StatusBadge.js";
+import { STRINGS, entryText, isKhmerText, showsEn, showsKm, t } from "../utils/strings.js";
 
 // One line of /my-entries: the title (opens the entry), its status, and what
-// the status means for the contributor.
+// the status means for the contributor. `lang` follows the language switch,
+// with the same rule for the title as the entry cards.
 
+// What each status means (string IDs in utils/strings.js).
 const HINTS = {
-  pending: "Waiting for review. Only you and the reviewers can see it for now.",
-  returned: "This entry was returned. Edit it and save to send it for review again.",
+  pending: "M7", // Waiting for review. Only you and the reviewers can see it for now.
+  returned: "M8", // This entry was returned. Edit it and save to send it for review again.
 };
 
 const styles = {
@@ -72,31 +75,46 @@ const styles = {
   },
 };
 
-export default function MyEntryRow({ entry }) {
+// Khmer-only mode: a Khmer title in the main title's place needs a taller line
+// than 1.2, or the tops and bottoms of the Khmer letters get cut off.
+styles.titleInKhmer = { ...styles.title, lineHeight: 1.5 };
+
+export default function MyEntryRow({ entry, lang }) {
   const hint = HINTS[entry.status];
+  const khmerTitle = isKhmerText(lang, entry.title_khmer);
   return (
     <li style={styles.row}>
-      <Link href={`/entries/${entry.id}`} style={styles.title}>
-        {entry.title}
+      <Link
+        href={`/entries/${entry.id}`}
+        lang={khmerTitle ? "km" : undefined}
+        style={khmerTitle ? styles.titleInKhmer : styles.title}
+      >
+        {entryText(lang, entry.title, entry.title_khmer)}
         <span style={styles.cover} />
       </Link>
-      {entry.title_khmer && <p lang="km" style={styles.titleKhmer}>{entry.title_khmer}</p>}
+      {lang === "both" && entry.title_khmer && (
+        <p lang="km" style={styles.titleKhmer}>{entry.title_khmer}</p>
+      )}
       <div style={styles.statusRow}>
-        <StatusBadge status={entry.status} />
+        <StatusBadge status={entry.status} lang={lang} />
         {entry.status === "returned" && (
           <Link href={`/entries/${entry.id}/edit`} style={styles.edit}>
-            EDIT
+            {t(lang, "E5")}
           </Link>
         )}
       </div>
-      {hint && <p style={{ ...styles.hint, marginTop: 10 }}>{hint}</p>}
+      {hint && <p style={{ ...styles.hint, marginTop: 10 }}>{t(lang, hint)}</p>}
       {entry.status === "returned" && entry.review_note && (
         <div style={styles.note}>
+          {/* The label is the student's English and Khmer (K8). The note itself is
+              the reviewer's own words, shown as written in every mode. */}
           <p style={styles.noteLabel}>
-            <span style={styles.noteEn}>REVIEWER'S NOTE</span>
-            <span style={styles.noteKm} lang="km">
-              កំណត់សម្គាល់របស់អ្នកវាយតម្លៃ
-            </span>
+            {showsEn(lang) && <span style={styles.noteEn}>{STRINGS.K8.en}</span>}
+            {showsKm(lang) && (
+              <span style={lang === "both" ? styles.noteKm : undefined} lang="km">
+                {STRINGS.K8.km}
+              </span>
+            )}
           </p>
           <p style={styles.noteText}>{entry.review_note}</p>
         </div>

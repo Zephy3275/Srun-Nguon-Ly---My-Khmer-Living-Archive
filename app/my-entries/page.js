@@ -2,6 +2,8 @@ import Link from "next/link";
 import MyEntryRow from "../../components/MyEntryRow.js";
 import PageHeading from "../../components/PageHeading.js";
 import { createClient } from "../../utils/supabase/server.js";
+import { getLang } from "../../utils/lang.js";
+import { sentenceCase, t } from "../../utils/strings.js";
 
 // Lab 10: the logged-in user's own entries, with their status. The .eq("owner")
 // filter is what this page asks for; the database would also show a reviewer
@@ -54,21 +56,22 @@ export default async function MyEntriesPage() {
     }
     entries = data ?? [];
   }
+  const lang = await getLang();
 
   return (
     <main style={styles.wrap}>
       <PageHeading
-        back={{ href: "/", label: "← BACK TO HOMEPAGE" }}
-        kicker="YOUR CONTRIBUTIONS"
-        title="My entries"
+        back={{ href: "/", label: t(lang, "P1") }}
+        kicker={t(lang, "M1")}
+        title={sentenceCase(lang, "H5")}
       >
         {user ? (
-          "Everything you have added, and where each entry is in review."
+          t(lang, "M2")
         ) : (
           <>
-            You need to be logged in to see your entries.{" "}
+            {t(lang, "M3")}{" "}
             <Link href="/login" style={styles.link}>
-              Log in
+              {sentenceCase(lang, "H6")}
             </Link>
           </>
         )}
@@ -76,20 +79,18 @@ export default async function MyEntriesPage() {
 
       {user &&
         (failed ? (
-          <p style={styles.notice}>
-            We couldn't load your entries right now. Please try again in a moment.
-          </p>
+          <p style={styles.notice}>{t(lang, "M4")}</p>
         ) : entries.length === 0 ? (
           <p style={styles.notice}>
-            You haven't added any entries yet.{" "}
+            {t(lang, "M5")}{" "}
             <Link href="/contribute" style={styles.link}>
-              Add one
+              {t(lang, "M6")}
             </Link>
           </p>
         ) : (
           <ul style={styles.list}>
             {entries.map((entry) => (
-              <MyEntryRow key={entry.id} entry={entry} />
+              <MyEntryRow key={entry.id} entry={entry} lang={lang} />
             ))}
           </ul>
         ))}
