@@ -6,7 +6,8 @@
 
 ## Where we are (verified 2026-11-19)
 
-- **Week 12 / Sprint 3 code is DONE and live.** `main` = `origin/main` = `experiment` = `7ca8ef9`, working tree clean. Everything is merged and deployed on Vercel (Vercel deploys `main`). A live check on 2026-11-08 passed as a logged-out visitor, as archive.test.three and as the reviewer archive.test.two. Details: `docs/sprint 3/CHANGES11_ReviewFixes.md` (A1 to A3, A6, B1, B3, B5, Q3, Khmer for the two waiting messages).
+- **Git (checked 2026-11-20):** on `experiment` = `origin/experiment` = `384a283` (the final-sprint handoff commit: `AGENTS.md` amendment and these notes, docs only), one commit ahead of `main` = `origin/main` = `7ca8ef9`. Working tree clean. Merge `experiment` into `main` before the deadline so the amended `AGENTS.md` and the README are on the default branch.
+- **Week 12 / Sprint 3 code is DONE and live.** All Sprint 3 code is in `7ca8ef9` on `main`. Everything is merged and deployed on Vercel (Vercel deploys `main`). A live check on 2026-11-08 passed as a logged-out visitor, as archive.test.three and as the reviewer archive.test.two. Details: `docs/sprint 3/CHANGES11_ReviewFixes.md` (A1 to A3, A6, B1, B3, B5, Q3, Khmer for the two waiting messages).
 - **Sprint 3 Canvas writing:** the submission, journal and reflection were drafted and finalized in `../Week12/Week12-SubmissionsForSprint3/Sprint3_Submissions.md` (outside the repo). The student submitted all of Sprint 3 on Canvas by the due date, 2026-11-08 (confirmed by the student on 2026-11-19). That file is useful source material for the README's AI-use section and the final reflection.
 - **There is no Week 13 process log** (the final brief said one was due Nov 15; the instructor confirmed that was a mistake) **and no Prompt Journal for the final.** AI use goes in the README.
 - **The ~80-line component rule no longer applies.** One component per file still does.
@@ -28,6 +29,31 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
 
 **Lab 13 "Polish Checklist"** (`../Week13/Lab13_Guide.md`): nothing new gets built. The seven checks (phone width; a Khmer search and an empty state; a stranger's add-entry flow; console attacks and whether the site says anything; logged-out network tab shows nothing pending or returned; entries credited and none obviously test; a README that describes this app), then: queue publish/return, published edit goes back to pending (reviewer's stays published), every user-visible error in plain words, every empty state says something, search the repo for TODO, lorem, placeholder, sample and test, **search the git history for anything that looks like a secret (if one was ever committed, ask the instructor how to handle it before Nov 22)**, fix red console errors, Khmer on entries, the queue, status words and error messages. The Lab 13 Trade Archives discussion post is separate coursework, not graded, and does not touch the repo.
 
+**Lab 13 progress (2026-11-21).** The student ran no browser checks. The Trade Archives post is ungraded; the guide itself says to run the checks on your own archive, so no partner is needed.
+- **Done and clean (read-only, by the AI):**
+  - Git-history secret scan, all branches: no JWT, `sb_secret_`, `sb_publishable_`, `service_role`, Google or OpenAI-style key, project URL or quoted password in any commit, and no `.env` file ever tracked.
+  - Search of the shipped code for TODO, lorem, placeholder, sample and test: only input hint text and regex `.test()` calls.
+  - Error messages read in the code: only fixed plain strings, no raw Supabase text.
+  - Empty states read in the code: the queue (EN+KM), /my-entries, home, /browse and search (EN+KM) all say something.
+- **Already proven by the changelogs (no re-run needed unless the code it covers changes):**
+  - Stranger publishing their own entry (Lab 10 attacks 1 and 2b).
+  - Logged out sees nothing unpublished (attack 5).
+  - Add-entry waiting message (Lab 10/11, live check 2026-11-08).
+  - Queue publish/return/resend and reviewer edit staying published (Lab 11, B1).
+  - Published edit going back to pending (Lab 10, B5).
+  - Khmer search and the bilingual no-match state (CHANGES3).
+- **Ownership attack PASSED (2026-11-21, student, live site, console as archive.test.three, uid starts d0492a09):** an update of another account's published entry ("Mooncake Ngoyen Egg 1") with `{ title: <same title>, status: 'pending' }` returned `data: []`, `error: null`, status 200; nothing changed. This is the first run against the update policy Lab 10 rewrote (the last ownership attack was Lab 7).
+- **Decided by the student:**
+  - B2 is deferred to the test-entry cleanup. Low risk: Storage has no select policy, so files cannot be listed, and the link sits in a pending entry only the owner and reviewers can see. Delete the Storage file by hand too, because deleting an entry leaves its photo behind.
+  - B4 is skipped (optional).
+- **Lab 13 is DONE** except the two checks that wait for the toggle (below).
+- **Still open:**
+  - Phone width 390: never tested live.
+  - Red console errors: never recorded.
+  - Khmer gaps: go to the toggle chat.
+  - Test-entry cleanup: last stretch.
+  - Phone and console checks are best run once, after the toggle lands, because the toggle touches every page.
+
 **Oldest-broken-thing-first rule from the brief:** a visitor who cannot search is worse than a queue with a rough edge; then the gate; then the README; then the video. (The brief also says "no new features in the polish weeks", but the student reports the instructor only cares that the deadline and the Final Capstone requirements are met and said to do whatever is necessary, so new work such as the three-way language toggle is fine. The brief's rules are guides, not limits.)
 
 ## Known open items carried from Sprint 3 (decisions, not bugs; several now count against the rubric)
@@ -36,7 +62,7 @@ Details and file:line in `../Week11/Week11-Review-3Lenses/OwnAuditFindings.md` a
 
 - **B2, a credential exposure:** one old test entry's photo is a console screenshot showing an email and a password, still publicly reachable in Storage bucket `photos` (the entry itself is pending). Fix: remove the Storage file and delete the entry by exact id; if the account is archive.test.two (the reviewer), change its password. Never a broad WHERE.
 - **B4, the gate (rubric criterion 2):** `entries.photo_url` accepts any URL (proved from the console 2026-11-08, probe row deleted). Fix: one check constraint (null, `/images/%`, or this project's `photos` bucket URL), then the five Lab 10 attacks again.
-- **Ownership attack not re-run** on the live site since Lab 10 rewrote the update policy (as archive.test.three, update another user's entry; pass is `data: []`). The five Lab 10 attacks were not re-run after the A6 trigger (it changed no policy or function).
+- **Ownership attack: PASSED on the live site 2026-11-21** (see Lab 13 progress above). The five Lab 10 attacks were not re-run after the A6 trigger (it changed no policy or function).
 - **Khmer gaps** (rubric criteria 3 and 6; every word of Khmer must come from the student): the two notice headings in `EntrySentNotice.js`, the two hints in `MyEntryRow.js` (the pending hint's wording changed 2026-11-08), the CONTRIBUTED BY label on cards, the /review heading, its sentence and the REVIEW header link, the MY ENTRIES link, and most menus and headings (English-only since the Week 8 decision to skip the language toggle). Also two different Khmer words for MY ENTRIES in the two notices, and different Khmer words for "publish" and "reviewer" in the same flow (audit B6).
 - **Old test entries** are still pending in the database (about 9), plus any throwaway entries. Confirm nothing test-like is public.
 - **Smaller, from the audit:** the form only fits mooncakes though the archive promises proverbs and Chinese (audit B1, the largest finding; a design decision); the word counter assumes spaces (B2); email confirmation is off with no submission limit; one person can submit and review their own entries; free-text credit; `review_note` has a 500-character limit only in the browser; orphan photos in Storage after delete or replace; EXIF/GPS not stripped; some failed queries are shown but not logged.
