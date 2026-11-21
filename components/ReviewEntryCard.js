@@ -36,8 +36,9 @@ const styles = {
   label: { fontFamily: "var(--font-label)", fontSize: 12, color: "var(--muted)", margin: "0 0 6px" },
   title: { fontFamily: "var(--font-heading)", fontSize: 28, fontWeight: 600, lineHeight: 1.2, margin: "8px 0 0" },
   titleKhmer: { fontFamily: "var(--font-heading)", fontSize: 18, color: "var(--text-soft)", margin: "2px 0 0" },
-  text: { fontSize: 15, color: "var(--muted)", lineHeight: 1.6, margin: "12px 0 0" },
-  textKhmer: { fontSize: 14, color: "var(--muted-dim)", lineHeight: 1.8, margin: "10px 0 0", paddingTop: 10, borderTop: "1px solid var(--border)" },
+  // pre-wrap keeps the contributor's line breaks, so the reviewer sees the text as written.
+  text: { fontSize: 15, color: "var(--muted)", lineHeight: 1.6, margin: "12px 0 0", whiteSpace: "pre-wrap" },
+  textKhmer: { fontSize: 14, color: "var(--muted-dim)", lineHeight: 1.8, margin: "10px 0 0", paddingTop: 10, borderTop: "1px solid var(--border)", whiteSpace: "pre-wrap" },
   failed: { marginTop: 16 },
 };
 

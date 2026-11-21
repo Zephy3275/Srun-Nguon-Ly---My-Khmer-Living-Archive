@@ -41,6 +41,7 @@ const styles = {
     color: "var(--muted)",
     lineHeight: 1.6,
     marginTop: 24,
+    whiteSpace: "pre-wrap", // keep the contributor's line breaks and blank lines
   },
   descriptionKhmer: {
     fontSize: 16,
@@ -49,6 +50,7 @@ const styles = {
     marginTop: 12,
     borderTop: "1px solid var(--border)",
     paddingTop: 12,
+    whiteSpace: "pre-wrap",
   },
 };
 

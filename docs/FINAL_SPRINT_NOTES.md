@@ -2,7 +2,10 @@
 
 > **How to use this file**
 > This is the live handoff for the final sprint. Read `AGENTS.md` first, then this file. `docs/PROJECT_NOTES.md` is now the history of Sprints 1 to 3 (large; read only the part you need, and treat anything it says about "next" as stale). **Update this file in place as work lands**, without asking the student.
-> Written 2026-11-19. Placed in `docs/` for now; the student plans to make a `docs/final sprint/` folder later and may move it there.
+> Written 2026-11-19. This file stays in `docs/` (the student's decision, 2026-11-21). The final sprint's changelogs go in `docs/final sprint/`, numbered by week like Sprint 3 (Week 13 = `CHANGES12_`).
+>
+> **Changelog index (final sprint):**
+> - `docs/final sprint/CHANGES12_PolishChecklist.md`: Lab 13 (checks already proven, secret and TODO scans, ownership attack passed, B2/B4 decisions, the line-break fix).
 
 ## Where we are (verified 2026-11-19)
 
@@ -47,12 +50,28 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
   - B2 is deferred to the test-entry cleanup. Low risk: Storage has no select policy, so files cannot be listed, and the link sits in a pending entry only the owner and reviewers can see. Delete the Storage file by hand too, because deleting an entry leaves its photo behind.
   - B4 is skipped (optional).
 - **Lab 13 is DONE** except the two checks that wait for the toggle (below).
+- **Bug fix, line breaks in descriptions (2026-11-21; PASSED on localhost, student-tested on the entry page and the edit form; /review skipped, no pending entry had line breaks, same one-line style):**
+  - The bug: line breaks typed in the form were saved, but a `<p>` collapses them, so the entry page and the review queue showed one run of text.
+  - The fix: `whiteSpace: "pre-wrap"` added to the description styles in `app/entries/[id]/page.js` (English and Khmer) and `components/ReviewEntryCard.js` (`text`, `textKhmer`), the same as the reviewer's note in `MyEntryRow.js`.
+  - Home and browse cards are left squashed on purpose: they clamp to a few lines, and blank lines would waste them.
+  - No database change.
 - **Still open:**
   - Phone width 390: never tested live.
   - Red console errors: never recorded.
   - Khmer gaps: go to the toggle chat.
   - Test-entry cleanup: last stretch.
   - Phone and console checks are best run once, after the toggle lands, because the toggle touches every page.
+
+**Order of work from here (agreed 2026-11-21; one chat per job; the toggle is graded, the instructor wants it):**
+1. **Lab 13: DONE.**
+2. **Language toggle and Khmer, NEXT.** Start with Lab 13's Khmer gaps (listed below). If it is not done by Sunday morning, stop and do the README: an untouched README scores 0.
+3. README.
+4. Real entry data.
+5. Reflection.
+6. The last stretch: clear the test entries plus the B2 Storage file, phone and console checks, merge `experiment` into `main` (the line-break fix is not live until then), wake Supabase, the video, the Show Your Archive post, submit.
+7. UX/UI only with time left.
+
+The Q&A slot must be booked before Nov 22: do it now, not in the last stretch.
 
 **Oldest-broken-thing-first rule from the brief:** a visitor who cannot search is worse than a queue with a rough edge; then the gate; then the README; then the video. (The brief also says "no new features in the polish weeks", but the student reports the instructor only cares that the deadline and the Final Capstone requirements are met and said to do whatever is necessary, so new work such as the three-way language toggle is fine. The brief's rules are guides, not limits.)
 
@@ -63,7 +82,7 @@ Details and file:line in `../Week11/Week11-Review-3Lenses/OwnAuditFindings.md` a
 - **B2, a credential exposure:** one old test entry's photo is a console screenshot showing an email and a password, still publicly reachable in Storage bucket `photos` (the entry itself is pending). Fix: remove the Storage file and delete the entry by exact id; if the account is archive.test.two (the reviewer), change its password. Never a broad WHERE.
 - **B4, the gate (rubric criterion 2):** `entries.photo_url` accepts any URL (proved from the console 2026-11-08, probe row deleted). Fix: one check constraint (null, `/images/%`, or this project's `photos` bucket URL), then the five Lab 10 attacks again.
 - **Ownership attack: PASSED on the live site 2026-11-21** (see Lab 13 progress above). The five Lab 10 attacks were not re-run after the A6 trigger (it changed no policy or function).
-- **Khmer gaps** (rubric criteria 3 and 6; every word of Khmer must come from the student): the two notice headings in `EntrySentNotice.js`, the two hints in `MyEntryRow.js` (the pending hint's wording changed 2026-11-08), the CONTRIBUTED BY label on cards, the /review heading, its sentence and the REVIEW header link, the MY ENTRIES link, and most menus and headings (English-only since the Week 8 decision to skip the language toggle). Also two different Khmer words for MY ENTRIES in the two notices, and different Khmer words for "publish" and "reviewer" in the same flow (audit B6).
+- **Khmer gaps** (rubric criteria 3 and 6; Khmer comes from the student, or from a Gemini draft the student reads and corrects, per the AGENTS.md final-sprint amendment; Khmer the student already wrote stays as written): the two notice headings in `EntrySentNotice.js`, the two hints in `MyEntryRow.js` (the pending hint's wording changed 2026-11-08), the CONTRIBUTED BY label on cards, the /review heading, its sentence and the REVIEW header link, the MY ENTRIES link, and most menus and headings (English-only since the Week 8 decision to skip the language toggle). Also two different Khmer words for MY ENTRIES in the two notices, and different Khmer words for "publish" and "reviewer" in the same flow (audit B6).
 - **Old test entries** are still pending in the database (about 9), plus any throwaway entries. Confirm nothing test-like is public.
 - **Smaller, from the audit:** the form only fits mooncakes though the archive promises proverbs and Chinese (audit B1, the largest finding; a design decision); the word counter assumes spaces (B2); email confirmation is off with no submission limit; one person can submit and review their own entries; free-text credit; `review_note` has a 500-character limit only in the browser; orphan photos in Storage after delete or replace; EXIF/GPS not stripped; some failed queries are shown but not logged.
 - **Sourcing:** the student's draft says some images are AI-generated (Gemini) and the hero is Gemini-painted. The README must say so plainly; the rubric wants real entries credited by name with permission (at least eight real entries, each with a credited source).
