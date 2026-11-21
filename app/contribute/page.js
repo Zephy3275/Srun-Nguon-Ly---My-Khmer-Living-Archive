@@ -2,6 +2,8 @@ import Link from "next/link";
 import ContributeForm from "../../components/ContributeForm.js";
 import PageHeading from "../../components/PageHeading.js";
 import { createClient } from "../../utils/supabase/server.js";
+import { getLang } from "../../utils/lang.js";
+import { sentenceCase, t } from "../../utils/strings.js";
 
 const styles = {
   wrap: {
@@ -18,26 +20,27 @@ const styles = {
 export default async function ContributePage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  const lang = await getLang();
 
   return (
     <main style={styles.wrap}>
       <PageHeading
-        back={{ href: "/", label: "← BACK TO HOMEPAGE" }}
-        kicker="CONTRIBUTE"
-        title="Add an entry"
+        back={{ href: "/", label: t(lang, "P1") }}
+        kicker={t(lang, "F1")}
+        title={t(lang, "F2")}
       >
         {user ? (
-          "Add something to the archive. Every field marked required must be filled in, and the photo is required."
+          t(lang, "F3")
         ) : (
           <>
-            You need to be logged in to add an entry.{" "}
+            {t(lang, "F4")}{" "}
             <Link href="/login" style={styles.link}>
-              Log in
+              {sentenceCase(lang, "H6")}
             </Link>
           </>
         )}
       </PageHeading>
-      {user && <ContributeForm />}
+      {user && <ContributeForm lang={lang} />}
     </main>
   );
 }

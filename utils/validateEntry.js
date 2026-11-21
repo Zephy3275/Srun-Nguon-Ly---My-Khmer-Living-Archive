@@ -1,6 +1,7 @@
 // Checks the text fields of the contribution form. Pure functions: no
-// network, no React. Returns { fieldName: "message" } - an empty object
-// means everything passed. The photo is checked in photoCheck.js.
+// network, no React. Returns { fieldName: "<string ID>" } - an empty object
+// means everything passed. Each ID (V1 to V11) is a message in
+// utils/strings.js, shown by the form in the chosen language. The photo is checked in photoCheck.js.
 // Rules come from Week7_Lab7/TableRule_Refined.md.
 // Khmer text is only ever trimmed and inspected, never changed.
 
@@ -45,40 +46,40 @@ export function validateEntry(v) {
     if (!LETTER.test(s) || size(s) > max || CONTROL.test(s)) errors[name] = message;
   };
 
-  plain("title", 120, "Add a title (up to 120 characters).");
-  plain("source", 300, "Say where this comes from (up to 300 characters).");
+  plain("title", 120, "V1");
+  plain("source", 300, "V2");
   // One name is enough (no first + last rule), in any language: it only needs a letter.
-  plain("contributor", 120, "Add the contributor's name (up to 120 characters).");
-  plain("filling", 120, "Describe the filling (up to 120 characters).");
-  plain("shape", 120, "Describe the shape (up to 120 characters).");
-  plain("color", 120, "Describe the color (up to 120 characters).");
+  plain("contributor", 120, "V3");
+  plain("filling", 120, "V4");
+  plain("shape", 120, "V5");
+  plain("color", 120, "V6");
 
   // The Khmer fields are optional (a contributor may not know Khmer). Empty is
   // fine; a filled one must have a letter and fit the limit. Any language is accepted.
   const tk = v.title_khmer;
   if (tk !== "" && (!LETTER.test(tk) || size(tk) > 500 || CONTROL.test(tk))) {
-    errors.title_khmer = "Khmer title: words, up to 500 characters, or leave it empty.";
+    errors.title_khmer = "V7";
   }
 
   const d = v.description;
   if (!LETTER.test(d) || hasControl(d) || words(d) > 1000 || size(d) > 10000) {
-    errors.description = "Add a description (up to 1,000 words).";
+    errors.description = "V8";
   }
 
   const dk = v.description_khmer;
   if (dk !== "" && (!LETTER.test(dk) || size(dk) > 6000 || hasControl(dk))) {
     errors.description_khmer =
-      "Khmer description: words, up to 6,000 characters, or leave it empty.";
+      "V9";
   }
 
   // Optional fields: an empty value is fine, a filled one must pass.
   const tx = v.texture;
   if (tx !== "" && (!LETTER.test(tx) || DIGIT.test(tx) || size(tx) > 120 || CONTROL.test(tx))) {
-    errors.texture = "Texture should be words, not numbers (up to 120 characters).";
+    errors.texture = "V10";
   }
   for (const name of ["sweetness", "saltiness"]) {
     if (v[name] !== "" && !/^[1-5]$/.test(v[name])) {
-      errors[name] = "Pick 1 to 5, or leave it empty.";
+      errors[name] = "V11";
     }
   }
 

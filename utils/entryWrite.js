@@ -1,7 +1,7 @@
 // Pieces shared by submitEntry.js (add) and updateEntry.js (edit), so the two
 // can never disagree about which columns exist or where a photo goes.
-// Real errors are logged with console.error; only fixed, short messages are
-// ever returned for the screen.
+// Real errors are logged with console.error; only the string ID of a fixed,
+// short message (utils/strings.js) is ever returned for the screen.
 
 const BUCKET = "photos";
 
@@ -35,7 +35,7 @@ export function entryColumns(values) {
 
 // Upload to <user id>/<random uuid>.<ext>. The original filename is never used
 // and the extension comes from the detected type. upsert:false = never overwrite.
-// Returns { path, publicUrl } or { error: "short message" }.
+// Returns { path, publicUrl } or { error: "<string ID>" }.
 export async function uploadPhoto(supabase, userId, file, photoType) {
   const path = `${userId}/${crypto.randomUUID()}.${photoType.ext}`;
   const { error } = await supabase.storage
@@ -43,7 +43,7 @@ export async function uploadPhoto(supabase, userId, file, photoType) {
     .upload(path, file, { contentType: photoType.mime, upsert: false });
   if (error) {
     console.error("Photo upload failed:", error);
-    return { error: "Your photo didn't upload. Check your connection and try again." };
+    return { error: "F27" };
   }
   const { data: { publicUrl } } = supabase.storage.from(BUCKET).getPublicUrl(path);
   return { path, publicUrl };

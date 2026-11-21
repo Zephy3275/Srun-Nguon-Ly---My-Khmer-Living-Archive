@@ -5,6 +5,7 @@
 
 import FieldCounter from "./FieldCounter.js";
 import { clipWords } from "../utils/validateEntry.js";
+import { t } from "../utils/strings.js";
 
 const styles = {
   wrap: { display: "flex", flexDirection: "column", gap: 6 },
@@ -39,7 +40,9 @@ const styles = {
   error: { fontSize: 13, color: "var(--danger)", margin: 0 },
 };
 
-export default function FormField({ field, value, error, onChange }) {
+// field.label, field.hint and `error` are string IDs (utils/strings.js), shown
+// in the language `lang`.
+export default function FormField({ field, value, error, onChange, lang }) {
   const id = `field-${field.name}`;
   const common = {
     id,
@@ -66,7 +69,7 @@ export default function FormField({ field, value, error, onChange }) {
   } else if (field.kind === "scale") {
     control = (
       <select {...common} value={value} onChange={change}>
-        <option value="">Leave empty</option>
+        <option value="">{t(lang, "F20")}</option>
         {[1, 2, 3, 4, 5].map((n) => (
           <option key={n} value={String(n)}>
             {n}
@@ -93,7 +96,7 @@ export default function FormField({ field, value, error, onChange }) {
         style={field.required ? styles.labelRequired : styles.label}
         htmlFor={id}
       >
-        {field.label}
+        {t(lang, field.label)}
         {field.required && (
           <span style={styles.star} aria-hidden="true">
             {" "}
@@ -104,9 +107,9 @@ export default function FormField({ field, value, error, onChange }) {
       {control}
       <div style={styles.noteRow}>
         <p id={`${id}-note`} style={error ? styles.error : styles.hint}>
-          {error || field.hint}
+          {t(lang, error || field.hint)}
         </p>
-        {field.counter && <FieldCounter value={value} counter={field.counter} />}
+        {field.counter && <FieldCounter value={value} counter={field.counter} lang={lang} />}
       </div>
     </div>
   );

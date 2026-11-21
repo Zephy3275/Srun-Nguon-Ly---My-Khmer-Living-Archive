@@ -1,6 +1,7 @@
 // Saves changes to an existing entry. Same inputs as submitEntry, plus the
 // entry's id. photoType is null when the user kept the old photo.
-// Returns { id } on success or { error: "short message" }.
+// Returns { id } on success or { error: "<string ID>" } (a short message in
+// utils/strings.js; the form shows it in the chosen language).
 //
 // The important part is the check after .update(): when a row-level security
 // policy refuses an update, Supabase does NOT return an error. It changes zero
@@ -22,14 +23,14 @@ import {
   removeUploadedPhoto,
 } from "./entryWrite.js";
 
-const NOT_SAVED = "That change wasn't saved.";
+const NOT_SAVED = "P9"; // "That change wasn't saved."
 
 // onStage is optional: a function the form passes in to be told which step is
 // running, so it can show it. It changes nothing about what is saved.
 // currentStatus is the entry's status as the edit page loaded it.
 export async function updateEntry(supabase, id, values, photoType, onStage, currentStatus) {
   const user = await getSessionUser(supabase);
-  if (!user) return { error: "Your session has ended. Please log in again." };
+  if (!user) return { error: "F25" };
 
   // Ask the database whether this user is a reviewer. If the question itself
   // fails, treat them as a non-reviewer: the safe answer sends the entry to review.
@@ -42,14 +43,14 @@ export async function updateEntry(supabase, id, values, photoType, onStage, curr
   if (backToReview) columns.status = "pending";
   let newPhotoPath = null;
   if (photoType) {
-    onStage?.("UPLOADING PHOTO…");
+    onStage?.("F15");
     const photo = await uploadPhoto(supabase, user.id, values.photo, photoType);
     if (photo.error) return { error: photo.error };
     newPhotoPath = photo.path;
     columns.photo_url = photo.publicUrl;
   }
 
-  onStage?.("SAVING CHANGES…");
+  onStage?.("F17");
   const { data, error } = await supabase
     .from("entries")
     .update(columns)

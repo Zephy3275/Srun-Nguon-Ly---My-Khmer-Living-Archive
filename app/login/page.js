@@ -1,5 +1,7 @@
 import LoginForm from "../../components/LoginForm.js";
 import PageHeading from "../../components/PageHeading.js";
+import { getLang } from "../../utils/lang.js";
+import { sentenceCase, t } from "../../utils/strings.js";
 
 const styles = {
   wrap: {
@@ -9,17 +11,18 @@ const styles = {
   },
 };
 
-export default function LoginPage() {
+export default async function LoginPage() {
+  const lang = await getLang();
   return (
     <main style={styles.wrap}>
       <PageHeading
-        back={{ href: "/", label: "← BACK TO HOMEPAGE" }}
-        kicker="MEMBER ACCESS"
-        title="Log in"
+        back={{ href: "/", label: t(lang, "P1") }}
+        kicker={t(lang, "A1")}
+        title={sentenceCase(lang, "H6")}
       >
-        Sign in with the email and password you used to sign up.
+        {t(lang, "A2")}
       </PageHeading>
-      <LoginForm />
+      <LoginForm lang={lang} />
     </main>
   );
 }

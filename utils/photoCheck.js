@@ -4,7 +4,9 @@
 // file. These limits match the `photos` bucket (5 MB, jpeg/png/webp).
 
 const MAX_BYTES = 5 * 1024 * 1024;
-const MESSAGE = "Choose a JPG, PNG or WebP photo under 5 MB.";
+// The messages are string IDs (utils/strings.js): the form shows them in the
+// chosen language.
+const MESSAGE = "V12"; // "Choose a JPG, PNG or WebP photo under 5 MB."
 
 const startsWith = (bytes, signature, offset = 0) =>
   signature.every((b, i) => bytes[offset + i] === b);
@@ -27,7 +29,7 @@ async function detectPhotoType(file) {
 
 // Returns { message } when the photo is not acceptable, or { type } when it is.
 export async function checkPhoto(file) {
-  if (!file) return { message: "Add a photo (JPG, PNG or WebP, under 5 MB)." };
+  if (!file) return { message: "V13" };
   if (file.size === 0 || file.size > MAX_BYTES) return { message: MESSAGE };
   const type = await detectPhotoType(file);
   if (!type) return { message: MESSAGE };

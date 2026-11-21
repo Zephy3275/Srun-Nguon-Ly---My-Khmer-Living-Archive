@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "../utils/supabase/client.js";
 import Loader from "./Loader.js";
+import { sentenceCase, t } from "../utils/strings.js";
 
 const styles = {
   form: {
@@ -77,7 +78,8 @@ const styles = {
   },
 };
 
-export default function SignupForm() {
+// `error` holds a string ID (utils/strings.js), drawn in the language `lang`.
+export default function SignupForm({ lang }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -97,7 +99,7 @@ export default function SignupForm() {
     });
 
     if (authError) {
-      setError("Something went wrong. Please try again.");
+      setError("P8"); // Something went wrong. Please try again.
       setLoading(false);
       return;
     }
@@ -112,14 +114,14 @@ export default function SignupForm() {
 
     // Safety net: if confirmation were enabled, no session is returned yet.
     setLoading(false);
-    setError("Check your email to confirm your account.");
+    setError("A14"); // Check your email to confirm your account.
   }
 
   return (
     <form onSubmit={handleSubmit} style={styles.form} noValidate>
       <fieldset disabled={loading} style={styles.fields}>
         <label style={styles.label} htmlFor="signup-email">
-          EMAIL
+          {t(lang, "A3")}
         </label>
         <input
           id="signup-email"
@@ -132,7 +134,7 @@ export default function SignupForm() {
         />
 
         <label style={styles.label} htmlFor="signup-password">
-          PASSWORD
+          {t(lang, "A4")}
         </label>
         <input
           id="signup-password"
@@ -142,22 +144,22 @@ export default function SignupForm() {
           placeholder="••••••••"
           style={styles.input}
           minLength={6}
-          title="At least 6 characters"
+          title={t(lang, "A11")}
           required
         />
-        <p style={styles.hint}>At least 6 characters.</p>
+        <p style={styles.hint}>{t(lang, "A11")}</p>
 
         <button type="submit" className="btn-filled" style={styles.button}>
-          {loading ? <Loader size={20} label="CREATING ACCOUNT…" /> : "CREATE ACCOUNT"}
+          {loading ? <Loader size={20} label={t(lang, "A13")} /> : t(lang, "A12")}
         </button>
       </fieldset>
 
-      {error && <p style={styles.error}>{error}</p>}
+      {error && <p style={styles.error}>{t(lang, error)}</p>}
 
       <p style={styles.linkRow}>
-        Already have an account?{" "}
+        {t(lang, "A15")}{" "}
         <Link href="/login" style={styles.link}>
-          Log in
+          {sentenceCase(lang, "H6")}
         </Link>
       </p>
     </form>

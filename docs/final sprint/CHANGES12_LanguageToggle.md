@@ -79,3 +79,44 @@ What a visitor sees, logged out: the home page, browse and search, the entry car
   - EDIT and DELETE are in Khmer, so is the delete question, and CANCEL (បោះបង់) works as before.
 - **EN:** English only; the entries' Khmer is gone.
 - **EN + ខ្មែរ:** exactly as before the toggle.
+
+## Step 3: accounts and the entry form (2026-11-22)
+
+Login, sign-up, add an entry and edit an entry, with every field label, hint, live counter, error message, save stage and the notices after saving.
+
+**The main change:** the form helpers used to return English sentences. Now they return the string's ID, for example `{ title: "V1" }` or `{ error: "F26" }`, and the component turns the ID into words only when it draws it. So a message on screen also changes language when the switch is pressed. The helpers are `utils/validateEntry.js`, `photoCheck.js`, `submitEntry.js`, `updateEntry.js` and `entryWrite.js`. The swap was done by a script that matched each English sentence exactly and stopped if one was missing.
+- `utils/entryFields.js`: each field's `label` and `hint` is now an ID (FL1 to FL12, FH1 to FH9, P6 for SOURCE).
+- Nothing about what is checked or saved changed. The rules, limits, columns and the zero-row check are as before.
+
+**Files changed:**
+- `app/login/page.js`, `app/signup/page.js`, `app/contribute/page.js`, `app/entries/[id]/edit/page.js`.
+- `components/LoginForm.js`, `SignupForm.js`, `ContributeForm.js`, `EntryFormFields.js`, `FormField.js`, `FieldCounter.js`, `PhotoPreview.js`, `EntrySentNotice.js`, `BilingualNotice.js`.
+- `utils/entryFields.js`, `validateEntry.js`, `photoCheck.js`, `submitEntry.js`, `updateEntry.js`, `entryWrite.js`, `strings.js`.
+
+**Details worth knowing:**
+- **`sentenceCase(lang, id)`** (new in `utils/strings.js`): the English uses the same words in capitals in the menu (LOG IN) and in sentence case in links and titles (Log in). One string serves both, and the Khmer is unchanged.
+- **The save notices (`EntrySentNotice.js`):**
+  - EN + ខ្មែរ: the English heading, the English text and the student's Khmer under it, as before.
+  - EN: English only.
+  - ខ្មែរ: the Khmer heading (Gemini's F23 / F24) and the student's Khmer text.
+  - The "BACK TO HOMEPAGE" button reuses P1 without its arrow.
+- **`BilingualNotice.js`** takes an optional `lang`. With none it shows both lines, exactly as before, so the review page, which step 4 changes, keeps working.
+- **English text change:** the edit page's "There is no entry with that id in the archive." now ends with "yet", the same sentence as the entry page (one string, E4).
+
+**Checked by the AI:**
+- Every string ID used anywhere in the code (142) exists in `utils/strings.js`.
+- `validateEntry` on an empty form returns the expected IDs (V1 to V11).
+- Throwaway dev server on port 3005, stopped afterwards, no errors in its log. /login, /signup, /contribute and an edit page (all logged out) came back in the right language in all three modes.
+- Not checkable without logging in: the form itself, its errors, the saving stages and the notices.
+
+**Tested by the student (localhost, 2026-11-22): PASSED.**
+- **ខ្មែរ, logged out:**
+  - /login is in Khmer, and the red error for a wrong password too. Pressing EN while it showed switched it to English.
+  - /signup is in Khmer.
+- **ខ្មែរ, as archive.test.three:**
+  - The add form is all Khmer: labels, hints, the TEXTURE label សាច់នំ (វាយនភាព), the 1-to-5 dropdowns.
+  - Saving an empty form shows every red message in Khmer, the photo one included.
+  - The photo preview caption is Khmer.
+  - Editing a pending test entry: the edit page and the current-photo caption are Khmer. Saving with no change shows the notice in Khmer, text and buttons.
+- **EN + ខ្មែរ:** the form and the notice look as before, English and Khmer text, English buttons.
+- **Skipped (the student's call):** adding a new entry to see the "Thank you" notice. It is the same component as the edit notice, which passed, and it would have left one more test entry.

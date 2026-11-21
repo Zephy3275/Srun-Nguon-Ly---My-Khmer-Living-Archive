@@ -11,6 +11,7 @@ import { updateEntry } from "../utils/updateEntry.js";
 import EntryFormFields from "./EntryFormFields.js";
 import EntrySentNotice from "./EntrySentNotice.js";
 import Loader from "./Loader.js";
+import { t } from "../utils/strings.js";
 
 // Used twice: /contribute (no `entry` prop = add a new entry) and the edit page
 // (`entry` = the row being edited, form pre-filled, new photo optional).
@@ -43,7 +44,10 @@ const styles = {
   },
 };
 
-export default function ContributeForm({ entry }) {
+// `lang` comes from the page. The field errors, formError and stage are string
+// IDs (utils/strings.js), turned into words only when drawn, so they follow
+// the language switch even while they are on screen.
+export default function ContributeForm({ entry, lang }) {
   const router = useRouter();
   const editing = Boolean(entry);
   const [values, setValues] = useState(editing ? valuesFromEntry(entry) : EMPTY_VALUES);
@@ -66,7 +70,7 @@ export default function ContributeForm({ entry }) {
     if (loading) return;
     setFormError("");
     setLoading(true); // disables the button for the whole check + upload + save
-    setStage("CHECKING YOUR ENTRY…");
+    setStage("F14"); // CHECKING YOUR ENTRY…
 
     try {
       const clean = trimValues(values);
@@ -106,12 +110,12 @@ export default function ContributeForm({ entry }) {
       setLoading(false);
     } catch (err) {
       console.error("Contribute form failed unexpectedly:", err);
-      setFormError("Something went wrong. Please try again.");
+      setFormError("P8"); // Something went wrong. Please try again.
       setLoading(false);
     }
   }
 
-  if (sent) return <EntrySentNotice kind={sent} />;
+  if (sent) return <EntrySentNotice kind={sent} lang={lang} />;
 
   return (
     <form onSubmit={handleSubmit} style={styles.form} noValidate>
@@ -121,20 +125,19 @@ export default function ContributeForm({ entry }) {
           errors={errors}
           onChange={handleChange}
           currentPhoto={editing ? entry.photo_url : undefined}
+          lang={lang}
         />
       </fieldset>
 
       <button type="submit" disabled={loading} className="btn-filled" style={styles.button}>
         {loading ? (
-          <Loader size={20} label={stage || "SAVING…"} />
-        ) : editing ? (
-          "SAVE CHANGES"
+          <Loader size={20} label={t(lang, stage || "F13")} />
         ) : (
-          "ADD TO THE ARCHIVE"
+          t(lang, editing ? "F12" : "F11")
         )}
       </button>
 
-      {formError && <p style={styles.error}>{formError}</p>}
+      {formError && <p style={styles.error}>{t(lang, formError)}</p>}
     </form>
   );
 }

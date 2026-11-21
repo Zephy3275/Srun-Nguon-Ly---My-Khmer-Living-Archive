@@ -5,6 +5,7 @@ import { useRouter } from "next/navigation";
 import Link from "next/link";
 import { createClient } from "../utils/supabase/client.js";
 import Loader from "./Loader.js";
+import { sentenceCase, t } from "../utils/strings.js";
 
 const styles = {
   form: {
@@ -72,7 +73,8 @@ const styles = {
   },
 };
 
-export default function LoginForm() {
+// `error` holds a string ID (utils/strings.js), drawn in the language `lang`.
+export default function LoginForm({ lang }) {
   const router = useRouter();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -94,7 +96,7 @@ export default function LoginForm() {
     if (authError) {
       // Fixed, non-specific message: never leaks whether the email, password,
       // or confirmation state was the actual problem.
-      setError("Invalid email or password");
+      setError("A7"); // Invalid email or password
       setLoading(false);
       return;
     }
@@ -107,7 +109,7 @@ export default function LoginForm() {
     <form onSubmit={handleSubmit} style={styles.form} noValidate>
       <fieldset disabled={loading} style={styles.fields}>
         <label style={styles.label} htmlFor="login-email">
-          EMAIL
+          {t(lang, "A3")}
         </label>
         <input
           id="login-email"
@@ -120,7 +122,7 @@ export default function LoginForm() {
         />
 
         <label style={styles.label} htmlFor="login-password">
-          PASSWORD
+          {t(lang, "A4")}
         </label>
         <input
           id="login-password"
@@ -133,16 +135,16 @@ export default function LoginForm() {
         />
 
         <button type="submit" className="btn-filled" style={styles.button}>
-          {loading ? <Loader size={20} label="SIGNING IN…" /> : "SIGN IN"}
+          {loading ? <Loader size={20} label={t(lang, "A6")} /> : t(lang, "A5")}
         </button>
       </fieldset>
 
-      {error && <p style={styles.error}>{error}</p>}
+      {error && <p style={styles.error}>{t(lang, error)}</p>}
 
       <p style={styles.linkRow}>
-        Need an account?{" "}
+        {t(lang, "A8")}{" "}
         <Link href="/signup" style={styles.link}>
-          Sign up
+          {sentenceCase(lang, "H7")}
         </Link>
       </p>
     </form>

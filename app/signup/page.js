@@ -1,5 +1,7 @@
 import SignupForm from "../../components/SignupForm.js";
 import PageHeading from "../../components/PageHeading.js";
+import { getLang } from "../../utils/lang.js";
+import { sentenceCase, t } from "../../utils/strings.js";
 
 const styles = {
   wrap: {
@@ -9,17 +11,18 @@ const styles = {
   },
 };
 
-export default function SignupPage() {
+export default async function SignupPage() {
+  const lang = await getLang();
   return (
     <main style={styles.wrap}>
       <PageHeading
-        back={{ href: "/", label: "← BACK TO HOMEPAGE" }}
-        kicker="JOIN THE ARCHIVE"
-        title="Sign up"
+        back={{ href: "/", label: t(lang, "P1") }}
+        kicker={t(lang, "A9")}
+        title={sentenceCase(lang, "H7")}
       >
-        Create an account to take part in the archive.
+        {t(lang, "A10")}
       </PageHeading>
-      <SignupForm />
+      <SignupForm lang={lang} />
     </main>
   );
 }

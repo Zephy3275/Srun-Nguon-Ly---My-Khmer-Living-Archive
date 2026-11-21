@@ -98,7 +98,13 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
   - A second CSS rule gives Khmer h1/h2 a line height of 1.5.
   - Details in the changelog.
   - **A published test entry, "test entry for lab 12 return for reviewer", is on the public home page.** Add it to the test-entry cleanup.
-- **Next steps:** 3 login, sign-up and the add/edit form with its errors; 4 my entries, review queue, the existing bilingual parts; 5 the phone and console checks in all three modes. If time runs out, hide the switch and go to the README.
+- **Step 2 committed:** `94f7309`.
+- **Step 3 DONE (2026-11-22; AI-checked logged out on a throwaway dev server; student-tested on localhost, PASSED in all three modes; the add-entry notice was skipped, same component as the edit notice):**
+  - Covers login, sign-up, add and edit with all labels, hints, counters, errors, stages and save notices.
+  - The form helpers in `utils/` now return string IDs instead of English. No rule or saving behaviour changed.
+  - New helper `sentenceCase`. `BilingualNotice` takes an optional `lang`.
+  - Details in the changelog.
+- **Next steps:** 4 my entries, review queue, the existing bilingual parts; 5 the phone and console checks in all three modes. If time runs out, hide the switch and go to the README.
 
 **Order of work from here (agreed 2026-11-21; one chat per job; the toggle is graded, the instructor wants it):**
 1. **Lab 13: DONE.**

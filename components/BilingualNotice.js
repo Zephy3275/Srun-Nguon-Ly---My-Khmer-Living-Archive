@@ -1,6 +1,9 @@
 // A short message in English with the Khmer under it, in one bordered box.
-// Used by the review page for its three messages. The Khmer is the student's
-// own wording, passed in by the caller.
+// Used by the review page and the edit page. The Khmer is the student's own
+// wording, passed in by the caller. `lang` follows the language switch:
+// "both" (or no lang) shows both lines, "en" only the English, "km" only the Khmer.
+
+import { showsEn, showsKm } from "../utils/strings.js";
 
 const styles = {
   box: {
@@ -20,14 +23,18 @@ const styles = {
     color: "var(--muted-dim)",
   },
 };
+// Khmer only: no rule above it, nothing to be set apart from.
+styles.kmAlone = { margin: 0, fontSize: 15 };
 
-export default function BilingualNotice({ en, km }) {
+export default function BilingualNotice({ en, km, lang = "both" }) {
   return (
     <div style={styles.box} role="status">
-      <p style={styles.en}>{en}</p>
-      <p style={styles.km} lang="km">
-        {km}
-      </p>
+      {showsEn(lang) && <p style={styles.en}>{en}</p>}
+      {showsKm(lang) && (
+        <p style={lang === "both" ? styles.km : styles.kmAlone} lang="km">
+          {km}
+        </p>
+      )}
     </div>
   );
 }

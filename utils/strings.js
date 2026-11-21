@@ -41,6 +41,14 @@ export function t(lang, id, vars = {}) {
   return text;
 }
 
+// The same words in sentence case ("LOG IN" -> "Log in"), for an English link
+// or title inside a sentence. Khmer has no capitals, so it comes back as it is.
+export function sentenceCase(lang, id, vars) {
+  const text = t(lang, id, vars);
+  if (lang === "km" && STRINGS[id]?.km) return text;
+  return text.charAt(0) + text.slice(1).toLowerCase();
+}
+
 export const STRINGS = {
   // Header and menu (top of every page)
   H1: { en: "KHMER LIVING ARCHIVE", km: "បណ្ណសាររស់ខ្មែរ" },

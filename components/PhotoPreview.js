@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useState } from "react";
+import { t } from "../utils/strings.js";
 
 // The picture shown above the photo picker in the entry form. A freshly chosen
 // file is previewed right away (before anything is uploaded); with no new file,
@@ -25,7 +26,7 @@ const styles = {
   },
 };
 
-export default function PhotoPreview({ file, currentPhoto }) {
+export default function PhotoPreview({ file, currentPhoto, lang }) {
   const [url, setUrl] = useState(null);
 
   // A temporary local address for the chosen file. It is freed again when the
@@ -47,11 +48,11 @@ export default function PhotoPreview({ file, currentPhoto }) {
     <div style={styles.wrap}>
       <img
         src={src}
-        alt={url ? "Preview of the new photo" : "Current photo"}
+        alt={t(lang, url ? "X5" : "X4")}
         style={styles.image}
       />
       <p style={styles.caption}>
-        {url ? "NEW PHOTO (not saved yet)" : "CURRENT PHOTO"}
+        {t(lang, url ? "F19" : "F18")}
       </p>
     </div>
   );

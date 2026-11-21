@@ -3,6 +3,8 @@ import BilingualNotice from "../../../../components/BilingualNotice.js";
 import ContributeForm from "../../../../components/ContributeForm.js";
 import PageHeading from "../../../../components/PageHeading.js";
 import { createClient } from "../../../../utils/supabase/server.js";
+import { getLang } from "../../../../utils/lang.js";
+import { STRINGS, sentenceCase, t } from "../../../../utils/strings.js";
 
 const styles = {
   wrap: {
@@ -17,18 +19,17 @@ const styles = {
   warning: { marginTop: 24 },
 };
 
-const BACK_TO_REVIEW_EN =
-  "This entry is published. If you save changes, it goes back to review and is hidden from the public archive until a reviewer approves it again.";
-const BACK_TO_REVIEW_KM =
-  "ធាតុនេះត្រូវបានផ្សព្វផ្សាយរួចហើយ។ ប្រសិនបើអ្នករក្សាទុកការផ្លាស់ប្តូរ ធាតុនេះនឹងត្រឡប់ទៅស្ថានភាពរង់ចាំការពិនិត្យឡើងវិញ ហើយនឹងត្រូវបានលាក់ពីបណ្ណសារសាធារណៈ រហូតទាល់តែអ្នកពិនិត្យអនុម័តវាជាថ្មីម្តងទៀត។";
+// The warning before a non-reviewer edits a published entry: the student's
+// English and Khmer (K13 in utils/strings.js).
+const BACK_TO_REVIEW = STRINGS.K13;
 
 // Page frame + one heading and message, used by every state except the form.
-function Notice({ id, heading, children }) {
+function Notice({ id, lang, heading, children }) {
   return (
     <main style={styles.wrap}>
       <PageHeading
-        back={{ href: `/entries/${id}`, label: "← BACK TO ENTRY" }}
-        kicker="EDIT ENTRY"
+        back={{ href: `/entries/${id}`, label: t(lang, "P3") }}
+        kicker={t(lang, "F5")}
         title={heading}
       >
         {children}
@@ -42,13 +43,14 @@ export default async function EditEntryPage({ params }) {
 
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
+  const lang = await getLang();
 
   if (!user) {
     return (
-      <Notice id={id} heading="Log in to edit">
-        You need to be logged in to edit an entry.{" "}
+      <Notice id={id} lang={lang} heading={t(lang, "F6")}>
+        {t(lang, "F7")}{" "}
         <Link href="/login" style={styles.link}>
-          Log in
+          {sentenceCase(lang, "H6")}
         </Link>
       </Notice>
     );
@@ -66,16 +68,16 @@ export default async function EditEntryPage({ params }) {
   if (error && error.code !== "22P02") {
     console.error("Edit page could not load the entry:", error);
     return (
-      <Notice id={id} heading="Couldn't load this entry">
-        We couldn't reach the archive right now. Please try again in a moment.
+      <Notice id={id} lang={lang} heading={t(lang, "E1")}>
+        {t(lang, "E2")}
       </Notice>
     );
   }
 
   if (!entry) {
     return (
-      <Notice id={id} heading="Entry not found">
-        There is no entry with that id in the archive.
+      <Notice id={id} lang={lang} heading={t(lang, "E3")}>
+        {t(lang, "E4")}
       </Notice>
     );
   }
@@ -83,8 +85,8 @@ export default async function EditEntryPage({ params }) {
   // Politeness only: the owner-only database policies are the real refusal.
   if (entry.owner !== user.id) {
     return (
-      <Notice id={id} heading="You can't edit this entry">
-        Only the person who added an entry can edit it.
+      <Notice id={id} lang={lang} heading={t(lang, "F8")}>
+        {t(lang, "F9")}
       </Notice>
     );
   }
@@ -99,19 +101,18 @@ export default async function EditEntryPage({ params }) {
   return (
     <main style={styles.wrap}>
       <PageHeading
-        back={{ href: `/entries/${id}`, label: "← BACK TO ENTRY" }}
-        kicker="EDIT ENTRY"
-        title="Edit entry"
+        back={{ href: `/entries/${id}`, label: t(lang, "P3") }}
+        kicker={t(lang, "F5")}
+        title={sentenceCase(lang, "F5")}
       >
-        Change anything you like, then save. Your current photo stays unless you
-        choose a new one.
+        {t(lang, "F10")}
       </PageHeading>
       {warnsBackToReview && (
         <div style={styles.warning}>
-          <BilingualNotice en={BACK_TO_REVIEW_EN} km={BACK_TO_REVIEW_KM} />
+          <BilingualNotice en={BACK_TO_REVIEW.en} km={BACK_TO_REVIEW.km} lang={lang} />
         </div>
       )}
-      <ContributeForm entry={entry} />
+      <ContributeForm entry={entry} lang={lang} />
     </main>
   );
 }

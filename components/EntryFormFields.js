@@ -11,10 +11,10 @@ const styles = {
   item: { display: "flex", flexDirection: "column", gap: 12 },
 };
 
-const EDIT_PHOTO_HINT =
-  "Optional. Choose a file only if you want to replace the current photo. JPG, PNG or WebP, up to 5 MB.";
+// "Optional. Choose a file only if you want to replace the current photo. ..."
+const EDIT_PHOTO_HINT = "FH10";
 
-export default function EntryFormFields({ values, errors, onChange, currentPhoto }) {
+export default function EntryFormFields({ values, errors, onChange, currentPhoto, lang }) {
   return FIELDS.map((field) => {
     const isPhoto = field.kind === "file";
     const shown =
@@ -24,13 +24,14 @@ export default function EntryFormFields({ values, errors, onChange, currentPhoto
     return (
       <div key={field.name} style={styles.item}>
         {isPhoto && (
-          <PhotoPreview file={values.photo} currentPhoto={currentPhoto} />
+          <PhotoPreview file={values.photo} currentPhoto={currentPhoto} lang={lang} />
         )}
         <FormField
           field={shown}
           value={values[field.name]}
           error={errors[field.name]}
           onChange={onChange}
+          lang={lang}
         />
       </div>
     );
