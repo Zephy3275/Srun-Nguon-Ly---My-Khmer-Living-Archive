@@ -1,4 +1,5 @@
 ﻿import Link from "next/link";
+import { entryText, isKhmerText } from "../utils/strings.js";
 
 const styles = {
   list: {
@@ -33,7 +34,9 @@ const styles = {
   },
 };
 
-export default function SearchSuggestions({ suggestions }) {
+// Same rule as the cards: "both" shows the English title and the Khmer beside
+// it, "en" the English only, "km" the Khmer (or the English if there is none).
+export default function SearchSuggestions({ suggestions, lang }) {
   return (
     <ul style={styles.list}>
       {suggestions.map((s) => (
@@ -43,8 +46,12 @@ export default function SearchSuggestions({ suggestions }) {
             style={styles.link}
             onMouseDown={(e) => e.preventDefault()}
           >
-            <span style={styles.title}>{s.title}</span>
-            {s.titleKhmer && <span lang="km" style={styles.khmer}>{s.titleKhmer}</span>}
+            <span lang={isKhmerText(lang, s.titleKhmer) ? "km" : undefined} style={styles.title}>
+              {entryText(lang, s.title, s.titleKhmer)}
+            </span>
+            {lang === "both" && s.titleKhmer && (
+              <span lang="km" style={styles.khmer}>{s.titleKhmer}</span>
+            )}
           </Link>
         </li>
       ))}

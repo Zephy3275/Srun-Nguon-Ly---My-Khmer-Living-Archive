@@ -1,5 +1,6 @@
 import Link from "next/link";
 import DeleteEntryButton from "./DeleteEntryButton.js";
+import { t } from "../utils/strings.js";
 
 // Edit + Delete for one entry. The page only renders this when the logged-in
 // user is the entry's owner. That is politeness, not security: the real refusal
@@ -27,13 +28,13 @@ const styles = {
   },
 };
 
-export default function EntryOwnerActions({ id }) {
+export default function EntryOwnerActions({ id, lang }) {
   return (
     <div style={styles.row}>
       <Link href={`/entries/${id}/edit`} style={styles.edit}>
-        EDIT
+        {t(lang, "E5")}
       </Link>
-      <DeleteEntryButton id={id} />
+      <DeleteEntryButton id={id} lang={lang} />
     </div>
   );
 }

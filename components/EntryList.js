@@ -9,11 +9,11 @@ const styles = {
   },
 };
 
-export default function EntryList({ entries }) {
+export default function EntryList({ entries, lang }) {
   return (
     <div style={styles.grid}>
       {entries.map((entry) => (
-        <EntryCard key={entry.id} {...entry} />
+        <EntryCard key={entry.id} {...entry} lang={lang} />
       ))}
     </div>
   );

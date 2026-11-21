@@ -4,6 +4,8 @@ import ContextAbout from "../components/ContextAbout.js";
 import HeroBanner from "../components/HeroBanner.js";
 import MoonPhases from "../components/MoonPhases.js";
 import { createClient } from "../utils/supabase/server.js";
+import { getLang } from "../utils/lang.js";
+import { archive, t } from "../utils/strings.js";
 
 const styles = {
   wrap: {
@@ -93,55 +95,50 @@ export default async function Home() {
     .eq("status", "published")
     .order("created_at", { ascending: false });
   const entries = data ?? [];
+  const lang = await getLang();
 
   return (
     <>
       <HeroBanner>
-        <p style={styles.kicker}>KHMER LIVING ARCHIVE</p>
-        <h1 style={styles.title}>{collection.name}</h1>
-        <p style={styles.description}>{collection.description}</p>
+        <p style={styles.kicker}>{t(lang, "H1")}</p>
+        <h1 style={styles.title}>{archive(lang, "name")}</h1>
+        <p style={styles.description}>{archive(lang, "description")}</p>
       </HeroBanner>
       <main style={styles.wrap}>
         <MoonPhases />
 
         <div style={styles.card}>
-          <p style={styles.cardLabel}>CURATED BY</p>
+          <p style={styles.cardLabel}>{t(lang, "HM1")}</p>
           <p style={styles.cardValue}>{collection.curator}</p>
         </div>
         <div style={styles.card}>
-          <p style={styles.cardLabel}>SOURCE</p>
-          <p style={styles.cardValue}>{collection.source}</p>
+          <p style={styles.cardLabel}>{t(lang, "P6")}</p>
+          <p style={styles.cardValue}>{archive(lang, "source")}</p>
         </div>
         <div style={styles.card}>
-          <p style={styles.cardLabel}>CITY</p>
-          <p style={styles.cardValue}>{collection.city}</p>
+          <p style={styles.cardLabel}>{t(lang, "HM2")}</p>
+          <p style={styles.cardValue}>{archive(lang, "city")}</p>
         </div>
 
-        <ContextAbout />
+        <ContextAbout lang={lang} />
 
         {error ? (
-          <p style={styles.notice}>
-            We couldn't load the archive right now. Please try again in a moment.
-          </p>
+          <p style={styles.notice}>{t(lang, "HM4")}</p>
         ) : entries.length === 0 ? (
-          <p style={styles.notice}>No entries in the archive yet.</p>
+          <p style={styles.notice}>{t(lang, "HM5")}</p>
         ) : (
           <>
-            <p style={styles.count}>entries in the archive: {entries.length}</p>
+            <p style={styles.count}>{t(lang, "HM3", { count: entries.length })}</p>
 
             <div style={styles.grid}>
               {entries.map((entry) => (
-                <EntryCard key={entry.id} {...entry} />
+                <EntryCard key={entry.id} {...entry} lang={lang} />
               ))}
             </div>
           </>
         )}
 
-        <footer style={styles.footer}>
-          Built in ICT 340 — Vibe Coding, American University of Phnom Penh, Fall
-          2026. This archive is under construction all semester. Come back in
-          December.
-        </footer>
+        <footer style={styles.footer}>{t(lang, "HM6")}</footer>
       </main>
     </>
   );

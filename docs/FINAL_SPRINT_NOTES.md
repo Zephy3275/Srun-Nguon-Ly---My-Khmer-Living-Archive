@@ -91,7 +91,14 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
   - `components/LangSwitch.js`: three buttons in the header that set the cookie and call `router.refresh()`.
   - `<html lang>` follows the mode. One CSS rule in `app/globals.css`: `:lang(km)` gets no letter spacing.
 - **Step 1 DONE and student-tested (2026-11-22, localhost, PASSED: switch, Khmer header logged out and in, the choice kept across refresh and pages):** `utils/strings.js`, `utils/lang.js` and `LangSwitch.js` added; `app/layout.js`, `SiteHeader.js`, `AuthHeader.js`, `LogoutButton.js` and `globals.css` changed. Checked by the AI on a throwaway dev server (port 3005, stopped afterwards): the home page in all three modes gave the right `<html lang>`, the right switch button pressed, and the header links in English or Khmer.
-- **Next steps:** 2 public pages (home, browse and search, cards, entry page, collection identity, tab title); 3 login, sign-up and the add/edit form with its errors; 4 my entries, review queue, the existing bilingual parts; 5 the phone and console checks in all three modes. If time runs out, hide the switch and go to the README.
+- **Step 1 committed:** `b06f831`.
+- **Step 2 DONE (2026-11-22; AI-checked on a throwaway dev server; student-tested on localhost, PASSED in all three modes):**
+  - Covers home, browse and search, cards, an entry's page with EDIT/DELETE, the loading text and the tab title.
+  - The archive's identity now has a `km` block in `collection.config.js`.
+  - A second CSS rule gives Khmer h1/h2 a line height of 1.5.
+  - Details in the changelog.
+  - **A published test entry, "test entry for lab 12 return for reviewer", is on the public home page.** Add it to the test-entry cleanup.
+- **Next steps:** 3 login, sign-up and the add/edit form with its errors; 4 my entries, review queue, the existing bilingual parts; 5 the phone and console checks in all three modes. If time runs out, hide the switch and go to the README.
 
 **Order of work from here (agreed 2026-11-21; one chat per job; the toggle is graded, the instructor wants it):**
 1. **Lab 13: DONE.**

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { entryText, isKhmerText, t } from "../utils/strings.js";
 
 // Cut a paragraph off after 3 lines and end it with "…". Used for both the
 // English and the Khmer description so every card stays about the same height.
@@ -79,6 +80,9 @@ const styles = {
     borderTop: "1px solid var(--border)",
   },
 };
+// Khmer-only mode: a Khmer title in the main title's place needs a taller line
+// than 1.2, or the tops and bottoms of the Khmer letters get cut off.
+styles.titleInKhmer = { ...styles.title, lineHeight: 1.5 };
 
 export default function EntryCard({
   id,
@@ -89,24 +93,45 @@ export default function EntryCard({
   description,
   descriptionKhmer,
   image,
+  lang,
 }) {
+  // "both": the English, then the Khmer under it. "en": English only.
+  // "km": the Khmer in the English's place (the English if there is none).
+  const shownTitle = entryText(lang, title, titleKhmer);
+  const shownDescription = entryText(lang, description, descriptionKhmer);
   return (
     <Link href={`/entries/${id}`} style={styles.link}>
       <div style={styles.card}>
         {image ? (
-          <img src={image} alt={title} style={styles.image} />
+          <img src={image} alt={shownTitle} style={styles.image} />
         ) : (
-          <div style={styles.imageFallback}>IMAGE PENDING</div>
+          <div style={styles.imageFallback}>{t(lang, "P5")}</div>
         )}
         <div style={styles.body}>
-          <p style={styles.label}>SOURCE: {source}</p>
+          <p style={styles.label}>{t(lang, "P6")}: {source}</p>
           {contributor && (
-            <p style={{ ...styles.label, marginTop: 2 }}>CONTRIBUTED BY: {contributor}</p>
+            <p style={{ ...styles.label, marginTop: 2 }}>
+              {t(lang, "P7")}: {contributor}
+            </p>
           )}
-          <p style={styles.title}>{title}</p>
-          {titleKhmer && <p lang="km" style={styles.titleKhmer}>{titleKhmer}</p>}
-          {description && <p style={styles.description}>{description}</p>}
-          {descriptionKhmer && (
+          <p
+            lang={isKhmerText(lang, titleKhmer) ? "km" : undefined}
+            style={isKhmerText(lang, titleKhmer) ? styles.titleInKhmer : styles.title}
+          >
+            {shownTitle}
+          </p>
+          {lang === "both" && titleKhmer && (
+            <p lang="km" style={styles.titleKhmer}>{titleKhmer}</p>
+          )}
+          {shownDescription && (
+            <p
+              lang={isKhmerText(lang, descriptionKhmer) ? "km" : undefined}
+              style={styles.description}
+            >
+              {shownDescription}
+            </p>
+          )}
+          {lang === "both" && descriptionKhmer && (
             <p lang="km" style={styles.descriptionKhmer}>{descriptionKhmer}</p>
           )}
         </div>

@@ -1,4 +1,6 @@
 import Loader from "../components/Loader.js";
+import { getLang } from "../utils/lang.js";
+import { t } from "../utils/strings.js";
 
 // Shown while a page waits for the archive. The site header (in the layout)
 // stays on screen above it.
@@ -18,11 +20,12 @@ const styles = {
   },
 };
 
-export default function Loading() {
+export default async function Loading() {
+  const lang = await getLang();
   return (
     <main style={styles.wrap}>
       <div style={styles.center}>
-        <Loader size={128} label="LOADING THE ARCHIVE…" vertical />
+        <Loader size={128} label={t(lang, "P4")} vertical />
       </div>
     </main>
   );

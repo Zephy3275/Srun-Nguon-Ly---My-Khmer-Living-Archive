@@ -4,10 +4,10 @@ import {
   Noto_Sans_Khmer,
   Noto_Serif_Khmer,
 } from "next/font/google";
-import collection from "../collection.config.js";
 import "./globals.css";
 import SiteHeader from "../components/SiteHeader.js";
 import { getLang } from "../utils/lang.js";
+import { archive, t } from "../utils/strings.js";
 
 // Fonts come with Next.js (next/font/google): they are downloaded when the site
 // is built and served from our own site, not from Google at visit time. Each
@@ -44,10 +44,15 @@ const fontVariables = [
   khmerSerif.variable,
 ].join(" ");
 
-export const metadata = {
-  title: `${collection.name} — Khmer Living Archive`,
-  description: collection.description,
-};
+// The browser tab title and the search-engine description, in the chosen
+// language. English mixed case in the tab, as before (H1 is the capitals form).
+export async function generateMetadata() {
+  const lang = await getLang();
+  return {
+    title: `${archive(lang, "name")} — ${lang === "km" ? t(lang, "H1") : "Khmer Living Archive"}`,
+    description: archive(lang, "description"),
+  };
+}
 
 export default async function RootLayout({ children }) {
   // The page language follows the switch: Khmer only -> "km", otherwise "en"

@@ -4,6 +4,7 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../utils/supabase/client.js";
 import Loader from "./Loader.js";
+import { t } from "../utils/strings.js";
 
 // Delete with an inline "are you sure?" step. Nothing is deleted until the
 // second click. Like an update, a delete refused by a row-level security
@@ -28,7 +29,7 @@ const styles = {
   error: { color: "var(--danger)", fontSize: 14, margin: "12px 0 0" },
 };
 
-export default function DeleteEntryButton({ id }) {
+export default function DeleteEntryButton({ id, lang }) {
   const router = useRouter();
   const [confirming, setConfirming] = useState(false);
   const [loading, setLoading] = useState(false);
@@ -49,7 +50,7 @@ export default function DeleteEntryButton({ id }) {
         "Entry delete removed nothing:",
         deleteError ?? "no row came back (refused by a policy, or the entry is gone)"
       );
-      setError("That change wasn't saved.");
+      setError(t(lang, "P9"));
       setLoading(false);
       setConfirming(false);
       return;
@@ -62,7 +63,7 @@ export default function DeleteEntryButton({ id }) {
     return (
       <div>
         <button type="button" style={styles.delete} onClick={() => setConfirming(true)}>
-          DELETE
+          {t(lang, "E6")}
         </button>
         {error && <p style={styles.error}>{error}</p>}
       </div>
@@ -71,9 +72,9 @@ export default function DeleteEntryButton({ id }) {
 
   return (
     <div style={styles.row}>
-      <span style={styles.ask}>Delete this entry? This can't be undone.</span>
+      <span style={styles.ask}>{t(lang, "E7")}</span>
       <button type="button" style={styles.delete} disabled={loading} onClick={handleDelete}>
-        {loading ? <Loader size={16} label="DELETING…" /> : "YES, DELETE"}
+        {loading ? <Loader size={16} label={t(lang, "E9")} /> : t(lang, "E8")}
       </button>
       <button
         type="button"
@@ -81,7 +82,7 @@ export default function DeleteEntryButton({ id }) {
         disabled={loading}
         onClick={() => setConfirming(false)}
       >
-        CANCEL
+        {t(lang, "E10")}
       </button>
     </div>
   );

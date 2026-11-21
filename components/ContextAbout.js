@@ -1,3 +1,5 @@
+import { t } from "../utils/strings.js";
+
 const styles = {
   section: {
     marginTop: 48,
@@ -42,72 +44,27 @@ const styles = {
   },
 };
 
-const intro =
-  "Mooncakes are eaten during the Mid-Autumn Festival, held on the 15th night " +
-  "of the 8th lunar month (usually mid-September to early October), when the " +
-  "moon is believed to be at its fullest and brightest of the year. The " +
-  "festival centers on the moon, family reunions, and mooncakes — dense, " +
-  "round pastries loaded with history, mythology, and meaning.";
-
+// The text lives in utils/strings.js (AB1 to AB12), in English and Khmer.
+// Each point is a heading ID and a text ID.
 const points = [
-  {
-    lead: "Shape and symbolism",
-    body:
-      "The round shape became symbolic of the full moon, representing unity " +
-      "and completeness, making mooncakes an ideal treat for family " +
-      "gatherings. The classic version has a lotus seed paste center with a " +
-      "salted duck egg yolk representing the full moon itself.",
-  },
-  {
-    lead: "The rebellion legend",
-    body:
-      "The most famous origin story dates to the Yuan Dynasty. Han Chinese " +
-      "revolutionaries are said to have hidden messages inside mooncakes to " +
-      "secretly coordinate an uprising against Mongol rulers — “Kill the " +
-      "Mongols on the 15th day of the 8th month” — and the successful " +
-      "rebellion gave rise to the Ming Dynasty. True or not, it's part of why " +
-      "mooncakes are tied to unity and resistance as much as reunion.",
-  },
-  {
-    lead: "Reaching Southeast Asia",
-    body:
-      "The festival spread well beyond China to Southeast Asian countries " +
-      "with large ethnic Chinese populations, and remains an important " +
-      "festival in Vietnam and across the diaspora. Cambodia's Teochew " +
-      "(Chaozhou) and Cantonese communities carry this forward — Phnom Penh " +
-      "still holds public Mid-Autumn celebrations today, which is the living " +
-      "context your uncle's shop sits inside.",
-  },
-  {
-    lead: "Egg yolks",
-    body:
-      "The salted duck egg yolk at the center is meant to visually and " +
-      "symbolically stand in for the moon itself. A no-yolk version gives a " +
-      "smoother, purely-paste texture, while double yolk is prized for extra " +
-      "richness and is often treated as a step up in indulgence — collectors " +
-      "of the classic Cantonese style will hunt for triple or even " +
-      "quadruple-yolk versions as the ultimate flex.",
-  },
+  ["AB4", "AB5"],
+  ["AB6", "AB7"],
+  ["AB8", "AB9"],
+  ["AB10", "AB11"],
 ];
 
-const closing =
-  "As someone who came from a Teochew family lineage in Cambodia that produces " +
-  "mooncake, I have experience mooncake all my life but I never really put much " +
-  "thought into its fascinating history and origin. In this archive, I plan to " +
-  "preserve that piece and leave my marking in the world.";
-
-export default function ContextAbout() {
+export default function ContextAbout({ lang }) {
   return (
     <section style={styles.section}>
-      <p style={styles.kicker}>ABOUT THE MOONCAKE</p>
-      <h2 style={styles.heading}>What is a mooncake?</h2>
-      <p style={styles.intro}>{intro}</p>
-      {points.map((p) => (
-        <p key={p.lead} style={styles.point}>
-          <strong style={styles.lead}>{p.lead}:</strong> {p.body}
+      <p style={styles.kicker}>{t(lang, "AB1")}</p>
+      <h2 style={styles.heading}>{t(lang, "AB2")}</h2>
+      <p style={styles.intro}>{t(lang, "AB3")}</p>
+      {points.map(([lead, body]) => (
+        <p key={lead} style={styles.point}>
+          <strong style={styles.lead}>{t(lang, lead)}:</strong> {t(lang, body)}
         </p>
       ))}
-      <p style={styles.closing}>{closing}</p>
+      <p style={styles.closing}>{t(lang, "AB12")}</p>
     </section>
   );
 }

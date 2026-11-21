@@ -39,4 +39,43 @@ A three-way language switch in the header: **EN + ខ្មែរ** (the default
 - EN + ខ្មែរ and EN show the English header as before.
 - The choice stays after a refresh and on other pages.
 
-**Also in this commit:** the PUBLISHED status word becomes បានផ្សព្វផ្សាយ (the student's choice, 2026-11-22, to match the PUBLISH button). It is stored in `utils/strings.js` (K2), and the status badge starts using it in step 4.
+**Also in the step 1 commit:** the PUBLISHED status word becomes បានផ្សព្វផ្សាយ (the student's choice, 2026-11-22, to match the PUBLISH button). It is stored in `utils/strings.js` (K2), and the status badge starts using it in step 4.
+
+## Step 2: the public pages (2026-11-22)
+
+What a visitor sees, logged out: the home page, browse and search, the entry cards, an entry's page (with the owner's EDIT and DELETE), the page-loading text and the browser tab title.
+
+**How entries show in each mode** (the student's decision):
+- **EN + ខ្មែរ:** as before, the English title and description with the Khmer under them.
+- **EN:** English only; the entry's Khmer is hidden.
+- **ខ្មែរ:** the Khmer title and description in the English's place. An entry with no Khmer shows its English.
+- The search still searches both languages in every mode; only the words around it change.
+
+**The archive's identity:** the name, description, source and city now have Khmer versions in `collection.config.js` (a `km` block), because AGENTS.md makes that file the single source of the archive's identity. `archive(lang, key)` in `utils/strings.js` picks the right one. The curator's name stays as written.
+
+**Files changed:**
+- `app/page.js`, `app/browse/page.js`, `app/entries/[id]/page.js`, `app/loading.js`, `app/layout.js` (the tab title, now `generateMetadata`).
+- `components/ContextAbout.js` (its text moved to `utils/strings.js`, AB1 to AB12), `EntryCard.js`, `EntryList.js`, `SearchFilter.js` (the student's Khmer empty-state hint moved to `utils/strings.js` as K16), `SearchSuggestions.js`, `EntryOwnerActions.js`, `DeleteEntryButton.js`.
+- `collection.config.js` (the `km` block).
+- `utils/strings.js` (regenerated: C1 to C4 moved to `collection.config.js`; helpers `entryText`, `isKhmerText`, `archive`).
+- `app/globals.css`: a second rule, `h1:lang(km), h2:lang(km) { line-height: 1.5 !important; }`. The big headings use a tight line height of 1.1 to 1.2, which cuts off the tops and bottoms of Khmer letter stacks. Cards and the entry description get the same fix in their own styles.
+
+**English text changes:**
+- About section, "your uncle's shop" became "my uncle's shop" (the student's fix).
+- The search count lost a stray line break inside it.
+
+**Checked by the AI:** throwaway dev server on port 3005, stopped afterwards; no errors in its log. In all three modes:
+- The tab title, the home page, /browse, an entry's page and a "not found" page each came back in the right language.
+- On a real entry ("Mooncake Round Peah" / ពាមូល), the Khmer title and description show under the English in EN + ខ្មែរ, are hidden in EN, and replace the English in ខ្មែរ. The photo's alt text follows.
+
+**Seen while checking:** the newest entry on the public home page is "test entry for lab 12 return for reviewer". It is published, so it is part of the test-entry cleanup.
+
+**Tested by the student (localhost, 2026-11-22): PASSED.**
+- **ខ្មែរ:**
+  - Everything on the home page is in Khmer.
+  - A real entry shows only its Khmer; test entries with no Khmer fall back to English.
+  - Searching ពាមូល and zzzz gives the count and the no-match message in Khmer.
+  - The entry page is in Khmer, back link, SOURCE and CONTRIBUTED BY included.
+  - EDIT and DELETE are in Khmer, so is the delete question, and CANCEL (បោះបង់) works as before.
+- **EN:** English only; the entries' Khmer is gone.
+- **EN + ខ្មែរ:** exactly as before the toggle.

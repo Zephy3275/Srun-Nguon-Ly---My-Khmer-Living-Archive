@@ -3,9 +3,11 @@
 import { useState } from "react";
 import EntryList from "./EntryList.js";
 import SearchSuggestions from "./SearchSuggestions.js";
+import { STRINGS, showsEn, showsKm, t } from "../utils/strings.js";
 
-// Khmer copy for the empty state (student-provided / verified).
-const EMPTY_KHMER = "សាកល្បងពាក្យផ្សេងទៀត — រាល់ការបញ្ចូលអាចរកបានដោយចំណងជើង ឬការពិពណ៌នារបស់វា ជាភាសាអង់គ្លេស ឬខ្មែរ។";
+// The search still looks through both languages in every mode; the language
+// switch only changes the words around it. The empty-state hint in Khmer (K16)
+// is the student's own, now kept in utils/strings.js.
 
 const styles = {
   searchRow: {
@@ -78,7 +80,7 @@ const styles = {
   },
 };
 
-export default function SearchFilter({ entries }) {
+export default function SearchFilter({ entries, lang }) {
   const [query, setQuery] = useState("");
   const [open, setOpen] = useState(false);
   const q = query.trim().toLowerCase();
@@ -108,7 +110,7 @@ export default function SearchFilter({ entries }) {
         <div style={styles.searchRow}>
           <input
             type="text"
-            placeholder="Search by title, description or contributor…"
+            placeholder={t(lang, "S2")}
             value={query}
             onChange={(e) => {
               setQuery(e.target.value);
@@ -120,7 +122,7 @@ export default function SearchFilter({ entries }) {
               if (e.key === "Escape") setOpen(false);
             }}
             style={styles.input}
-            aria-label="Search entries"
+            aria-label={t(lang, "X2")}
           />
           {query !== "" && (
             <button
@@ -130,40 +132,39 @@ export default function SearchFilter({ entries }) {
                 setOpen(false);
               }}
               style={styles.clear}
-              aria-label="Clear search"
+              aria-label={t(lang, "X3")}
             >
-              CLEAR ×
+              {t(lang, "S3")}
             </button>
           )}
         </div>
 
         {showDropdown && (
           <div style={styles.suggestWrap}>
-            <SearchSuggestions suggestions={suggestions} />
+            <SearchSuggestions suggestions={suggestions} lang={lang} />
           </div>
         )}
       </div>
 
       <p style={styles.count}>
         {q === ""
-          ? `${entries.length} entries in the archive`
-          : `${filtered.length} match${filtered.length === 1 ? "" : "es"}
-             for “${query}”`}
+          ? t(lang, "S4", { count: entries.length })
+          : t(lang, "S5", { count: filtered.length, query })}
       </p>
 
       {hasNoMatch ? (
         <div style={styles.empty}>
-          <p style={styles.emptyTitle}>
-            Nothing in the archive matches “{query}” yet.
-          </p>
-          <p style={styles.emptyHint}>
-            Try another word — every entry can be found by its title or
-            description, in English or Khmer.
-          </p>
-          <p style={styles.emptyKhmer}>{EMPTY_KHMER}</p>
+          <p style={styles.emptyTitle}>{t(lang, "S6", { query })}</p>
+          {/* The hint: English in "both" and "en", the student's Khmer in "both" and "km". */}
+          {showsEn(lang) && <p style={styles.emptyHint}>{STRINGS.K16.en}</p>}
+          {showsKm(lang) && (
+            <p lang="km" style={styles.emptyKhmer}>
+              {STRINGS.K16.km}
+            </p>
+          )}
         </div>
       ) : (
-        <EntryList entries={filtered} />
+        <EntryList entries={filtered} lang={lang} />
       )}
     </div>
   );

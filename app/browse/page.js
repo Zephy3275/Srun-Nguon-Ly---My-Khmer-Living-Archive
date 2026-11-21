@@ -1,5 +1,6 @@
-import collection from "../../collection.config.js";
 import { createClient } from "../../utils/supabase/server.js";
+import { getLang } from "../../utils/lang.js";
+import { archive, t } from "../../utils/strings.js";
 import PageHeading from "../../components/PageHeading.js";
 import SearchFilter from "../../components/SearchFilter.js";
 
@@ -32,23 +33,22 @@ export default async function Browse() {
     .eq("status", "published")
     .order("created_at", { ascending: false });
   const entries = data ?? [];
+  const lang = await getLang();
 
   return (
     <main style={styles.wrap}>
       <PageHeading
-        back={{ href: "/", label: "← BACK TO HOMEPAGE" }}
-        kicker="BROWSE THE COLLECTION"
-        title={collection.name}
+        back={{ href: "/", label: t(lang, "P1") }}
+        kicker={t(lang, "S1")}
+        title={archive(lang, "name")}
       />
 
       {error ? (
-        <p style={styles.notice}>
-          We couldn't load the archive right now. Please try again in a moment.
-        </p>
+        <p style={styles.notice}>{t(lang, "HM4")}</p>
       ) : entries.length === 0 ? (
-        <p style={styles.notice}>No entries in the archive yet.</p>
+        <p style={styles.notice}>{t(lang, "HM5")}</p>
       ) : (
-        <SearchFilter entries={entries} />
+        <SearchFilter entries={entries} lang={lang} />
       )}
     </main>
   );

@@ -130,6 +130,13 @@ button:focus-visible {
   letter-spacing: 0 !important;
 }
 
+/* The same stacks need more height than the tight line height of the big
+   English headings (1.1 to 1.2), or their tops and bottoms get cut off. */
+h1:lang(km),
+h2:lang(km) {
+  line-height: 1.5 !important;
+}
+
 .nav-link,
 .nav-btn {
   display: inline-block;

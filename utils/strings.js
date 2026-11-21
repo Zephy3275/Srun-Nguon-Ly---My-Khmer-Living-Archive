@@ -9,11 +9,23 @@
 //   "en": English only;   "km": Khmer only.
 // A string with no Khmer falls back to its English, so a gap never breaks a page.
 
+import collection from "../collection.config.js";
+
 export const LANGS = ["both", "en", "km"];
 
 // Show the English part / the Khmer part of something that has both.
 export const showsEn = (lang) => lang !== "km";
 export const showsKm = (lang) => lang !== "en";
+
+// An entry's own text (title or description, from the database): Khmer-only
+// shows its Khmer, or its English when it has none; the other modes the English.
+// The Khmer line under the English is shown only in "both".
+export const entryText = (lang, en, km) => (lang === "km" && km ? km : en);
+export const isKhmerText = (lang, km) => lang === "km" && Boolean(km);
+
+// The archive's identity (name, description, source, city) from
+// collection.config.js, in Khmer in Khmer-only mode when it has one.
+export const archive = (lang, key) => (lang === "km" && collection.km?.[key]) || collection[key];
 
 // The text for one ID. {count} and {query} in the text are filled from `vars`.
 export function t(lang, id, vars = {}) {
@@ -204,12 +216,6 @@ export const STRINGS = {
   X3: { en: "Clear search", km: "សម្អាតការស្វែងរក" },
   X4: { en: "Current photo", km: "រូបភាពបច្ចុប្បន្ន" },
   X5: { en: "Preview of the new photo", km: "ការមើលរូបភាពថ្មីជាមុន" },
-
-  // The archive's own description (the site owner's words, home page)
-  C1: { en: "Khmer Archive Proverbs and Mooncake Recipes", km: "បណ្ណសារខ្មែរ៖ សុភាសិត និងរូបមន្តនំសែនព្រះខែ" },
-  C2: { en: "A living archive of a piece of my family's heritage showcasing varying mooncake recipes and proverbs in both khmer and chinese.", km: "បណ្ណសាររស់នៃផ្នែកមួយនៃមរតកគ្រួសាររបស់ខ្ញុំ ដែលបង្ហាញពីរូបមន្តនំសែនព្រះខែ និងសុភាសិតផ្សេងៗទាំងជាភាសាខ្មែរ និងភាសាចិន។" },
-  C3: { en: "The knowledge will come from my family, my mom, uncle and grandma. My family is hybrid between khmer and chinese, so they have a unique blend of culture", km: "ចំណេះដឹងទាំងនេះនឹងមានប្រភពមកពីគ្រួសាររបស់ខ្ញុំ គឺម្តាយ ពូ និងយាយរបស់ខ្ញុំ។ គ្រួសាររបស់ខ្ញុំជាកូនកាត់ខ្មែរ-ចិន ដូច្នេះពួកគាត់មានការលាយបញ្ចូលគ្នានៃវប្បធម៌ដ៏ពិសេសមួយ។" },
-  C4: { en: "Phnom Penh", km: "ភ្នំពេញ" },
 
   // Khmer the student wrote before the toggle (Labs 10 to 12). Kept as written, except
   // K2 and K5 (the PUBLISHED status and the RETURN button, the student's new choices) and the MY ENTRIES name in K14 and K15.
