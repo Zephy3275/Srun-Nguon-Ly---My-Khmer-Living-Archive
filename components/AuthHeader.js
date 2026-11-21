@@ -1,6 +1,7 @@
 import Link from "next/link";
 import LogoutButton from "./LogoutButton.js";
 import { createClient } from "../utils/supabase/server.js";
+import { t } from "../utils/strings.js";
 
 // The account part of the site header: your email and SIGN OUT when logged in
 // (plus REVIEW for reviewers), LOG IN and SIGN UP links when not. Server component: it reads the session.
@@ -24,7 +25,7 @@ const styles = {
   },
 };
 
-export default async function AuthHeader() {
+export default async function AuthHeader({ lang }) {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
 
@@ -42,24 +43,24 @@ export default async function AuthHeader() {
         <>
           {isReviewer && (
             <Link href="/review" className="nav-link">
-              REVIEW
+              {t(lang, "H4")}
             </Link>
           )}
           <Link href="/my-entries" className="nav-link">
-            MY ENTRIES
+            {t(lang, "H5")}
           </Link>
           <span style={styles.email} title={user.email}>
             {user.email}
           </span>
-          <LogoutButton />
+          <LogoutButton lang={lang} />
         </>
       ) : (
         <>
           <Link href="/login" className="nav-link">
-            LOG IN
+            {t(lang, "H6")}
           </Link>
           <Link href="/signup" className="nav-btn btn-outline">
-            SIGN UP
+            {t(lang, "H7")}
           </Link>
         </>
       )}

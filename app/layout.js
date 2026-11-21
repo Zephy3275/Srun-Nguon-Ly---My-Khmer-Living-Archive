@@ -7,6 +7,7 @@ import {
 import collection from "../collection.config.js";
 import "./globals.css";
 import SiteHeader from "../components/SiteHeader.js";
+import { getLang } from "../utils/lang.js";
 
 // Fonts come with Next.js (next/font/google): they are downloaded when the site
 // is built and served from our own site, not from Google at visit time. Each
@@ -48,9 +49,12 @@ export const metadata = {
   description: collection.description,
 };
 
-export default function RootLayout({ children }) {
+export default async function RootLayout({ children }) {
+  // The page language follows the switch: Khmer only -> "km", otherwise "en"
+  // (the Khmer parts of "both" carry their own lang="km").
+  const lang = await getLang();
   return (
-    <html lang="en" className={fontVariables}>
+    <html lang={lang === "km" ? "km" : "en"} className={fontVariables}>
       <body
         style={{
           margin: 0,
@@ -60,7 +64,7 @@ export default function RootLayout({ children }) {
           minHeight: "100vh",
         }}
       >
-        <SiteHeader />
+        <SiteHeader lang={lang} />
         {children}
       </body>
     </html>

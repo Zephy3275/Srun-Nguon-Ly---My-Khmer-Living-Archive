@@ -4,8 +4,9 @@ import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../utils/supabase/client.js";
 import Loader from "./Loader.js";
+import { t } from "../utils/strings.js";
 
-export default function LogoutButton() {
+export default function LogoutButton({ lang }) {
   const router = useRouter();
   const [loading, setLoading] = useState(false);
 
@@ -32,7 +33,7 @@ export default function LogoutButton() {
       disabled={loading}
       className="nav-btn btn-outline"
     >
-      {loading ? <Loader size={16} label="SIGNING OUT…" /> : "SIGN OUT"}
+      {loading ? <Loader size={16} label={t(lang, "H9")} /> : t(lang, "H8")}
     </button>
   );
 }

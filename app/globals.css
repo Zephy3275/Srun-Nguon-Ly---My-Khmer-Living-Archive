@@ -123,6 +123,13 @@ button:focus-visible {
 }
 
 /* Plain header link (BROWSE, LOG IN): bold light text, soft highlight on hover. */
+/* Khmer letters stack above and below each other; letter spacing pulls the
+   stacks apart. Anything in Khmer (the whole page in Khmer-only mode, or a
+   lang="km" part) gets none, even where a style above or inline sets some. */
+:lang(km) {
+  letter-spacing: 0 !important;
+}
+
 .nav-link,
 .nav-btn {
   display: inline-block;

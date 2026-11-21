@@ -6,10 +6,11 @@
 >
 > **Changelog index (final sprint):**
 > - `docs/final sprint/CHANGES12_PolishChecklist.md`: Lab 13 (checks already proven, secret and TODO scans, ownership attack passed, B2/B4 decisions, the line-break fix).
+> - `docs/final sprint/CHANGES12_LanguageToggle.md`: the three-way language toggle (in progress, step by step).
 
 ## Where we are (verified 2026-11-19)
 
-- **Git (checked 2026-11-20):** on `experiment` = `origin/experiment` = `384a283` (the final-sprint handoff commit: `AGENTS.md` amendment and these notes, docs only), one commit ahead of `main` = `origin/main` = `7ca8ef9`. Working tree clean. Merge `experiment` into `main` before the deadline so the amended `AGENTS.md` and the README are on the default branch.
+- **Git (checked 2026-11-21, start of the toggle chat):** on `experiment` = `origin/experiment` = `d243146`, three commits ahead of `main` = `origin/main` = `7ca8ef9`: `384a283` (handoff: `AGENTS.md` amendment and these notes, docs only), `e3b51f3` (Lab 13 checklist, docs only) and `d243146` (the line-break fix, code). Working tree clean. Merge `experiment` into `main` before the deadline so the amended `AGENTS.md` and the README are on the default branch.
 - **Week 12 / Sprint 3 code is DONE and live.** All Sprint 3 code is in `7ca8ef9` on `main`. Everything is merged and deployed on Vercel (Vercel deploys `main`). A live check on 2026-11-08 passed as a logged-out visitor, as archive.test.three and as the reviewer archive.test.two. Details: `docs/sprint 3/CHANGES11_ReviewFixes.md` (A1 to A3, A6, B1, B3, B5, Q3, Khmer for the two waiting messages).
 - **Sprint 3 Canvas writing:** the submission, journal and reflection were drafted and finalized in `../Week12/Week12-SubmissionsForSprint3/Sprint3_Submissions.md` (outside the repo). The student submitted all of Sprint 3 on Canvas by the due date, 2026-11-08 (confirmed by the student on 2026-11-19). That file is useful source material for the README's AI-use section and the final reflection.
 - **There is no Week 13 process log** (the final brief said one was due Nov 15; the instructor confirmed that was a mistake) **and no Prompt Journal for the final.** AI use goes in the README.
@@ -61,6 +62,36 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
   - Khmer gaps: go to the toggle chat.
   - Test-entry cleanup: last stretch.
   - Phone and console checks are best run once, after the toggle lands, because the toggle touches every page.
+
+**Language toggle progress (2026-11-21):**
+- Three modes planned: both (today's look), English only, Khmer only.
+- **String count done (read-only, by the AI):** 151 different English strings have no Khmer, used in about 200 spots. 16 strings already have the student's Khmer.
+- The list is outside the repo: `../Week13/Language_Toggle_Files/Khmer_Strings_For_Gemini.md`. It has IDs, where each string appears, and a "words to keep the same" table, for Gemini to translate.
+- The existing Khmer uses several words for one idea: four for "entry", two for MY ENTRIES, two for "publish", two for "reviewer", three for "return". Gemini is asked to recommend one each. The student decides.
+- Spotted while counting (the student's call, English to fix first if wanted):
+  - The home footer still says "under construction all semester. Come back in December."
+  - The About text says "your uncle's shop".
+  - The English uses both LOG IN and SIGN IN.
+- **Later re-translation is expected.** The instructor allowed the student to rewrite the front page in English first: the title, the credit, some descriptions and wording, probably during the UX/UI work. The real entry data update also changes text. Changed English strings will go back to Gemini by ID. Entry text is separate: it lives in the entries' own Khmer fields, not in this list.
+- **Gemini's Khmer is back:** `../Week13/Language_Toggle_Files/khmer_strings_translated.md` (Gemini 3.1 Pro). All 151 IDs came back, the English unchanged and the placeholders kept. **The student still has to read and correct every Khmer string** (AGENTS.md final-sprint rule).
+- **Decisions (student, 2026-11-22):**
+  - New strings use Gemini's words: ធាតុ (entry), ធាតុរបស់ខ្ញុំ (MY ENTRIES), ផ្សព្វផ្សាយ (publish), អ្នកពិនិត្យ (reviewer), បញ្ជូនត្រឡប់មកវិញ (return).
+  - The student's 16 existing Khmer strings stay as written, except:
+    - The RETURN button becomes បញ្ជូនត្រឡប់មកវិញ.
+    - The PUBLISHED status becomes បានផ្សព្វផ្សាយ (to match the PUBLISH button).
+    - The MY ENTRIES name inside the two save notices becomes «ធាតុរបស់ខ្ញុំ», so it matches the menu.
+  - **Flagged for later:** the notices still say ការដាក់ស្នើ and ខ្លឹមសារ for "entry" (interchangeable, the student will decide). REVIEWER'S NOTE (អ្នកវាយតម្លៃ) and the reason label (ការប្រគល់ត្រឡប់) keep the student's words.
+  - "both" mode = exactly the look before the toggle. The new Khmer shows only in Khmer-only mode.
+  - Entry text: English-only hides an entry's Khmer title and description; Khmer-only shows them and falls back to English when an entry has none.
+  - TEXTURE label = `សាច់នំ (វាយនភាព)`; the error message keeps សាច់នំ.
+  - AB9: "your uncle's shop" becomes "my uncle's shop" (ហាងរបស់ពូខ្ញុំ).
+- **Design:**
+  - A `lang` cookie ("both", "en" or "km"; default "both"), read on the server by `utils/lang.js` (`getLang()`) and passed down as a `lang` prop.
+  - `utils/strings.js` holds every string by ID (generated by script from Gemini's file, Khmer never retyped), with `t(lang, id, vars)` and the English fallback.
+  - `components/LangSwitch.js`: three buttons in the header that set the cookie and call `router.refresh()`.
+  - `<html lang>` follows the mode. One CSS rule in `app/globals.css`: `:lang(km)` gets no letter spacing.
+- **Step 1 DONE and student-tested (2026-11-22, localhost, PASSED: switch, Khmer header logged out and in, the choice kept across refresh and pages):** `utils/strings.js`, `utils/lang.js` and `LangSwitch.js` added; `app/layout.js`, `SiteHeader.js`, `AuthHeader.js`, `LogoutButton.js` and `globals.css` changed. Checked by the AI on a throwaway dev server (port 3005, stopped afterwards): the home page in all three modes gave the right `<html lang>`, the right switch button pressed, and the header links in English or Khmer.
+- **Next steps:** 2 public pages (home, browse and search, cards, entry page, collection identity, tab title); 3 login, sign-up and the add/edit form with its errors; 4 my entries, review queue, the existing bilingual parts; 5 the phone and console checks in all three modes. If time runs out, hide the switch and go to the README.
 
 **Order of work from here (agreed 2026-11-21; one chat per job; the toggle is graded, the instructor wants it):**
 1. **Lab 13: DONE.**
