@@ -6,11 +6,16 @@
 >
 > **Changelog index (final sprint):**
 > - `docs/final sprint/CHANGES12_PolishChecklist.md`: Lab 13 (checks already proven, secret and TODO scans, ownership attack passed, B2/B4 decisions, the line-break fix).
-> - `docs/final sprint/CHANGES12_LanguageToggle.md`: the three-way language toggle (in progress, step by step).
+> - `docs/final sprint/CHANGES12_LanguageToggle.md`: the three-way language toggle (DONE 2026-11-22: steps 1 to 5, what each changed and how it was tested, and what the README should say about it).
 
-## Where we are (verified 2026-11-19)
+## Where we are (updated 2026-11-22, end of the toggle chat)
 
-- **Git (checked 2026-11-21, start of the toggle chat):** on `experiment` = `origin/experiment` = `d243146`, three commits ahead of `main` = `origin/main` = `7ca8ef9`: `384a283` (handoff: `AGENTS.md` amendment and these notes, docs only), `e3b51f3` (Lab 13 checklist, docs only) and `d243146` (the line-break fix, code). Working tree clean. Merge `experiment` into `main` before the deadline so the amended `AGENTS.md` and the README are on the default branch.
+- **Git (checked 2026-11-22):** on `experiment` = `origin/experiment`, last code commit `57a2871` (toggle step 4). With the step 5 docs commit it is **8 commits ahead of `main` = `origin/main` = `7ca8ef9`** (Sprint 3):
+  - the handoff and Lab 13 docs;
+  - the line-break fix;
+  - the toggle, steps 1 to 5.
+- **`README.md` is still the course starter** (unchanged since the template's first commit).
+- **Vercel deploys `main`, so nothing since Sprint 3 is live yet.** Merge `experiment` into `main` and push before the deadline, so the toggle, the line-break fix, the amended `AGENTS.md` and the README are live and on the default branch.
 - **Week 12 / Sprint 3 code is DONE and live.** All Sprint 3 code is in `7ca8ef9` on `main`. Everything is merged and deployed on Vercel (Vercel deploys `main`). A live check on 2026-11-08 passed as a logged-out visitor, as archive.test.three and as the reviewer archive.test.two. Details: `docs/sprint 3/CHANGES11_ReviewFixes.md` (A1 to A3, A6, B1, B3, B5, Q3, Khmer for the two waiting messages).
 - **Sprint 3 Canvas writing:** the submission, journal and reflection were drafted and finalized in `../Week12/Week12-SubmissionsForSprint3/Sprint3_Submissions.md` (outside the repo). The student submitted all of Sprint 3 on Canvas by the due date, 2026-11-08 (confirmed by the student on 2026-11-19). That file is useful source material for the README's AI-use section and the final reflection.
 - **There is no Week 13 process log** (the final brief said one was due Nov 15; the instructor confirmed that was a mistake) **and no Prompt Journal for the final.** AI use goes in the README.
@@ -50,18 +55,15 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
 - **Decided by the student:**
   - B2 is deferred to the test-entry cleanup. Low risk: Storage has no select policy, so files cannot be listed, and the link sits in a pending entry only the owner and reviewers can see. Delete the Storage file by hand too, because deleting an entry leaves its photo behind.
   - B4 is skipped (optional).
-- **Lab 13 is DONE** except the two checks that wait for the toggle (below).
+- **Lab 13 is DONE.** Its last two checks, phone width and the console, ran with the toggle's step 5 (2026-11-22, localhost) and passed.
 - **Bug fix, line breaks in descriptions (2026-11-21; PASSED on localhost, student-tested on the entry page and the edit form; /review skipped, no pending entry had line breaks, same one-line style):**
   - The bug: line breaks typed in the form were saved, but a `<p>` collapses them, so the entry page and the review queue showed one run of text.
   - The fix: `whiteSpace: "pre-wrap"` added to the description styles in `app/entries/[id]/page.js` (English and Khmer) and `components/ReviewEntryCard.js` (`text`, `textKhmer`), the same as the reviewer's note in `MyEntryRow.js`.
   - Home and browse cards are left squashed on purpose: they clamp to a few lines, and blank lines would waste them.
   - No database change.
-- **Still open:**
-  - Phone width 390: never tested live.
-  - Red console errors: never recorded.
-  - Khmer gaps: go to the toggle chat.
-  - Test-entry cleanup: last stretch.
-  - Phone and console checks are best run once, after the toggle lands, because the toggle touches every page.
+- **Phone width 390 and the console: PASSED** (localhost, all three modes; details under step 5 of the toggle below). On the live site they are checked once more after the merge, in the last stretch.
+- **Khmer gaps: DONE** through the toggle. Every interface string now has Khmer, shown in Khmer-only mode.
+- **Still open:** test-entry cleanup, in the last stretch.
 
 **Language toggle progress (2026-11-21):**
 - Three modes planned: both (today's look), English only, Khmer only.
@@ -73,7 +75,7 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
   - The About text says "your uncle's shop".
   - The English uses both LOG IN and SIGN IN.
 - **Later re-translation is expected.** The instructor allowed the student to rewrite the front page in English first: the title, the credit, some descriptions and wording, probably during the UX/UI work. The real entry data update also changes text. Changed English strings will go back to Gemini by ID. Entry text is separate: it lives in the entries' own Khmer fields, not in this list.
-- **Gemini's Khmer is back:** `../Week13/Language_Toggle_Files/khmer_strings_translated.md` (Gemini 3.1 Pro). All 151 IDs came back, the English unchanged and the placeholders kept. **The student still has to read and correct every Khmer string** (AGENTS.md final-sprint rule).
+- **Gemini's Khmer is back:** `../Week13/Language_Toggle_Files/khmer_strings_translated.md` (Gemini Neon 4; the file's own footer wrongly says "Gemini 3.1 Pro", Gemini's mistake). All 151 IDs came back, the English unchanged and the placeholders kept. **The student still has to read and correct every Khmer string** (AGENTS.md final-sprint rule).
 - **Decisions (student, 2026-11-22):**
   - New strings use Gemini's words: ធាតុ (entry), ធាតុរបស់ខ្ញុំ (MY ENTRIES), ផ្សព្វផ្សាយ (publish), អ្នកពិនិត្យ (reviewer), បញ្ជូនត្រឡប់មកវិញ (return).
   - The student's 16 existing Khmer strings stay as written, except:
@@ -106,15 +108,29 @@ Due **Sun 2026-11-22, 11:59 PM. There is no late window**; what is live and in t
   - Details in the changelog.
 - **Step 3 committed:** `b6879db`.
 - **Step 4 DONE (2026-11-22; AI-checked logged out; student-tested on localhost, PASSED in all three modes; afterwards the RETURN button's Khmer became បញ្ជូនត្រឡប់ទៅវិញ):** /my-entries and /review, the status badges, review buttons, counter and messages. A scan found no interface text left outside `utils/strings.js`. All 167 IDs are used.
-- **Next step:** 5 the phone and console checks in all three modes. If time runs out, hide the switch and go to the README.
+- **Step 4 committed:** `57a2871`.
+- **Step 5 DONE (2026-11-22): the checks only, no code.**
+  - AI: every main page (home, browse, an entry, its edit page, not found, login, signup, contribute, my-entries, review) loaded in all three modes on a throwaway dev server, 30 requests, all 200, no server errors or warnings.
+  - Student, localhost, 390px wide, console open: PASSED.
+    - No sideways scroll and no cut-off text, Khmer included. The header wraps cleanly, everything can be read and tapped without zooming, and there are no red console messages.
+    - Pass 2 (EN + ខ្មែរ) covered /review as the reviewer, where the two-language buttons wrap onto their own lines (expected).
+    - Pass 1 was also run logged in as archive.test.three and as archive.test.two (the student confirmed afterwards). Every page, the add form and /my-entries included, worked normally at 390px.
+- **THE LANGUAGE TOGGLE IS DONE (code).** What is left is not code:
+  1. The student reads Gemini's Khmer and corrects any string in `khmer_strings_translated.md`. The generator script re-runs it into `utils/strings.js`.
+  2. Flagged words: ការដាក់ស្នើ / ខ្លឹមសារ in the two save notices; អ្នកវាយតម្លៃ in REVIEWER'S NOTE.
+  3. Optional: Khmer for L4, the switch's "Language" label for screen readers.
+  4. The toggle goes live only when `experiment` is merged into `main` (last stretch).
+- **Generator script:** `../Week13/Language_Toggle_Files/gen_strings.js` (outside the repo). Checked: it reproduces `utils/strings.js` exactly.
+  - Run from the repo: `node ../Week13/Language_Toggle_Files/gen_strings.js ../Week13/Language_Toggle_Files/khmer_strings_translated.md ../Week13/Language_Toggle_Files/Khmer_Strings_For_Gemini.md utils/strings.js`.
+  - The student's word decisions (K2, K5, K14, K15, FL9, AB9) are lines in the script, so a re-run keeps them.
 
 **Order of work from here (agreed 2026-11-21; one chat per job; the toggle is graded, the instructor wants it):**
 1. **Lab 13: DONE.**
-2. **Language toggle and Khmer, NEXT.** Start with Lab 13's Khmer gaps (listed below). If it is not done by Sunday morning, stop and do the README: an untouched README scores 0.
-3. README.
+2. **Language toggle and Khmer: DONE (2026-11-22),** code and checks. The student's Khmer read-through is still to do.
+3. **README, NEXT** (due today, Sun 2026-11-22, 11:59 PM; an untouched README scores 0). It now has the toggle to describe in "who it's for" (language) and in "AI use" (Gemini drafted the interface Khmer, the student corrected it).
 4. Real entry data.
 5. Reflection.
-6. The last stretch: clear the test entries plus the B2 Storage file, phone and console checks, merge `experiment` into `main` (the line-break fix is not live until then), wake Supabase, the video, the Show Your Archive post, submit.
+6. The last stretch: clear the test entries plus the B2 Storage file (including the published "test entry for lab 12 return for reviewer"), merge `experiment` into `main` (the line-break fix and the whole toggle are not live until then), a quick phone and console look on the live URL, wake Supabase, the video, the Show Your Archive post, submit.
 7. UX/UI only with time left.
 
 The Q&A slot must be booked before Nov 22: do it now, not in the last stretch.
@@ -128,7 +144,7 @@ Details and file:line in `../Week11/Week11-Review-3Lenses/OwnAuditFindings.md` a
 - **B2, a credential exposure:** one old test entry's photo is a console screenshot showing an email and a password, still publicly reachable in Storage bucket `photos` (the entry itself is pending). Fix: remove the Storage file and delete the entry by exact id; if the account is archive.test.two (the reviewer), change its password. Never a broad WHERE.
 - **B4, the gate (rubric criterion 2):** `entries.photo_url` accepts any URL (proved from the console 2026-11-08, probe row deleted). Fix: one check constraint (null, `/images/%`, or this project's `photos` bucket URL), then the five Lab 10 attacks again.
 - **Ownership attack: PASSED on the live site 2026-11-21** (see Lab 13 progress above). The five Lab 10 attacks were not re-run after the A6 trigger (it changed no policy or function).
-- **Khmer gaps** (rubric criteria 3 and 6; Khmer comes from the student, or from a Gemini draft the student reads and corrects, per the AGENTS.md final-sprint amendment; Khmer the student already wrote stays as written): the two notice headings in `EntrySentNotice.js`, the two hints in `MyEntryRow.js` (the pending hint's wording changed 2026-11-08), the CONTRIBUTED BY label on cards, the /review heading, its sentence and the REVIEW header link, the MY ENTRIES link, and most menus and headings (English-only since the Week 8 decision to skip the language toggle). Also two different Khmer words for MY ENTRIES in the two notices, and different Khmer words for "publish" and "reviewer" in the same flow (audit B6).
+- **Khmer gaps: RESOLVED by the language toggle (2026-11-22).** Every interface string now has Khmer, shown in Khmer-only mode; the default "both" mode looks as it did before. The text below is the history of the gap. Khmer comes from the student, or from a Gemini draft the student reads and corrects, per the AGENTS.md final-sprint amendment; Khmer the student already wrote stays as written): the two notice headings in `EntrySentNotice.js`, the two hints in `MyEntryRow.js` (the pending hint's wording changed 2026-11-08), the CONTRIBUTED BY label on cards, the /review heading, its sentence and the REVIEW header link, the MY ENTRIES link, and most menus and headings (English-only since the Week 8 decision to skip the language toggle). Also two different Khmer words for MY ENTRIES in the two notices, and different Khmer words for "publish" and "reviewer" in the same flow (audit B6).
 - **Old test entries** are still pending in the database (about 9), plus any throwaway entries. Confirm nothing test-like is public.
 - **Smaller, from the audit:** the form only fits mooncakes though the archive promises proverbs and Chinese (audit B1, the largest finding; a design decision); the word counter assumes spaces (B2); email confirmation is off with no submission limit; one person can submit and review their own entries; free-text credit; `review_note` has a 500-character limit only in the browser; orphan photos in Storage after delete or replace; EXIF/GPS not stripped; some failed queries are shown but not logged.
 - **Sourcing:** the student's draft says some images are AI-generated (Gemini) and the hero is Gemini-painted. The README must say so plainly; the rubric wants real entries credited by name with permission (at least eight real entries, each with a credited source).
@@ -138,6 +154,13 @@ Details and file:line in `../Week11/Week11-Review-3Lenses/OwnAuditFindings.md` a
 - Next.js 15 App Router, React 19, JavaScript only, plain React, inline styles plus CSS variables (Midnight and Gold theme). Dependencies: `next`, `react`, `react-dom`, `@supabase/supabase-js`, `@supabase/ssr`.
 - Pages: `/`, `/browse`, `/entries/[id]` (owner-only EDIT and DELETE at the top), `/entries/[id]/edit`, `/contribute`, `/my-entries`, `/login`, `/signup`, `/review` (reviewers only).
 - Supabase: table `entries` (status pending, published or returned; `review_note`; `updated_at` set by trigger `entries_set_updated_at`, which a browser cannot set); table `reviewers` (RLS on, no policies; archive.test.two is the only row); functions `is_reviewer()` and `review_entry(entry_id, decision, note default null)` (security definer, return true or false and no error); policies: select = published, or your own, or reviewer; insert = own and pending; update = own and (pending, or reviewer); delete = own; Storage bucket `photos` (public, 5 MB, JPEG/PNG/WebP). **The SQL is not in the repo.** For the README's "how it works" and "security decisions", ask the student to run a read-only export of the real policies and functions (`pg_policies`, `pg_get_functiondef`) and paste the result; do not describe policies from memory.
+- **Language (added 2026-11-22):**
+  - A three-way switch in the header: EN + ខ្មែរ (the default), EN, ខ្មែរ. The choice is kept in a `lang` cookie (language only, nothing about the user).
+  - The server reads the cookie (`utils/lang.js`), and every page passes `lang` down.
+  - All interface text is in `utils/strings.js` by ID, with an English fallback. The archive's identity in Khmer is a `km` block in `collection.config.js`.
+  - Entries: EN hides their Khmer fields; ខ្មែរ shows them in the English's place, falling back to English.
+  - `<html lang>` follows the mode.
+  - No package and no database change. Full description: `docs/final sprint/CHANGES12_LanguageToggle.md`.
 - Accounts: archive.test.two = the reviewer; archive.test.three = the second account and the stranger; archive.test.one owns the nine real entries.
 - Env vars (names only): `NEXT_PUBLIC_SUPABASE_URL`, `NEXT_PUBLIC_SUPABASE_PUBLISHABLE_KEY`, in a gitignored `.env.local` and in Vercel.
 
@@ -150,8 +173,34 @@ Details and file:line in `../Week11/Week11-Review-3Lenses/OwnAuditFindings.md` a
 ## Where the sources are (outside the repo unless noted)
 
 - `../Week13/`: `Lab13_Guide.md`, `Course Final/` (`FinalCapstone.md`, `How_Final_Is_Graded.md`, `ReadmeFile_Guide.md`, `VideoDemo.md`), `MyReadMeFile_Draft.md` (the student's rough notes), `MyPlanForThisWeek/MyPlan.md` (the student's own plan, written 2026-11-19: Lab 13 first, the language toggle, README, AGENTS.md update, UX/UI continuation, real entry data, reflection; `Week13_CurrentNotes.md` in the same folder holds the decisions, the graded items the plan misses and the working style; `HandoffFromWeek12Chat.md` there is only an archive of the Week 12 planning chat), `Lab13_TradeArchives_DiscussionPost.md`.
-- The student will add a final-sprint folder with all the process logs and reflection logs submitted on Canvas; the README's AI-use section and the final reflection draw on them. Earlier ones: `../Week10/Week10_Submissions.md`, `../Week11/Week11_WritingsForCanvas.md`, `../Week12/Week12-SubmissionsForSprint3/Sprint3_Submissions.md`.
-- AI-use history for the README (as the student gave it; unverified by the AI): Cline with OpenRouter in Weeks 1 to 5 (Ox Alpha, which was free at launch and turned out to be Z.ai, then DeepSeek V0731); from Sprint 2, Claude Code, on Sonnet 5.5 (the student needed image reading, which DeepSeek lacked). Peer reviewers: Lyching and Kimyoo. The repo changelogs (`docs/CHANGES*.md`, `docs/sprint 2/`, `docs/sprint 3/`) record what the AI wrote and what was changed; they are the best evidence for "what I kept and what I rewrote".
+- **The process and reflection logs folder does not exist yet** (checked 2026-11-22: neither `docs/final sprint/` nor `../Week13/` has one). The student planned a folder with all the process logs and reflection logs submitted on Canvas; the README's AI-use section and the final reflection draw on them. Ask where they are. Earlier ones: `../Week10/Week10_Submissions.md`, `../Week11/Week11_WritingsForCanvas.md`, `../Week12/Week12-SubmissionsForSprint3/Sprint3_Submissions.md`.
+- AI-use history for the README (as the student gave it; unverified by the AI): Cline with OpenRouter in Weeks 1 to 5 (Ox Alpha, which was free at launch and turned out to be Z.ai, then DeepSeek V0731); from Sprint 2, Claude Code, on Sonnet 5.5 (the student needed image reading, which DeepSeek lacked). In the final sprint (Week 13), Claude Code on Opus 5.5 (Lab 13 and the language toggle). Gemini Neon 4 drafted the toggle's interface Khmer from a list the AI made; the student chose the terms and corrected words. Gemini also painted the hero and some images (see Sourcing above). Peer reviewers: Lyching and Kimyoo. The repo changelogs (`docs/CHANGES*.md`, `docs/sprint 2/`, `docs/sprint 3/`) record what the AI wrote and what was changed; they are the best evidence for "what I kept and what I rewrote".
+
+## README chat: start here (written 2026-11-22)
+
+The README is due tonight (Sun 2026-11-22, 11:59 PM). An untouched README scores 0.
+
+- **Guide and rubric:**
+  - `../Week13/Course Final/ReadmeFile_Guide.md`: eight sections in order, and the submission checklist to copy.
+  - `How_Final_Is_Graded.md`, criterion 4.
+  - The student's rough notes: `../Week13/MyReadMeFile_Draft.md`.
+- **The current `README.md` is the course starter's** ("Khmer Living Archive — starter", the Lab 1 steps; unchanged since the template's first commit). It gets replaced.
+- **Ask the student first, in one message:**
+  1. To run a read-only export of the real policies and functions in the Supabase SQL Editor (give them the query, `pg_policies` for `entries`, `reviewers` and `storage.objects`, and `pg_get_functiondef` for `is_reviewer` and `review_entry`), and paste the result. The README describes the SQL that was actually run, never from memory.
+  2. Where the process and reflection logs are (the folder does not exist yet).
+  3. Who and where the real entries came from, with permission, and which photos are Gemini-made.
+  4. Whether the Q&A slot is booked (it must be before Nov 22).
+- **Sources the README can draw on:**
+  - The changelogs: `docs/CHANGES*.md`, `docs/sprint 2/`, `docs/sprint 3/`, `docs/final sprint/`.
+  - "State of the system" above.
+  - The AI-use history above.
+  - The toggle changelog's "For the README" lines.
+- **Rules:**
+  - Write `UNSURE` where unsure.
+  - Env var names only, never values.
+  - No keys, emails, passwords or the project URL.
+  - Every claim checked against the code.
+- **After the README:** the reflection, then the last stretch (see "Order of work").
 
 ## Opening message for a new chat
 
@@ -161,4 +210,5 @@ cleanup, README, reflection and demo video. Read AGENTS.md (its last section is 
 the history of Sprints 1 to 3: read it only where needed. My plan for the week is in ../Week13/MyPlanForThisWeek/MyPlan.md
 (read it, and Week13_CurrentNotes.md next to it, for the decisions and working style); my process and reflection logs will be in the final-sprint folder. Short plan first, small steps, I
 commit and run all SQL by hand; all Khmer wording comes from me.
+This chat's job: <the job, e.g. "the README; read 'README chat: start here' in the notes first">.
 ```

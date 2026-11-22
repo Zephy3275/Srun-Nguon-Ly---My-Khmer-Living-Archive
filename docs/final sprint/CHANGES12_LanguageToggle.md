@@ -5,7 +5,7 @@ A three-way language switch in the header: **EN + ខ្មែរ** (the default
 ## Where the Khmer came from
 
 - 2026-11-21: the AI counted every user-visible English string with no Khmer: **151 strings**, used in about 200 places. The list, with an ID per string, is in `../Week13/Language_Toggle_Files/Khmer_Strings_For_Gemini.md` (outside the repo).
-- The student gave the list to **Gemini 3.1 Pro**, which drafted the Khmer (`khmer_strings_translated.md`, same folder). The AI checked that all 151 IDs came back with the English unchanged and `{count}` / `{query}` kept.
+- The student gave the list to **Gemini Neon 4**, which drafted the Khmer (`khmer_strings_translated.md`, same folder). The AI checked that all 151 IDs came back with the English unchanged and `{count}` / `{query}` kept.
 - The student reads and corrects every Khmer string. The AI wrote none of it.
 - The student's 16 earlier Khmer strings are kept as written, with two changes the student chose: the RETURN button now says បញ្ជូនត្រឡប់មកវិញ, and the two save notices now name the menu «ធាតុរបស់ខ្ញុំ», so it matches the menu.
 
@@ -158,3 +158,40 @@ The last screens with interface text:
 - **EN + ខ្មែរ:** as before, both languages.
 - **Logged out on ខ្មែរ:** /review shows only the Khmer "reviewers only" message.
 - **Changed after the test:** the RETURN button's Khmer (see above). It is a word change only.
+
+## Step 5: phone width and the console (2026-11-22)
+
+No code changed. These are also Lab 13's last two checks, run once after the toggle because the toggle touched every page.
+
+**Checked by the AI:**
+- Throwaway dev server on port 3005, stopped afterwards.
+- Ten main pages in each of the three modes, 30 requests in all: home, /browse, an entry, its edit page, a not-found entry, /login, /signup, /contribute, /my-entries, /review.
+- Every request returned 200, and the server log showed no errors or warnings.
+
+**Tested by the student (localhost, 390px wide in the browser's phone view, console open): PASSED.**
+- **Pass 1, ខ្មែរ (logged out):** every page looks normal, nothing breaks.
+- **Pass 2, EN + ខ្មែរ** (home, /browse, an entry, /review as the reviewer): normal. On /review the two-language PUBLISH and RETURN buttons drop onto their own lines because they are wider. That is expected: the row is set to wrap.
+- **Pass 3, EN (home):** normal.
+- **Every page:**
+  - No sideways scrolling and nothing past the right edge.
+  - No cut-off text.
+  - The header wraps cleanly with every button reachable.
+  - Everything can be read and tapped without zooming.
+- **Console:** no red messages.
+- **Logged in:** pass 1 was also run as archive.test.three and as archive.test.two (the student confirmed afterwards). Every page, the add form and /my-entries included, worked normally at 390px.
+
+## The toggle is done
+
+All interface text is in `utils/strings.js` (167 IDs, every one used). A scan found none left written into a page.
+
+What remains is not code:
+1. The student's read-through of Gemini's Khmer.
+2. The words flagged for later: ការដាក់ស្នើ / ខ្លឹមសារ in the save notices, អ្នកវាយតម្លៃ in REVIEWER'S NOTE.
+3. Optional: Khmer for L4.
+4. The merge into `main`, which puts it live.
+
+The generator script is kept outside the repo at `../Week13/Language_Toggle_Files/gen_strings.js`. It reproduces `utils/strings.js` exactly, the student's word decisions included.
+
+**For the README:**
+- The interface Khmer was drafted by Gemini Neon 4 from a list the AI made. The student chose the terms and changed several words. The student's earlier Khmer was kept.
+- The AI (Claude Code) wrote the toggle code, the generator script and these checks.
