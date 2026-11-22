@@ -8,6 +8,8 @@ import { STRINGS, showsEn, showsKm } from "../utils/strings.js";
 // rpc call. The note is optional and is only sent with RETURN: PUBLISH ignores
 // it. English in spaced capitals, Khmer beside it with no letter spacing
 // (spacing would pull the Khmer stacks apart).
+// showPublish={false} hides PUBLISH: the entry page's take-down box
+// (TakeDownButton.js) reuses the note box and RETURN for a published entry.
 
 const styles = {
   noteLabel: {
@@ -54,7 +56,7 @@ const NOTE_LABEL = STRINGS.K6;
 const PUBLISH = STRINGS.K4;
 const RETURN = STRINGS.K5;
 
-export default function ReviewButtons({ disabled, onDecide, lang }) {
+export default function ReviewButtons({ disabled, onDecide, lang, showPublish = true }) {
   const [note, setNote] = useState("");
   const en = showsEn(lang);
   const km = showsKm(lang);
@@ -78,16 +80,18 @@ export default function ReviewButtons({ disabled, onDecide, lang }) {
         />
       </label>
       <div style={styles.row}>
-        <button
-          type="button"
-          className="btn-filled"
-          style={styles.button}
-          disabled={disabled}
-          onClick={() => onDecide("published")}
-        >
-          {en && <span style={styles.en}>{PUBLISH.en}</span>}
-          {km && <span lang="km">{PUBLISH.km}</span>}
-        </button>
+        {showPublish && (
+          <button
+            type="button"
+            className="btn-filled"
+            style={styles.button}
+            disabled={disabled}
+            onClick={() => onDecide("published")}
+          >
+            {en && <span style={styles.en}>{PUBLISH.en}</span>}
+            {km && <span lang="km">{PUBLISH.km}</span>}
+          </button>
+        )}
         <button
           type="button"
           className="btn-outline"

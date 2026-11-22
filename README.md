@@ -70,7 +70,7 @@ The full definitions, exported from the live database, are in [docs/database.md]
 |---|---|
 | `pending` | New or edited, waiting for a reviewer. The default. Hidden from the public. |
 | `published` | Approved. Everyone can see it. |
-| `returned` | Sent back by a reviewer, with an optional note. The owner edits it, and saving sends it back to `pending`. |
+| `returned` | Sent back by a reviewer, with an optional note: a pending entry from the queue, or a published one taken down from its page. Hidden from the public. The owner edits it, and saving sends it back to `pending`. |
 
 **Who can read and write what** (row-level security policies on `entries`)
 
@@ -88,7 +88,7 @@ The full definitions, exported from the live database, are in [docs/database.md]
 
 **Database functions:**
 - `is_reviewer()` says whether the logged-in user is on the `reviewers` list.
-- `review_entry(entry_id, decision, note)` is how a reviewer publishes or returns an entry (next section).
+- `review_entry(entry_id, decision, note)` is how a reviewer publishes or returns a pending entry, or takes a published one down (next section).
 - A trigger, `entries_set_updated_at`, sets `updated_at` itself, so the browser cannot. It changes only when the owner changes the content; a reviewer's decision does not count as an edit.
 
 **The path of an entry:**
@@ -107,7 +107,7 @@ The full definitions, exported from the live database, are in [docs/database.md]
 **Why `review_entry` lives in the database.** Publishing means changing a row you don't own, and the edit policy forbids that. So the function runs with the database's own rights (`security definer`), which skip the policies. Because it skips them, it does all its own checks:
 1. Are you on the `reviewers` list?
 2. Is the decision `published` or `returned`?
-3. Is the entry still `pending`?
+3. Is the entry still `pending`? A `published` entry is accepted only for `returned`, which takes it down.
 
 If any answer is no, it returns `false` and changes nothing. It returns `true` only if a row really changed, and it never shows an error. It also runs with an empty `search_path`, so it can't be tricked into using a look-alike table. None of this can live in the browser, because anyone can change the code running in their own browser.
 
@@ -128,6 +128,7 @@ If any answer is no, it returns `false` and changes nothing. It returns `true` o
 | 2026-10-25 | Logged out, ask for unpublished entries | empty list |
 | 2026-11-07 | Call `review_entry` again, after it was replaced to add the note | returned `false` |
 | 2026-11-21 | Edit another account's published entry | empty list, nothing changed |
+| 2026-11-22 | Take a published entry down with `review_entry`, after the function was changed to allow it | returned `false`, still published |
 
 In Sprint 2 a classmate attacked the live site from their own account. Editing and deleting my entries returned empty lists, and uploading a `.txt` file was refused.
 
@@ -136,9 +137,11 @@ In Sprint 2 a classmate attacked the live site from their own account. Editing a
   - On `/my-entries` it shows RETURNED, the line "This entry was returned. Edit it and save to send it for review again.", an EDIT link and the reviewer's note, if there is one.
   - I first shipped it without a note (Lab 10, because of the deadline) and added the note in Lab 11, because "returned" with no reason is frustrating.
   - Any save of a returned entry sends it back to review, even when the owner is a reviewer. An early version forgot that case, and a reviewer's own returned entry was stuck forever.
-- **Can reviewers take down published entries? No.**
-  - `review_entry` only acts on `pending` entries, and the edit policy only lets you edit your own. A reviewer cannot unpublish someone else's entry.
-  - I didn't decide this on purpose: it is how the lab's SQL works, and I didn't plan for taking an entry down. It is a gap. Fixing it would mean letting `review_entry` move a `published` entry to `returned`.
+- **Can reviewers take down published entries? Yes, since the final sprint.**
+  - At first the answer was no, and not by choice: the lab's `review_entry` only acted on `pending` entries, and the edit policy only lets you edit your own. I noticed it when I had published test entries on the public page and no way to remove them as the reviewer.
+  - I changed `review_entry` so a reviewer can also return a `published` entry, with an optional note. It leaves the public pages at once, and its owner sees RETURNED and the note on `/my-entries`. Publishing still only works on `pending` entries.
+  - The button is in a "FOR REVIEWERS" box at the bottom of a published entry's page, shown only to reviewers. As with the queue, that is politeness: the database function is what checks.
+  - I chose "returned" rather than deleting, so the owner can fix the entry and send it again, and nothing is lost.
   - An owner can still delete their own entry at any status.
 - **What search shows a contributor about their own pending entries: nothing.**
   - The home page and search only ask for `published` entries, even though the read policy would let you see your own pending ones.
@@ -159,7 +162,8 @@ In Sprint 2 a classmate attacked the live site from their own account. Editing a
 - One person can submit and review their own entries.
 - Photos stay in Storage after their entry is deleted or the photo is replaced.
 - Location data (EXIF/GPS) is not removed from uploaded photos; removing it means re-encoding them, which costs quality.
-- One old test entry's photo was a screenshot of a test login (an email and a password). It is being deleted with the other test entries before submission.
+- Old test entries still exist in the database as pending or returned. They are hidden from the public; only their owners and the reviewer see them.
+- One old test entry's photo is a screenshot of a test login (an email and a password). It is still in Storage. It can be opened only by its exact address, which appears only in that hidden test entry.
 
 ## 5. AI use
 
@@ -176,7 +180,7 @@ I used AI for almost all of the code, and I say so plainly. The model names are 
 | Weeks 7 to 12 | Claude Code, Claude Sonnet 5.5 | Planning, SQL, the contribution form, edit and delete, the gate, the review queue, the fixes, the console attack kits, the changelogs in `docs/` | Kept after reviewing every change before I committed it; my AI-assisted commits say so |
 | Week 8 | Gemini, in Antigravity | Painted the hero picture, from a brief Claude wrote | Kept, credited below |
 | Week 8 onwards | Gemini, in the Gemini web app | Made the site icon and the loading animation's artwork; Claude Code (Sonnet 5.5) cut them out and added them to the site | Kept, credited below |
-| Week 13 | Claude Code, Claude Opus 5.5 | The final checklist and scans, the language switch and the script that builds `utils/strings.js`, this README and `docs/database.md` | Kept after testing each step |
+| Week 13 | Claude Code, Claude Opus 5.5 | The final checklist and scans, the language switch and the script that builds `utils/strings.js`, the reviewer's take-down (the SQL change and the button), this README and `docs/database.md` | Kept after testing each step |
 | Week 13 | Gemini Neon 4 | Drafted the Khmer for 151 interface strings | I chose the key words (entry, publish, reviewer, return, MY ENTRIES), read some of the strings and changed several words. I have not read every one. |
 
 **The Khmer, honestly:**
@@ -253,11 +257,11 @@ The database has to exist first. The SQL is not a script in this repo. [docs/dat
 - At least eight real entries, each with a credited source: yes, 9, from my uncle's shop (section 6)
 - Khmer renders on every screen a user meets, including the queue: yes, the language switch covers every screen (2026-11-22)
 - Works at phone width: yes, tested 2026-11-22 in the browser at 390 px wide, all three language modes
-- No test entries, lorem ipsum or TODO comments in shipped pages: NOT YET. No lorem or TODO (searched 2026-11-21); the old test entries are still to be deleted.
+- No test entries, lorem ipsum or TODO comments in shipped pages: yes. The published test entries were taken down on 2026-11-22 with the reviewer's RETURN button (the last one on camera in the demo video), so the public pages show only the real entries. No lorem or TODO in the code (searched 2026-11-21). Old test entries still exist hidden (section 4).
 - No console errors on the main pages: yes, 2026-11-22 (on my computer; live check after the merge: NOT YET)
 - jesseorndorff is a collaborator on this repo: yes
 - Supabase project restored and awake on (date): NOT YET
 - Demo video link opens in a private window: NOT YET
 - Reflection pasted in the Canvas submission: NOT YET
 - Posted in the Show Your Archive discussion: NOT YET
-- Q&A slot booked for (date and time): NOT YET
+- Q&A slot booked for (date and time): yes, December 4

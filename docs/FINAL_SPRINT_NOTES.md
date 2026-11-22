@@ -8,7 +8,15 @@
 > - `docs/final sprint/CHANGES12_PolishChecklist.md`: Lab 13 (checks already proven, secret and TODO scans, ownership attack passed, B2/B4 decisions, the line-break fix).
 > - `docs/final sprint/CHANGES12_LanguageToggle.md`: the three-way language toggle (DONE 2026-11-22: steps 1 to 5, what each changed and how it was tested, and what the README should say about it).
 
-## Where we are (updated 2026-11-22, end of the toggle chat)
+## Where we are (updated 2026-11-22, evening)
+
+- **MERGED AND LIVE (2026-11-22):** `main` = `experiment` = `817f97b` (README, `docs/database.md`, the toggle, the line-break fix) pushed by the student; the live site serves the toggle (checked by fetching the home page). **The Q&A slot is booked** (date and time still to get from the student for the README checklist).
+- **Reviewer take-down (2026-11-22, the student's own decision, done before the video):** the SQL was run (`review_entry` can now return a published entry). The code is written and AI-checked logged out: `TakeDownButton.js` (new), `ReviewButtons.js` (`showPublish`), `app/entries/[id]/page.js`. The README (sections 3, 4 and 5, Q&A Dec 4), `docs/database.md` and `docs/final sprint/CHANGES12_ReviewerTakeDown.md` are updated. **Student tests ALL PASSED (2026-11-22):** the stranger's `review_entry` returned `false`; both published test entries were taken down, so **the public shelf has only the nine real entries**; the owner sees RETURNED with the note; a non-reviewer sees no box. The README attack table and checklist were updated. **The student chose to leave** the old pending tests in the queue and the B2 screenshot in Storage; README section 4 says both honestly. The video script now shows the take-down as the "one decision" (it also hides the demo entry again). Next: commit, merge, record. **At 22:40 the student chose (on advice) to leave for after the deadline:** the title rename, the source line, and combining CURATED BY / SOURCE / CITY on the home page (`app/page.js` lines ~112-120, `collection.config.js` and its `km` block; the Khmer comes from the student). One published test entry was left on purpose to take down on camera; the demo entry is taken down right after recording.
+- **New order (student, 2026-11-22):** test-entry cleanup, then the **demo video** (script: `../Week13/VideoDemo_Script.md`), the Show Your Archive post, then real entry data only if time is left (the instructor said it is not required). Q&A prep comes later (nothing to submit).
+- **Two test entries are PUBLISHED on the live home page:** "test entry for lab 12 return for reviewer" and "waiting politely". The old pending tests also fill the reviewer's queue. Both would show in the video, so the cleanup goes first.
+- **Ingredients field: not tonight** (the student asked). It needs a column, a constraint, the trigger's content list, the form, validation, the entry page, the review card, strings (EN and KM) and the README and database.md: about an hour and a half with testing.
+
+## Where we were (end of the toggle chat)
 
 - **Git (checked 2026-11-22):** on `experiment` = `origin/experiment`, last code commit `57a2871` (toggle step 4). With the step 5 docs commit it is **8 commits ahead of `main` = `origin/main` = `7ca8ef9`** (Sprint 3):
   - the handoff and Lab 13 docs;

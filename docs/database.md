@@ -117,11 +117,15 @@ begin
   update public.entries
     set status = decision,
         review_note = case when decision = 'returned' then note else null end
-    where id = entry_id and status = 'pending';
+    where id = entry_id
+      and (status = 'pending'
+           or (status = 'published' and decision = 'returned'));  -- new: a reviewer can take a published entry down
   return found;
 end;
 $function$
 ```
+
+**Changed 2026-11-22 (final sprint, after the export above):** the `where` line used to be `where id = entry_id and status = 'pending'`. A reviewer can now also return a published entry, which takes it off the public pages. Publishing still works only on pending entries. Run by the student in the SQL Editor (one `begin`/`commit` block, `create or replace` with the same arguments). Details: `docs/final sprint/CHANGES12_ReviewerTakeDown.md`.
 
 ### `set_entry_updated_at()` and its trigger
 

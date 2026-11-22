@@ -1,5 +1,6 @@
 import BackLink from "../../../components/BackLink.js";
 import EntryOwnerActions from "../../../components/EntryOwnerActions.js";
+import TakeDownButton from "../../../components/TakeDownButton.js";
 import { createClient } from "../../../utils/supabase/server.js";
 import { getLang } from "../../../utils/lang.js";
 import { entryText, isKhmerText, t } from "../../../utils/strings.js";
@@ -66,7 +67,7 @@ export default async function EntryPage({ params }) {
   const { data: entry, error } = await supabase
     .from("entries")
     .select(
-      "id, owner, title, titleKhmer:title_khmer, source, contributor, sweetness, saltiness, description, descriptionKhmer:description_khmer, image:photo_url"
+      "id, owner, status, title, titleKhmer:title_khmer, source, contributor, sweetness, saltiness, description, descriptionKhmer:description_khmer, image:photo_url"
     )
     .eq("id", id)
     .maybeSingle();
@@ -93,6 +94,17 @@ export default async function EntryPage({ params }) {
         <p style={styles.description}>{t(lang, "E4")}</p>
       </main>
     );
+  }
+
+  // Final sprint: a reviewer can take a published entry down (TakeDownButton).
+  // Only asked when it could matter: logged in and the entry is published. A
+  // failed check counts as "not a reviewer". Politeness only: review_entry in
+  // the database is the real refusal.
+  let canTakeDown = false;
+  if (user && entry.status === "published") {
+    const { data: isReviewer, error: reviewerError } = await supabase.rpc("is_reviewer");
+    if (reviewerError) console.error("is_reviewer check failed:", reviewerError);
+    canTakeDown = isReviewer === true;
   }
 
   // Sweetness and saltiness are optional (null when nobody rated them): only
@@ -138,6 +150,7 @@ export default async function EntryPage({ params }) {
       {lang === "both" && entry.descriptionKhmer && (
         <p lang="km" style={styles.descriptionKhmer}>{entry.descriptionKhmer}</p>
       )}
+      {canTakeDown && <TakeDownButton id={entry.id} lang={lang} />}
     </main>
   );
 }
