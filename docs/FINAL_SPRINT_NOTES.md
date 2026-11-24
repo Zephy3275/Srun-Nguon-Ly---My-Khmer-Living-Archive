@@ -7,8 +7,51 @@
 > **Changelog index (final sprint):**
 > - `docs/final sprint/CHANGES12_PolishChecklist.md`: Lab 13 (checks already proven, secret and TODO scans, ownership attack passed, B2/B4 decisions, the line-break fix).
 > - `docs/final sprint/CHANGES12_LanguageToggle.md`: the three-way language toggle (DONE 2026-11-22: steps 1 to 5, what each changed and how it was tested, and what the README should say about it).
+> - `docs/final sprint/CHANGES12_ReviewerTakeDown.md`: a reviewer can return a published entry (the `review_entry` change and the button; all tests passed 2026-11-22).
+> - Also: `README.md` (eight sections, a living document) and `docs/database.md` (the live database's definitions).
 
-## Where we are (updated 2026-11-22, evening)
+## AFTER THE DEADLINE (updated 2026-11-23, 00:15)
+
+- **Submitted on time (student):** the capstone (live URL, repo, reflection) and the Week 13 process log. The last commit before the deadline is `a192b50` (22:45, take-down button), on `main` = `experiment`, live.
+- **NOT submitted: the demo video.** The student could not record (a technical problem) and emailed the instructor; waiting for the reply. The script is ready: `../Week13/VideoDemo_Script.md` (the "AI got it wrong" example is now the Sprint 2 `UPDATE ... WHERE contributor IS NULL` that credited all 17 rows).
+- **One published test entry is still on the live home page** (left on purpose to take down on camera). If the video is delayed, take it down now (reviewer, the entry's page, RETURN), because the instructor grades the live URL.
+- **Still open:** the Show Your Archive post (it needs the video link; replies due Sun 2026-11-29); keeping Supabase awake during grading; Q&A prep for **Dec 4**; README checklist lines (video, Supabase, live re-check, reflection pasted = yes) once the instructor replies.
+- **After-deadline wish list (student):** the title rename (mooncakes only), the source line, combining CURATED BY / SOURCE / CITY on the home page, real entry data (the AI-written descriptions), maybe an Ingredients field, the UX/UI continuation, the queue's old test entries, the B2 screenshot file.
+
+## Real entry data chat: start here (written 2026-11-25)
+
+**Context:** the Water Festival break (about 3 to 4 days from 2026-11-25; the instructor is away). The student works on the project meanwhile and is still trying to fix the video recording (the script is ready). Git: `main` = `experiment` = `a192b50`, clean apart from this file. Nothing is due during the break; the Show Your Archive replies are due Sun 2026-11-29 and the Q&A is on **Dec 4**.
+
+**Ask first, in one short message:**
+1. Was the last published test entry taken down (reviewer, its page, RETURN)? If not, do it before anything else: the instructor grades the live URL.
+2. Did the instructor answer about the video?
+3. The real facts for the entries: the student provides them (from the uncle's shop). The AI never invents descriptions, ingredients or Khmer.
+
+**The job, in the student's order (one step at a time: plan, approve, build, student tests, student commits):**
+1. **Title rename** to a mooncake collection (proverbs and Chinese were dropped, with the instructor's agreement).
+   - `collection.config.js`: `name` and `description`, and their Khmer in the `km` block. The new Khmer comes from the student, or from a Gemini draft the student corrects.
+   - The title is also the browser tab title (`app/layout.js` reads it) and the /browse heading.
+2. **Source line:** `collection.config.js` `source` says "my mom, uncle and grandma"; everything came from the uncle's shop. The `km.source` changes too.
+3. **Combine CURATED BY, SOURCE and CITY on the home page.** Today they are three separate cards in `app/page.js` (about lines 110-121), with labels HM1, P6 and HM2 and values `collection.curator`, `archive(lang, "source")` and `archive(lang, "city")`. Styling only, no data change. The UI/UX overhaul is paused, so propose one small layout first.
+4. **Ingredients field (new).** Order: SQL first, then code.
+   - SQL (the student runs it): `alter table entries add column ingredients text` (nullable), plus a length constraint like the others (null, or 1 to N).
+   - Also add `ingredients` to the trigger function `set_entry_updated_at`'s two content lists. Otherwise an edit that only changes ingredients would not count as an edit. That means `create or replace` with the full function from `docs/database.md`.
+   - Code: `utils/entryWrite.js` `entryColumns`; `utils/validateEntry.js`; `utils/entryFields.js` (the form field); the entry page `app/entries/[id]/page.js` (select and show); `components/ReviewEntryCard.js` and `app/review/page.js` (select); the edit page's select.
+   - New strings: the label, hint and error in English and Khmer. **Add them as lines in `../Week13/Language_Toggle_Files/gen_strings.js`** (like the student's decisions there, `all.XX = { en, km }`) and re-run it. Never hand-edit `utils/strings.js`, or the next re-run loses it. The run command is under "Generator script" below.
+   - Docs: README sections 3 and 6, `docs/database.md`.
+5. **Update the nine entry descriptions** (English and Khmer, plus sweetness, saltiness and the new ingredients) with the student's real facts, replacing what Claude wrote in Week 4.
+   - **Watch out:** archive.test.one owns the nine real entries and is not a reviewer. An edit through the site's form sends each entry back to `pending`, so it disappears from the public pages until the reviewer publishes it again (the same rule the video shows).
+   - Either edit through the form and republish each one from /review, or the student runs an `update ... where id = '<exact id>'` per entry in the SQL Editor. That keeps `published` and still bumps `updated_at`. Never a broad WHERE: see the Sprint 2 `contributor IS NULL` mistake.
+
+**After it lands, update these living lines:**
+- README: section 1 (the title note goes); section 3 (the `ingredients` column); section 5 (the Week 4 row: descriptions replaced); section 6 (descriptions from the shop; the AI only formatted them, if that is what happened); the checklist.
+- `docs/database.md`: column, constraint, trigger.
+- This file.
+- Changelogs: `docs/final sprint/CHANGES13_<Name>.md` (post-deadline work; confirm the number with the student).
+
+**Also still open (not this chat unless asked):** the video, the Show Your Archive post and replies, keeping Supabase awake, Q&A prep (Dec 4), the UX/UI continuation (`docs/UI-UX overhaul/OVERHAUL_NOTES.md`), the queue's old test entries, the B2 screenshot file in Storage.
+
+## Where we were (2026-11-22, evening)
 
 - **MERGED AND LIVE (2026-11-22):** `main` = `experiment` = `817f97b` (README, `docs/database.md`, the toggle, the line-break fix) pushed by the student; the live site serves the toggle (checked by fetching the home page). **The Q&A slot is booked** (date and time still to get from the student for the README checklist).
 - **Reviewer take-down (2026-11-22, the student's own decision, done before the video):** the SQL was run (`review_entry` can now return a published entry). The code is written and AI-checked logged out: `TakeDownButton.js` (new), `ReviewButtons.js` (`showPublish`), `app/entries/[id]/page.js`. The README (sections 3, 4 and 5, Q&A Dec 4), `docs/database.md` and `docs/final sprint/CHANGES12_ReviewerTakeDown.md` are updated. **Student tests ALL PASSED (2026-11-22):** the stranger's `review_entry` returned `false`; both published test entries were taken down, so **the public shelf has only the nine real entries**; the owner sees RETURNED with the note; a non-reviewer sees no box. The README attack table and checklist were updated. **The student chose to leave** the old pending tests in the queue and the B2 screenshot in Storage; README section 4 says both honestly. The video script now shows the take-down as the "one decision" (it also hides the demo entry again). Next: commit, merge, record. **At 22:40 the student chose (on advice) to leave for after the deadline:** the title rename, the source line, and combining CURATED BY / SOURCE / CITY on the home page (`app/page.js` lines ~112-120, `collection.config.js` and its `km` block; the Khmer comes from the student). One published test entry was left on purpose to take down on camera; the demo entry is taken down right after recording.
@@ -227,10 +270,13 @@ The README is due tonight (Sun 2026-11-22, 11:59 PM). An untouched README scores
 ## Opening message for a new chat
 
 ```
-Final sprint (Weeks 13 to 16; everything due Sun 2026-11-22, 11:59 PM, no late window): the Khmer Living Archive's polish,
-cleanup, README, reflection and demo video. Read AGENTS.md (its last section is the final-sprint amendment), then docs/FINAL_SPRINT_NOTES.md, then check `git status` and `git log --oneline -5`. docs/PROJECT_NOTES.md is
-the history of Sprints 1 to 3: read it only where needed. My plan for the week is in ../Week13/MyPlanForThisWeek/MyPlan.md
-(read it, and Week13_CurrentNotes.md next to it, for the decisions and working style); my process and reflection logs will be in the final-sprint folder. Short plan first, small steps, I
-commit and run all SQL by hand; all Khmer wording comes from me.
-This chat's job: <the job, e.g. "the README; read 'README chat: start here' in the notes first">.
+Khmer Living Archive, after the final deadline (submitted 2026-11-22 except the demo video; Water Festival break now;
+Q&A on Dec 4). Read AGENTS.md (its last section is the final-sprint amendment), then docs/FINAL_SPRINT_NOTES.md
+(start with "AFTER THE DEADLINE" and "Real entry data chat: start here"), then check `git status` and
+`git log --oneline -5`. docs/PROJECT_NOTES.md is the history of Sprints 1 to 3: read it only where needed.
+My plan is in ../Week13/MyPlanForThisWeek/MyPlan.md (and Week13_CurrentNotes.md next to it for the working style).
+My process and reflection logs are in ../Week13/WeeklyProcessLogs+ReflectionLogs/. Short plan first, small steps;
+I commit and run all SQL by hand; all Khmer wording and all entry facts come from me (or a Gemini draft I correct).
+This chat's job: real entry data and the small UI around it: the title rename, the source line, combining
+CURATED BY / SOURCE / CITY, the Ingredients field, then the nine entry descriptions.
 ```
