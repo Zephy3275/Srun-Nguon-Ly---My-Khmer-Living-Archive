@@ -5,7 +5,7 @@ A three-way language switch in the header: **EN + ខ្មែរ** (the default
 ## Where the Khmer came from
 
 - 2026-11-21: the AI counted every user-visible English string with no Khmer: **151 strings**, used in about 200 places. The list, with an ID per string, is in `../Week13/Language_Toggle_Files/Khmer_Strings_For_Gemini.md` (outside the repo).
-- The student gave the list to **Gemini Neon 4**, which drafted the Khmer (`khmer_strings_translated.md`, same folder). The AI checked that all 151 IDs came back with the English unchanged and `{count}` / `{query}` kept.
+- The student gave the list to **Gemini 4 Neon**, which drafted the Khmer (`khmer_strings_translated.md`, same folder). The AI checked that all 151 IDs came back with the English unchanged and `{count}` / `{query}` kept.
 - The student reads and corrects every Khmer string. The AI wrote none of it.
 - The student's 16 earlier Khmer strings are kept as written, with two changes the student chose: the RETURN button now says បញ្ជូនត្រឡប់មកវិញ, and the two save notices now name the menu «ធាតុរបស់ខ្ញុំ», so it matches the menu.
 
@@ -193,5 +193,5 @@ What remains is not code:
 The generator script is kept outside the repo at `../Week13/Language_Toggle_Files/gen_strings.js`. It reproduces `utils/strings.js` exactly, the student's word decisions included.
 
 **For the README:**
-- The interface Khmer was drafted by Gemini Neon 4 from a list the AI made. The student chose the terms and changed several words. The student's earlier Khmer was kept.
+- The interface Khmer was drafted by Gemini 4 Neon from a list the AI made. The student chose the terms and changed several words. The student's earlier Khmer was kept.
 - The AI (Claude Code) wrote the toggle code, the generator script and these checks.

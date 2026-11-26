@@ -9,7 +9,7 @@ Built by Ly Srun Nguon for ICT 340 at AUPP, Fall 2026.
 A small archive of the mooncakes made by my uncle's mooncake shop in Phnom Penh, in English and Khmer. It holds nine mooncakes. Each has:
 - a photo;
 - its filling, shape, colour and texture;
-- a sweetness and saltiness score;
+- a sweetness score, except the three Peah (it depends on the filling, so their description gives it);
 - a description in both languages.
 
 What people can do:
@@ -175,16 +175,18 @@ I used AI for almost all of the code, and I say so plainly. The model names are 
 | Week 2 | Cline + OpenRouter: Nvidia Nemotron 3 Ultra (free) | Nothing: it kept failing, probably the free tier's limits | Dropped |
 | Week 2 | Cline + OpenRouter: Ox Alpha (free at launch; it turned out to be Z ai 5.3) | The first entry card, the first two entries, a changelog, explanations | Kept; I moved on when it stopped being free |
 | Weeks 3 to 5 | Cline + OpenRouter: DeepSeek flash v4 0731 | Moved the entries into `data/entries.js`; browse and search; a page for each entry; the Khmer fields; then Supabase, login and sign-up (Week 5) | Kept, but I rejected its edits when it guessed. It garbled its own changelog near a 200k-token context, and invented details when asked to describe the repo. Dropped when I needed a model that reads screenshots. |
-| Week 4 | Claude Code, Claude Sonnet 5 | **Wrote the descriptions of my nine mooncakes in English and translated them into Khmer** | **Kept as written. I have not checked them against the shop or corrected the Khmer yet** (next job; this table will be updated) |
+| Week 4 | Claude Code, Claude Sonnet 5 | Wrote the first descriptions of my nine mooncakes in English and translated them into Khmer | Replaced on Nov 26 (the last two rows). Some of its general facts (Teochew-style Peah, the snow skin Pandan, a second yolk as a gift) are still in the new text: I kept them without checking them against the shop |
 | Week 6 | Claude Code, Claude Sonnet 5 | Filled the gaps in my own data model worksheet; wrote the table, policy and insert SQL | Kept after reading; I ran all SQL by hand |
 | Weeks 7 to 12 | Claude Code, Claude Sonnet 5.5 | Planning, SQL, the contribution form, edit and delete, the gate, the review queue, the fixes, the console attack kits, the changelogs in `docs/` | Kept after reviewing every change before I committed it; my AI-assisted commits say so |
 | Week 8 | Gemini, in Antigravity | Painted the hero picture, from a brief Claude wrote | Kept, credited below |
 | Week 8 onwards | Gemini, in the Gemini web app | Made the site icon and the loading animation's artwork; Claude Code (Sonnet 5.5) cut them out and added them to the site | Kept, credited below |
 | Week 13 | Claude Code, Claude Opus 5.5 | The final checklist and scans, the language switch and the script that builds `utils/strings.js`, the reviewer's take-down (the SQL change and the button), this README and `docs/database.md` | Kept after testing each step |
-| Week 13 | Gemini Neon 4 | Drafted the Khmer for 151 interface strings | I chose the key words (entry, publish, reviewer, return, MY ENTRIES), read some of the strings and changed several words. I have not read every one. |
+| Week 13 | Gemini 4 Neon | Drafted the Khmer for 151 interface strings | I chose the key words (entry, publish, reviewer, return, MY ENTRIES), read some of the strings and changed several words. I have not read every one. |
+| Nov 26 (after the deadline) | Claude Code, Claude Opus 5.5 | Rewrote the nine entry descriptions from my own edits and the facts I gave (sizes, yolks, sweetness, the Peah spelling); built the SQL that updated them | I edited two descriptions first and asked for one to be longer; I ran the SQL myself and checked the live site |
+| Nov 26 (after the deadline) | Gemini 4 Neon | Translated the nine new descriptions into Khmer | I also tried Google Translate; Claude compared the two, and I chose Gemini's and changed four words |
 
 **The Khmer, honestly:**
-- The nine entries' Khmer descriptions were translated by Claude in Week 4.
+- The nine entries' Khmer descriptions were translated by Gemini 4 Neon on Nov 26, replacing Claude's Week 4 translation. I chose it over Google Translate's and changed four words.
 - The interface Khmer from Sprints 2 and 3 is mine: the status words, the review buttons, the queue messages and the save notices.
 - The rest of the interface Khmer was drafted by Gemini in the final sprint. I chose the key words and corrected the strings I read, but not every string.
 
@@ -195,7 +197,7 @@ I used AI for almost all of the code, and I say so plainly. The model names are 
 - **Wrong dates.** It printed the "submitted" date in UTC, which shows the wrong day in Phnom Penh before 7 AM.
 - **A false hint.** It wrote "Only you can see it for now" for pending entries. That is false, because reviewers can see them too.
 - **An unannounced change.** It added a "queue could not be loaded" message without telling me. I found it later in the changelog.
-- **A wrong model name.** Gemini's translated file said it was from "Gemini 3.1 Pro". It was Gemini Neon 4.
+- **A wrong model name.** Gemini's translated file said it was from "Gemini 3.1 Pro". It was Gemini 4 Neon.
 - **One mistake was mine.** My first console attack used the placeholder id, returned a 400 and proved nothing. I re-ran it with a real id.
 
 **How I checked the work:**
@@ -210,7 +212,7 @@ I used AI for almost all of the code, and I say so plainly. The model names are 
 
 - **The mooncakes:** my uncle's mooncake shop in Phnom Penh. My uncle agreed to the shop being credited.
 - **The entry photos** (`public/images/`): taken from the shop's own listing on Grab, used with my uncle's permission. They are the shop's photos, not mine.
-- **The entry descriptions:** written by AI (see section 5). They will be replaced with what the shop says.
+- **The entry descriptions:** first written by AI in Week 4 (English, and a Khmer translation) and left unchanged until Nov 26, after the final deadline. Then they were rewritten by AI from my own edits and what I know from the shop, and translated into Khmer by Gemini 4 Neon (section 5). A few general facts from the Week 4 text are still in them, unchecked (listed in `docs/final sprint/CHANGES13_RealEntryData.md`).
 - **Artwork made with Gemini:**
   - the hero picture (`public/hero-moon-900.webp`, `public/hero-moon-2000.webp`), made in Antigravity;
   - the site icon (`app/icon.png`) and the loading animation (`public/loader-center.png`, `public/loader-rings.png`), made in the Gemini web app.
@@ -257,7 +259,7 @@ The database has to exist first. The SQL is not a script in this repo. [docs/dat
 - At least eight real entries, each with a credited source: yes, 9, from my uncle's shop (section 6)
 - Khmer renders on every screen a user meets, including the queue: yes, the language switch covers every screen (2026-11-22)
 - Works at phone width: yes, tested 2026-11-22 in the browser at 390 px wide, all three language modes
-- No test entries, lorem ipsum or TODO comments in shipped pages: yes. The published test entries were taken down on 2026-11-22 with the reviewer's RETURN button (the last one on camera in the demo video), so the public pages show only the real entries. No lorem or TODO in the code (searched 2026-11-21). Old test entries still exist hidden (section 4).
+- No test entries, lorem ipsum or TODO comments in shipped pages: NOT YET. The published test entries were taken down on 2026-11-22 with the reviewer's RETURN button, but one, "Lab11 part 4", is still public (checked 2026-11-26). No lorem or TODO in the code (searched 2026-11-21). Old test entries still exist hidden (section 4).
 - No console errors on the main pages: yes, 2026-11-22 (on my computer; live check after the merge: NOT YET)
 - jesseorndorff is a collaborator on this repo: yes
 - Supabase project restored and awake on (date): NOT YET
