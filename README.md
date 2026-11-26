@@ -1,4 +1,4 @@
-# Khmer Living Archive: mooncakes from my uncle's shop
+# Khmer Archive - Mooncake Collection
 
 **Live:** https://srun-nguon-ly-my-khmer-living-archi.vercel.app/
 
@@ -6,7 +6,7 @@ Built by Ly Srun Nguon for ICT 340 at AUPP, Fall 2026.
 
 ## 1. What this is
 
-A small archive of the mooncakes made by my uncle's mooncake shop in Phnom Penh, in English and Khmer. It holds nine mooncakes. Each has:
+An archive of mooncakes in English and Khmer, open to contributors: anyone with an account can add a mooncake, and a reviewer publishes it. I added the first nine, from my uncle's bakery in Phnom Penh. Each has:
 - a photo;
 - its filling, shape, colour and texture;
 - a sweetness score, except the three Peah (it depends on the filling, so their description gives it);
@@ -17,7 +17,7 @@ What people can do:
 - **Contributors** make an account and add an entry with a photo. It stays hidden until a reviewer publishes it.
 - **The reviewer** publishes or returns new entries from a review queue.
 
-The site's title and description still mention proverbs and Chinese. That is left over from the first week: the archive is mooncakes only, and the Chinese was dropped, with my instructor's agreement. The title will be renamed.
+The title was renamed on Nov 26, after the final deadline. Until then it was the first week's "Khmer Archive Proverbs and Mooncake Recipes": the archive became mooncakes only, and the proverbs and the Chinese were dropped, with my instructor's agreement.
 
 ## 2. Who it's for
 

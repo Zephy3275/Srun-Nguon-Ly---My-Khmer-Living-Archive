@@ -8,27 +8,28 @@
 
 const collection = {
   // What does your archive collect? e.g. "Khmer Proverbs"
-  name: "Khmer Archive Proverbs and Mooncake Recipes",
+  name: "Khmer Archive - Mooncake Collection",
 
   // One sentence: what is this archive, and why does it matter?
-  description: "A living archive of a piece of my family's heritage showcasing varying mooncake recipes and proverbs in both khmer and chinese.",
+  description: "A living archive of a piece of my family's heritage showcasing varying mooncake collections in both English and Khmer.",
 
   // Who is building this archive? Your name, as you want it shown.
   curator: "Ly Srun Nguon",
 
   // Where does your knowledge come from? A person, a place, a community.
-  source: "The knowledge will come from my family, my mom, uncle and grandma. My family is hybrid between khmer and chinese, so they have a unique blend of culture",
+  source: "The knowledge and source will come from my uncle, who owns a local bakery in Phnom Penh that also makes mooncakes during the festive season of the Mid-Autumn Festival.",
 
   // Place
   city: "Phnom Penh",
 
-  // The same four in Khmer, shown when the language switch is on Khmer only
-  // (drafted by Gemini, read and corrected by the curator). The curator name
-  // stays as written in every language.
+  // The same five in Khmer, shown when the language switch is on Khmer only.
+  // The caption and source were drafted by Gemini and chosen by the curator;
+  // the title and the curator's name are the curator's own.
   km: {
-    name: "បណ្ណសារខ្មែរ៖ សុភាសិត និងរូបមន្តនំសែនព្រះខែ",
-    description: "បណ្ណសាររស់នៃផ្នែកមួយនៃមរតកគ្រួសាររបស់ខ្ញុំ ដែលបង្ហាញពីរូបមន្តនំសែនព្រះខែ និងសុភាសិតផ្សេងៗទាំងជាភាសាខ្មែរ និងភាសាចិន។",
-    source: "ចំណេះដឹងទាំងនេះនឹងមានប្រភពមកពីគ្រួសាររបស់ខ្ញុំ គឺម្តាយ ពូ និងយាយរបស់ខ្ញុំ។ គ្រួសាររបស់ខ្ញុំជាកូនកាត់ខ្មែរ-ចិន ដូច្នេះពួកគាត់មានការលាយបញ្ចូលគ្នានៃវប្បធម៌ដ៏ពិសេសមួយ។",
+    curator: "លី ស៊្រុនងួន",
+    name: "បណ្ណសារខ្មែរ - កម្រងនំព្រះខែ",
+    description: "បណ្ណសាររស់នៃកេរដំណែលមួយផ្នែករបស់គ្រួសារខ្ញុំ ដែលដាក់បង្ហាញកម្រងនំព្រះខែផ្សេងៗគ្នាទាំងជាភាសាអង់គ្លេស និងភាសាខ្មែរ។",
+    source: "ចំណេះដឹង និងប្រភពនឹងបានមកពីពូរបស់ខ្ញុំ ដែលជាម្ចាស់ហាងនំប៉័ងក្នុងស្រុកមួយនៅភ្នំពេញ ហើយហាងនេះក៏មានធ្វើនំព្រះខែផងដែរនៅក្នុងរដូវកាលពិធីបុណ្យសែនព្រះខែ។",
     city: "ភ្នំពេញ",
   },
 

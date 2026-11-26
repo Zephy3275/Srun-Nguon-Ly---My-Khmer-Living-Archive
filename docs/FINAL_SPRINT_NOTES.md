@@ -9,6 +9,7 @@
 > - `docs/final sprint/CHANGES12_LanguageToggle.md`: the three-way language toggle (DONE 2026-11-22: steps 1 to 5, what each changed and how it was tested, and what the README should say about it).
 > - `docs/final sprint/CHANGES12_ReviewerTakeDown.md`: a reviewer can return a published entry (the `review_entry` change and the button; all tests passed 2026-11-22).
 > - `docs/final sprint/CHANGES13_RealEntryData.md`: after the deadline, the nine entries' new descriptions, Khmer titles, source and sweetness (SQL run 2026-11-26; FLAG: Week 4 facts kept unchecked).
+> - `docs/final sprint/CHANGES13_HomepageFixes.md`: after the deadline, the new title, caption and source (EN + Gemini Khmer), and the three home-page boxes merged into one.
 > - Also: `README.md` (eight sections, a living document) and `docs/database.md` (the live database's definitions).
 
 ## AFTER THE DEADLINE (updated 2026-11-23, 00:15)
@@ -50,6 +51,26 @@
   - README updated: section 1 (sweetness line), section 5 (Week 4 row, two Nov 26 rows, "The Khmer, honestly"), section 6 (descriptions), section 8 (the test-entry line now says NOT YET: "Lab11 part 4" is still public).
   - **The student no longer wants to preview changelogs: write them directly.**
 - **The student is leaving "Lab11 part 4" published for now** (may come back to it). When it is taken down, update README section 8 and CHANGES13 "Still open".
+- **Home-page fixes STARTED (2026-11-26; the student committed the entry-data docs and is not merging yet):**
+  - **English done in `collection.config.js` (the student's words):** name "Khmer Archive Mooncakes Collection"; the new description; the new source. The AI capitalized English, Khmer, Phnom Penh and Chinese.
+  - **Why the name is general (student):** the archive is open to anyone's mooncakes. The uncle's shop is only the first contributor, so it is not in the title.
+  - **The `km` block is still the OLD Khmer** until the student's translations come back (Gemini and Google again; the AI compares).
+  - The English to translate: `../Week14/HomepageFixes/Homepage_ForTranslation.md`.
+  - **Source fixed:** the student confirmed it is the **Mid-Autumn Festival** (they first wrote "Chinese Lunar New Year" by mistake). It is changed in the config and in the translation file.
+  - **README:** the H1 is now the new name; section 1 now says the archive is open to contributors and the first nine came from the uncle's bakery; the title note now says it was renamed on Nov 26.
+  - **Layout DONE (code, the AI's choice, which the student delegated):** in `app/page.js`, the three boxes became one. CURATED BY and CITY sit side by side (flex, wraps), SOURCE is full width under a thin line. The gap above is 32 px (was 48 per box) and the padding is 16/20 px. No new strings.
+    - AI check on a throwaway dev server (port 3005, stopped afterwards): home is 200 in all three modes with no errors, the new title is in the tab and hero, and the Mid-Autumn source shows.
+    - Student test at phone width: still to do.
+  - **Khmer DONE (2026-11-27):** the student made Gemini and Google translations again and the AI compared them. Gemini's was put in all three `km` lines by script (verbatim). Google's used នំសែនព្រះខែ / នំព្រះចន្ទ and dropped "local".
+  - **Title changed by the student (2026-11-27)** to "Khmer Archive - Mooncake Collection" / បណ្ណសារខ្មែរ - កម្រងនំព្រះខែ. Gemini's title put ខ្មែរ last ("archive of Khmer mooncakes"). It is in the config, the README H1 and the changelog.
+    - The student typed នំព្រះខ, without ែ. The AI used នំព្រះខែ; the student confirmed the typo.
+  - **Student test PASSED (2026-11-27, localhost):** the title, the combined box, and the Khmer title and texts.
+  - **Curator name in Khmer (student, 2026-11-27): លី ស៊្រុនងួន** in `km.curator`. `app/page.js` now uses `archive(lang, "curator")`, and the unused `collection` import was removed.
+    - Each entry's CONTRIBUTED BY and source stay English in Khmer-only mode: they are database fields with no Khmer column. **OPTIONAL, for later (student, 2026-11-27):** the student may want them in Khmer. That would be a SQL update of the nine entries, or new Khmer columns.
+    - The student re-checked: the Khmer name shows under CURATED BY in ខ្មែរ mode. PASSED.
+  - **Home-page fixes (steps 1 to 3) are DONE.** Uncommitted: `collection.config.js`, `app/page.js`, `README.md`, CHANGES13_HomepageFixes and this file.
+    - The tab now reads "Khmer Archive - Mooncake Collection — Khmer Living Archive" (a hyphen, then the layout's em dash).
+  - Changelog: `docs/final sprint/CHANGES13_HomepageFixes.md` (the student's test is marked PENDING there).
 - **Next (the student's list): the small home-page fixes.** Step 1 (title rename), step 2 (source line), step 3 (combine CURATED BY / SOURCE / CITY). Then step 4 (Ingredients) and saltiness, if wanted. All uncommitted so far: README, CHANGES12 (model name), CHANGES13 and this file.
 
 **Ask first, in one short message:**

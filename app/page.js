@@ -1,4 +1,3 @@
-import collection from "../collection.config.js";
 import EntryCard from "../components/EntryCard.js";
 import ContextAbout from "../components/ContextAbout.js";
 import HeroBanner from "../components/HeroBanner.js";
@@ -35,12 +34,25 @@ const styles = {
     margin: "0 auto",
     maxWidth: 560,
   },
+  // One box for CURATED BY, CITY and SOURCE (they used to be three boxes,
+  // about 400px of scrolling): the two short ones share the top row,
+  // the source sentence gets the full width underneath.
   card: {
-    marginTop: 48,
-    padding: 24,
+    marginTop: 32,
+    padding: "16px 20px",
     backgroundColor: "var(--surface)",
     border: "1px solid var(--border)",
     borderRadius: 10,
+  },
+  cardRow: {
+    display: "flex",
+    flexWrap: "wrap",
+    gap: "12px 48px",
+  },
+  cardSource: {
+    marginTop: 14,
+    paddingTop: 14,
+    borderTop: "1px solid var(--border)",
   },
   cardLabel: {
     fontFamily: "var(--font-label)",
@@ -108,16 +120,20 @@ export default async function Home() {
         <MoonPhases />
 
         <div style={styles.card}>
-          <p style={styles.cardLabel}>{t(lang, "HM1")}</p>
-          <p style={styles.cardValue}>{collection.curator}</p>
-        </div>
-        <div style={styles.card}>
-          <p style={styles.cardLabel}>{t(lang, "P6")}</p>
-          <p style={styles.cardValue}>{archive(lang, "source")}</p>
-        </div>
-        <div style={styles.card}>
-          <p style={styles.cardLabel}>{t(lang, "HM2")}</p>
-          <p style={styles.cardValue}>{archive(lang, "city")}</p>
+          <div style={styles.cardRow}>
+            <div>
+              <p style={styles.cardLabel}>{t(lang, "HM1")}</p>
+              <p style={styles.cardValue}>{archive(lang, "curator")}</p>
+            </div>
+            <div>
+              <p style={styles.cardLabel}>{t(lang, "HM2")}</p>
+              <p style={styles.cardValue}>{archive(lang, "city")}</p>
+            </div>
+          </div>
+          <div style={styles.cardSource}>
+            <p style={styles.cardLabel}>{t(lang, "P6")}</p>
+            <p style={styles.cardValue}>{archive(lang, "source")}</p>
+          </div>
         </div>
 
         <ContextAbout lang={lang} />
